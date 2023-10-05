@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resultizer/utils/constant/app_color.dart';
+import 'package:resultizer_merged/utils/constant/app_color.dart';
 
 class CommonButton extends StatefulWidget {
   final double? height;

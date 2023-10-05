@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
-import 'package:resultizer/utils/constant/app_color.dart';
-import 'package:resultizer/view/account_screen/account_screen.dart';
-import 'package:resultizer/view/favorite_screen/favorite_screen.dart';
-import 'package:resultizer/view/home_view/home_view.dart';
-import 'package:resultizer/view/home_view/news_view.dart';
-import 'package:resultizer/view/watch_screen/watch_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_color.dart';
+import 'package:resultizer_merged/view/account_screen/account_screen.dart';
+import 'package:resultizer_merged/view/favorite_screen/favorite_screen.dart';
+import 'package:resultizer_merged/view/home_view/home_view.dart';
+import 'package:resultizer_merged/view/home_view/news_view.dart';
+import 'package:resultizer_merged/view/watch_screen/watch_screen.dart';
 
 import '../../theme/themenotifer.dart';
 
@@ -21,7 +22,7 @@ class Bottom extends StatefulWidget {
 class _BottomState extends State<Bottom> {
   ColorNotifire notifire = ColorNotifire();
   List bottom = [
-    const HomeView(),
+    const HomeScreenView(),
     const FavoriteScreen(),
     const NewsviewScreen(),
     const Account_screen(),

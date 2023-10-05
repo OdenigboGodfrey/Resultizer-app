@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
 
 import '../../theme/themenotifer.dart';
 

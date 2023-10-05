@@ -2,7 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/view/search_screen/search_screen.dart';
+import 'package:resultizer_merged/view/search_screen/search_screen.dart';
 
 import '../theme/themenotifer.dart';
 import '../utils/constant/app_assets.dart';

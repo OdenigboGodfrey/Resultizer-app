@@ -1,6 +1,6 @@
 class AppString {
   // splash screen
-  static const String resultizer = "Resultizer";
+  static const String resultizer = "ResultizerMerged";
   static const String subResultizer = "Winning made simple";
 
   static const String welCome = "Live score updates";
@@ -81,4 +81,23 @@ class AppString {
   static const String thu = 'Thu';
   static const String fri = 'Fri';
   static const String sat = 'Sat';
+
+  static const String ft = 'FT';
+  static const String ns = 'NS';
+
+  static const String vs = 'vs';
+
+  static const String statistics = 'Statistics';
+  static const String lineups = 'Lineups';
+  static const String events = 'Events';
+  static const String odds = 'Odds';
+
+  static const String noStats = 'No statistics to show';
+  static const String noLineUp = 'No Line up information to show';
+  static const String noEvents = 'No Events to show';
+
+  static const String homeString = 'home';
+  static const String drawString = 'draw';
+  static const String awayString = 'away';
+  static const String drawRepresentation = '🤝';
 }

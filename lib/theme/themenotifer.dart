@@ -15,6 +15,7 @@ class ColorNotifire with ChangeNotifier {
   get background => isDark ? backgroundcolore : colorewhite;
 
   get bgcolore => isDark ? backgroundcolore : backgrounde;
+  get reverseBgColore => isDark ? backgrounde : backgroundcolore;
   get search => isDark ? backgroundcolore1 : backgrounde;
 
   get textcolore => isDark ? colorewhite : coloreblack;

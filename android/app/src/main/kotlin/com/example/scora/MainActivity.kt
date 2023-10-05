@@ -1,4 +1,4 @@
-package com.example.Resultizer
+package com.example.ResultizerMerged
 
 import io.flutter.embedding.android.FlutterActivity
 

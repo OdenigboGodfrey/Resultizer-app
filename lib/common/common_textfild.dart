@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:resultizer/common/common_appbar.dart';
-import 'package:resultizer/utils/constant/app_color.dart';
+import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/utils/constant/app_color.dart';
 
 class CustomTextfield extends StatefulWidget {
   final TextEditingController? fieldController;

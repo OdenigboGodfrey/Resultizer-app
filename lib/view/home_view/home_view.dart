@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/common/common_appbar.dart';
-import 'package:resultizer/utils/constant/app_string.dart';
-import 'package:resultizer/view/home_view/live_screen.dart';
-import 'package:resultizer/view/home_view/premierleague.dart';
+import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
+import 'package:resultizer_merged/view/home_view/live_screen.dart';
+import 'package:resultizer_merged/view/home_view/premierleague.dart';
 
 import '../../theme/themenotifer.dart';
 import '../../utils/constant/app_assets.dart';
@@ -25,7 +25,7 @@ class _HomeViewState extends State<HomeView> {
   dynamic selectedValue;
   ColorNotifire notifire = ColorNotifire();
   List cup = [
-    'World Cup 2022',
+    'World Cup 20221',
     'World Cup 2022',
     'World Cup 2022',
     'Premier League',

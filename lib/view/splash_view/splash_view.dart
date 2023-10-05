@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
-import 'package:resultizer/utils/constant/app_string.dart';
+import 'package:resultizer_merged/container_injector.dart';
+import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
+import 'package:flutter_bloc/src/bloc_provider.dart';
 
 import '../../theme/themenotifer.dart';
 import '../on_boarding/on_boarding_view.dart';

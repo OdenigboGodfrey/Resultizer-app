@@ -2,14 +2,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/common/common_button.dart';
-import 'package:resultizer/view/account_screen/about_screen.dart';
-import 'package:resultizer/view/account_screen/general_screen.dart';
-import 'package:resultizer/view/account_screen/help_screen.dart';
-import 'package:resultizer/view/account_screen/notification_screen.dart';
-import 'package:resultizer/view/account_screen/personal_screen.dart';
-import 'package:resultizer/view/account_screen/security_screen.dart';
-import 'package:resultizer/view/sign_in/sign_in_view.dart';
+import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/view/account_screen/about_screen.dart';
+import 'package:resultizer_merged/view/account_screen/general_screen.dart';
+import 'package:resultizer_merged/view/account_screen/help_screen.dart';
+import 'package:resultizer_merged/view/account_screen/notification_screen.dart';
+import 'package:resultizer_merged/view/account_screen/personal_screen.dart';
+import 'package:resultizer_merged/view/account_screen/security_screen.dart';
+import 'package:resultizer_merged/view/sign_in/sign_in_view.dart';
 
 import '../../common/common_appbar.dart';
 import '../../theme/themenotifer.dart';
