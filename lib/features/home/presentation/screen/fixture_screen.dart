@@ -5,12 +5,16 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/fixture_teams_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
-import 'package:resultizer_merged/features/match_detail/data/models/fixture_teams_dto.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/cubit/fixture_cubit.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/widgets/fixture_details.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/widgets/odd_accordion.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/events_view.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/fixture_details.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/lineups_view.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/odd_accordion.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/statistics_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
@@ -40,6 +44,11 @@ class FixtureScreen extends StatefulWidget {
 
 class _FixtureScreenState extends State<FixtureScreen> {
   ColorNotifire notifire = ColorNotifire();
+  List<String> goals = ['0','0'];
+  int homeGoals = 0;
+  int awayGoals = 0;
+  int whoIsWinner = 0;
+  Color currentColor = Colors.transparent;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +57,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
+    
     PremierGameDTO game = widget.game;
     // game.odds = [
     //   OddsModel(id: 0, name: '1x2', odds: [
@@ -72,13 +82,14 @@ class _FixtureScreenState extends State<FixtureScreen> {
     //   ])
     // ];
 
-    List<String> goals =
-        game.goals != null ? game.goals.toString().split(":") : ['0', '0'];
-    int homeGoals = int.tryParse(goals[0]) ?? 0;
-    int awayGoals = int.tryParse(goals[1]) ?? 0;
+    goals =
+        game.goals != null ? game.goals.toString().split(":") : goals;
+    homeGoals = int.tryParse(goals[0]) ?? 0;
+    awayGoals = int.tryParse(goals[1]) ?? 0;
 
-    int whoIsWinner =
+    whoIsWinner =
         (homeGoals > awayGoals) ? 1 : ((homeGoals < awayGoals) ? 2 : 0);
+    currentColor = getColor();
 
     return BlocBuilder<FixtureCubit, FixtureState>(
       builder: (context, state) {
@@ -89,7 +100,10 @@ class _FixtureScreenState extends State<FixtureScreen> {
             actionsIconTheme: IconThemeData(color: notifire.reverseBgColore),
             backgroundColor: notifire.bgcolore,
             leading: GestureDetector(
-              onTap: () => Get.back(),
+              onTap: () {
+                cubit.reset();
+                Get.back();
+              },
               child: Icon(Icons.arrow_back, color: notifire.textcolore),
             ),
             title: Text(
@@ -123,44 +137,38 @@ class _FixtureScreenState extends State<FixtureScreen> {
               if (state is FixtureStatisticsLoading ||
                   state is FixtureLineupsLoading ||
                   state is FixtureEventsLoading)
-                const SizedBox(
-                  width: 100,
-                  height: 100,
+                // const SizedBox(
+                //   width: 100,
+                //   height: 100,
+                // ),
+                LinearProgressIndicator(
+                  color: currentColor,
                 ),
-              //   LinearProgressIndicator(
-              //     color: getColor(soccerFixture),
-              //   ),
               if (state is FixtureStatisticsLoaded)
-                const SizedBox(
-                  width: 100,
-                  height: 100,
-                ),
-              //   StatisticsView(statistics: state.statistics),
+                // Container(
+                //   width: 100,
+                //   height: 100,
+                // ),
+                StatisticsView(statistics: cubit.statistics),
               if (state is FixtureLineupsLoaded)
-                const SizedBox(
-                  width: 100,
-                  height: 100,
-                ),
-              //   LineupsView(lineups: state.lineups),
+                // Container(
+                //   width: 100,
+                //   height: 100,
+                // ),
+                LineupsView(lineups: cubit.lineups),
               if (state is FixtureEventsLoaded)
-                const SizedBox(
-                  width: 100,
-                  height: 100,
+                // const SizedBox(
+                //   width: 100,
+                //   height: 100,
+                // ),
+                EventsView(
+                  events: cubit.events.isNotEmpty ? cubit.events.reversed.toList(): [],
+                  color: currentColor,
                 ),
-              //   EventsView(
-              //     events: state.events,
-              //     color: getColor(soccerFixture),
-              //   ),
               if (state is FixtureOddsActive && state.status)
                 OddAccordion(
                   oddsData: game.odds,
                 ),
-              // Container()
-              // Column(children: [
-              // for(var odd in game.odds)
-              //     // Text('Odd ${odd.name} - ${odd.odds[0]}: ${odd.odds[1]}...')
-
-              // ],)
             ],
           ),
         );
@@ -176,7 +184,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
               onPressed: () async {
                 notifire.isavalable(!notifire.isDark);
                 if (widget.game.matchStatus != "NS") {
-                  await cubit.getStatistics(widget.game.fixtureId.toString());
+                  await cubit.getStatistics(widget.game.fixtureId!);
                 } else {
                   Fluttertoast.showToast(
                       msg: AppString.noStats,
@@ -189,7 +197,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
             child: tabBarButton(
               label: AppString.lineups,
               onPressed: () async {
-                await cubit.getLineups(widget.game.fixtureId.toString());
+                await cubit.getLineups(widget.game.fixtureId!);
               },
             ),
           ),
@@ -198,7 +206,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
               label: AppString.events,
               onPressed: () async {
                 if (widget.game.matchStatus != "NS") {
-                  await cubit.getEvents(widget.game.fixtureId.toString());
+                  await cubit.getEvents(widget.game.fixtureId!);
                 } else {
                   Fluttertoast.showToast(
                       msg: AppString.noEvents,
@@ -222,7 +230,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
           {required String label, required void Function()? onPressed}) =>
       MaterialButton(
         onPressed: onPressed,
-        color: getColor(1 == 2),
+        color: currentColor,
         elevation: 0.0,
         padding: const EdgeInsets.all(16),
         shape: const RoundedRectangleBorder(borderRadius: BorderRadius.zero),
@@ -231,10 +239,10 @@ class _FixtureScreenState extends State<FixtureScreen> {
 }
 
 // Color getColor(SoccerFixture fixture) {
-Color getColor(bool isGoalEqual) {
+Color getColor() {
   Color color = Colors.black;
-  if (isGoalEqual) {
-    color = Colors.red;
+  if (notifire.isDark) {
+    color = AppColor.pinkColor;
   }
   return color;
 }

@@ -5,7 +5,7 @@ import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
 import 'package:resultizer_merged/features/home/data/enum/premier_game_enum.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/screens/fixture_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/fixture_screen.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';

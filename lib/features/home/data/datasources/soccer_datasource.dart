@@ -8,6 +8,7 @@ import 'package:resultizer_merged/features/home/data/models/fixture_model_dto.da
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/enum/premier_game_enum.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/statistics_dto.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 abstract class SoccerDataSource {
@@ -17,6 +18,7 @@ abstract class SoccerDataSource {
 
   Future<List<dynamic>> getLiveFootballMatches();
   Future<dynamic> getMatchByFixtureId(int fixtureId);
+  Future<List<FullFixtureModel>> getMatchInfoByFixtureId(int fixtureId);
 
   // Future<List<dynamic>> getLiveFixtures();
 }
@@ -171,7 +173,7 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
   }
 
   @override
-  Future<LiveBetsResponse> getMatchByFixtureId(int fixtureId) async {
+  Future<ApiResponse> getMatchByFixtureId(int fixtureId) async {
     try {
       final response = await dioHelper.get(
           url: Endpoints.odds, queryParams: {"fixture": fixtureId.toString()});
@@ -181,7 +183,7 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
           .map((dynamic item) => FullFixtureModel.fromJson(item))
           .toList();
 
-      LiveBetsResponse data = LiveBetsResponse(
+      ApiResponse data = ApiResponse(
         errors: response.data['errors'],
         results: response.data['results'],
         parameters: response.data['parameters'],
@@ -191,6 +193,190 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
       );
 
       return data;
+      // return null;
+    } catch (error, stackTrace) {
+      print(stackTrace);
+      rethrow;
+    }
+  }
+  
+  @override
+  Future<List<FullFixtureModel>> getMatchInfoByFixtureId(int fixtureId) async {
+    try {
+      final response = await dioHelper.get(
+          url: Endpoints.fixtures, queryParams: {"id": fixtureId.toString()});
+      List<dynamic> responseData = response.data['response'];
+
+      List<FullFixtureModel> responseData0 = responseData
+          .map((dynamic item) => FullFixtureModel.fromJson(item))
+          .toList();
+      // responseData0[0].statistics =  [
+      //   {
+      //     "team": {
+      //       "id": 1607,
+      //       "name": "Chicago Fire",
+      //       "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/1607.png"
+      //     },
+      //     "statistics": [
+      //       {
+      //         "type": "Shots on Goal",
+      //         "value": 3
+      //       },
+      //       {
+      //         "type": "Shots off Goal",
+      //         "value": 1
+      //       },
+      //       {
+      //         "type": "Total Shots",
+      //         "value": 7
+      //       },
+      //       {
+      //         "type": "Blocked Shots",
+      //         "value": 3
+      //       },
+      //       {
+      //         "type": "Shots insidebox",
+      //         "value": 5
+      //       },
+      //       {
+      //         "type": "Shots outsidebox",
+      //         "value": 2
+      //       },
+      //       {
+      //         "type": "Fouls",
+      //         "value": 12
+      //       },
+      //       {
+      //         "type": "Corner Kicks",
+      //         "value": 6
+      //       },
+      //       {
+      //         "type": "Offsides",
+      //         "value": 3
+      //       },
+      //       {
+      //         "type": "Ball Possession",
+      //         "value": "43%"
+      //       },
+      //       {
+      //         "type": "Yellow Cards",
+      //         "value": 1
+      //       },
+      //       {
+      //         "type": "Red Cards",
+      //         "value": null
+      //       },
+      //       {
+      //         "type": "Goalkeeper Saves",
+      //         "value": 3
+      //       },
+      //       {
+      //         "type": "Total passes",
+      //         "value": 281
+      //       },
+      //       {
+      //         "type": "Passes accurate",
+      //         "value": 219
+      //       },
+      //       {
+      //         "type": "Passes %",
+      //         "value": "78%"
+      //       },
+      //       {
+      //         "type": "expected_goals",
+      //         "value": "0.86"
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     "team": {
+      //       "id": 18310,
+      //       "name": "Charlotte",
+      //       "logo": "https:\/\/media-4.api-sports.io\/football\/teams\/18310.png"
+      //     },
+      //     "statistics": [
+      //       {
+      //         "type": "Shots on Goal",
+      //         "value": 5
+      //       },
+      //       {
+      //         "type": "Shots off Goal",
+      //         "value": 1
+      //       },
+      //       {
+      //         "type": "Total Shots",
+      //         "value": 7
+      //       },
+      //       {
+      //         "type": "Blocked Shots",
+      //         "value": 1
+      //       },
+      //       {
+      //         "type": "Shots insidebox",
+      //         "value": 5
+      //       },
+      //       {
+      //         "type": "Shots outsidebox",
+      //         "value": 2
+      //       },
+      //       {
+      //         "type": "Fouls",
+      //         "value": 10
+      //       },
+      //       {
+      //         "type": "Corner Kicks",
+      //         "value": 4
+      //       },
+      //       {
+      //         "type": "Offsides",
+      //         "value": 4
+      //       },
+      //       {
+      //         "type": "Ball Possession",
+      //         "value": "57%"
+      //       },
+      //       {
+      //         "type": "Yellow Cards",
+      //         "value": null
+      //       },
+      //       {
+      //         "type": "Red Cards",
+      //         "value": null
+      //       },
+      //       {
+      //         "type": "Goalkeeper Saves",
+      //         "value": 3
+      //       },
+      //       {
+      //         "type": "Total passes",
+      //         "value": 390
+      //       },
+      //       {
+      //         "type": "Passes accurate",
+      //         "value": 331
+      //       },
+      //       {
+      //         "type": "Passes %",
+      //         "value": "85%"
+      //       },
+      //       {
+      //         "type": "expected_goals",
+      //         "value": "1.18"
+      //       }
+      //     ]
+      //   }
+      // ].map((e) => StatisticsModel.fromJson(e)).toList();
+
+      // ApiResponse data = ApiResponse(
+      //   errors: response.data['errors'],
+      //   results: response.data['results'],
+      //   parameters: response.data['parameters'],
+      //   get: response.data['get'],
+      //   paging: response.data['paging'],
+      //   response: responseData0,
+      // );
+
+      return responseData0;
       // return null;
     } catch (error, stackTrace) {
       print(stackTrace);

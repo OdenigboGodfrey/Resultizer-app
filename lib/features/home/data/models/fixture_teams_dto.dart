@@ -1,13 +1,13 @@
 class FixtureTeam {
   final int id;
-  final String goals;
+  final String? goals;
   String? logo;
   String? name;
   bool? winner;
 
   FixtureTeam({
     required this.id,
-    required this.goals,
+    this.goals,
     this.logo,
     this.name,
     this.winner,

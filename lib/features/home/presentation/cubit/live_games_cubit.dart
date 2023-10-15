@@ -22,8 +22,6 @@ class LiveGamesCubit extends Cubit<LiveGamesStates> {
     final fixtures = await liveGamesUseCase(NoParams());
     fixtures.fold(
       (left) { 
-        print(left);
-        print(left.message);
         emit(LiveGamesLoadFailure(left.message));
         },
       (right) {

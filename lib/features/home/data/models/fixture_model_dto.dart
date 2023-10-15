@@ -1,4 +1,7 @@
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/events_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/lineup_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/statistics_dto.dart';
 class FixtureModel {
   final int id;
   final Status status;
@@ -18,25 +21,53 @@ class FullFixtureModel {
   // final Status status;
   final League league;
   final Teams teams;
-  final StatusDetails statusDetails;
-  final DateTime update;
+  final StatusDetails? statusDetails;
+  final DateTime? update;
   final List<OddsModel> odds;
+  final List<EventModel>? events;
+  List<StatisticsModel>? statistics;
+  List<Lineup>? lineups;
 
   FullFixtureModel({
     // required this.id,
     required this.fixture,
     required this.league,
     required this.teams,
-    required this.statusDetails,
-    required this.update,
+    this.statusDetails,
+    this.update,
     required this.odds,
+    this.events,
+    this.statistics,
+    this.lineups,
   });
 
   factory FullFixtureModel.fromJson(Map<String, dynamic> json) {
-    List<dynamic> oddsList = json['odds'];
-    List<OddsModel> odds = oddsList.map((value) => OddsModel.fromJson(value)).toList();
-    print('odds json');
-    print('${odds[0].toJson()}');
+    List<dynamic> dynamicList = [];
+    List<OddsModel> odds = [];
+    if (json.containsKey('odds')) {
+      dynamicList = json['odds'];
+      odds = dynamicList.map((value) => OddsModel.fromJson(value)).toList();
+    }
+    
+    // List<OddsModel> odds = oddsList.map((value) => OddsModel.fromJson(value)).toList();
+    List<EventModel> eventList = [];
+    if (json.containsKey('events')) {
+      dynamicList = json['events'];
+      eventList = dynamicList.map((e) => EventModel.fromJson(e)).toList();
+    }
+    
+    List<StatisticsModel> statisticsList = [];
+    if (json.containsKey('statistics')) {
+      dynamicList = json['statistics'];
+      statisticsList = dynamicList.map((e) => StatisticsModel.fromJson(e)).toList();
+    }
+
+    List<Lineup> lineups = [];
+    if (json.containsKey('lineups')) {
+      dynamicList = json['lineups'];
+      lineups = dynamicList.map((value) => Lineup.fromJson(value)).toList();
+    }
+    
 
     return FullFixtureModel(
       // id: json['id'],
@@ -44,9 +75,12 @@ class FullFixtureModel {
       fixture: FixtureModel.fromJson(json['fixture']),
       league: League.fromJson(json['league']),
       teams: Teams.fromJson(json['teams']),
-      statusDetails: StatusDetails.fromJson(json['status']),
-      update: DateTime.parse(json['update']),
+      statusDetails: json['status'] != null ? StatusDetails.fromJson(json['status']) : null,
+      update: json['update'] != null ? DateTime.parse(json['update']) : null,
       odds: odds,
+      events: eventList,
+      statistics: statisticsList,
+      lineups: lineups,
     );
   }
 }
@@ -64,9 +98,9 @@ class Status {
 
   factory Status.fromJson(Map<String, dynamic> json) {
     return Status(
-      long: json['long'],
-      elapsed: json['elapsed'],
-      seconds: json['seconds'],
+      long: json['long'] ?? '',
+      elapsed: json['elapsed'] ?? 0,
+      seconds: json['seconds'] ?? '',
     );
   }
 }
@@ -123,7 +157,7 @@ class Team {
   factory Team.fromJson(Map<String, dynamic> json) {
     return Team(
       id: json['id'],
-      goals: json['goals'],
+      goals: json['goals'] ?? 0,
       logo: json['logo'],
       name: json['name'],
     );
@@ -143,14 +177,14 @@ class StatusDetails {
 
   factory StatusDetails.fromJson(Map<String, dynamic> json) {
     return StatusDetails(
-      stopped: json['stopped'],
-      blocked: json['blocked'],
-      finished: json['finished'],
+      stopped: json['stopped'] ?? false,
+      blocked: json['blocked'] ?? false,
+      finished: json['finished'] ?? false,
     );
   }
 }
 
-class LiveBetsResponse {
+class ApiResponse {
   final String get;
   final Map<String, dynamic> parameters;
   final List<dynamic> errors;
@@ -159,7 +193,7 @@ class LiveBetsResponse {
   // final List<OddsModel> bets;
   final List<FullFixtureModel> response;
 
-  LiveBetsResponse({
+  ApiResponse({
     required this.get,
     required this.parameters,
     required this.errors,

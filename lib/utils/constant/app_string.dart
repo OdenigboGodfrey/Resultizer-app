@@ -100,4 +100,11 @@ class AppString {
   static const String drawString = 'draw';
   static const String awayString = 'away';
   static const String drawRepresentation = '🤝';
+
+  static const String goal = 'Goal';
+  static const String card = 'Card';
+  static const String subst = 'subst';
+  static const String yellowCard = 'Yellow Card';
+  static const String missedPenalty= 'Missed Penalty';
+  static const String assist = 'Assist';
 }

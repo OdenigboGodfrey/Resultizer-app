@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
+import 'package:resultizer_merged/features/videos/presentation/screens/feeds.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/view/account_screen/account_screen.dart';
 import 'package:resultizer_merged/view/favorite_screen/favorite_screen.dart';
-import 'package:resultizer_merged/view/home_view/home_view.dart';
 import 'package:resultizer_merged/view/home_view/news_view.dart';
 import 'package:resultizer_merged/view/watch_screen/watch_screen.dart';
 
@@ -25,7 +25,7 @@ class _BottomState extends State<Bottom> {
     const HomeScreenView(),
     const FavoriteScreen(),
     const NewsviewScreen(),
-    const Account_screen(),
+    const AccountScreenView(),
   ];
 
   int _selectedIndex = 0;
@@ -45,7 +45,10 @@ class _BottomState extends State<Bottom> {
           Navigator.push(
             context,
             MaterialPageRoute(
-              builder: (context) => const WatchScreen(),
+              builder: (context) { 
+                return const FeedsView();
+                // return const WatchScreen();
+              },
             ),
           );
         },

@@ -8,10 +8,11 @@ import 'package:resultizer_merged/container_injector.dart';
 import 'package:resultizer_merged/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/day_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/view/on_boarding/on_boarding_view.dart';
 import 'package:resultizer_merged/view/splash_view/splash_view.dart';
@@ -40,7 +41,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<LiveGamesCubit>(
             create: (context) => LiveGamesCubit(sl<LiveGamesUseCase>())),
         BlocProvider<FixtureCubit>(
-            create: (context) => FixtureCubit()),
+            create: (context) => FixtureCubit(fixtureDetailUseCase:  sl<FixtureDetailUseCase>())),
         MultiProvider(providers: [
           ChangeNotifierProvider(
             create: (context) => ColorNotifire(),

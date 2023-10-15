@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
-import 'package:resultizer_merged/features/match_detail/data/models/fixture_teams_dto.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/widgets/view_team.dart';
+import 'package:resultizer_merged/features/home/data/models/fixture_teams_dto.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/view_team.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 
-// import '../../../../core/domain/entities/soccer_fixture.dart';
-// import '../../../../core/utils/app_colors.dart';
-// import '../../../../core/utils/app_size.dart';
-// import '../../../../core/utils/app_values.dart';
-// import '../../../soccer/presentation/screens/soccer_screen.dart';
-// import 'view_team.dart';
 
 class FixtureDetails extends StatelessWidget {
   final String fixtureStatusLong;
-  
-  // final String homeGoals;
-  
-  // final String awayGoals;
   
   final String fixtureDate;
   
@@ -29,9 +20,6 @@ class FixtureDetails extends StatelessWidget {
   
   final String fixtureStatusElapsed;
 
-  // final SoccerFixture soccerFixture;
-
-  // const FixtureDetails({Key? key, required this.soccerFixture})
   const FixtureDetails({Key? key, required this.fixtureLeagueName, required this.fixtureStatusLong, required this.fixtureDate, required this.fixtureLeagueSubtitle, required this.homeTeam, required this.awayTeam, required this.fixtureLeagueLogo, required this.fixtureStatusElapsed})
       : super(key: key);
 
@@ -42,7 +30,7 @@ class FixtureDetails extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 20),
-      color: Colors.amberAccent,
+      color: AppColor.pinkColor,
       // decoration: BoxDecoration(gradient: getGradientColor(soccerFixture)),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -81,7 +69,7 @@ class FixtureDetails extends StatelessWidget {
             padding: const EdgeInsets.symmetric(
                 horizontal: 20, vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.red[400],
+              color: notifire.bgcolore,
               borderRadius: BorderRadius.circular(20),
             ),
             child: Text(
@@ -89,7 +77,7 @@ class FixtureDetails extends StatelessWidget {
               style: Theme.of(context)
                   .textTheme
                   .bodyMedium
-                  ?.copyWith(color: AppColor.offWhite),
+                  ?.copyWith(color: notifire.isDark ? AppColor.offWhite : AppColor.pinkColor),
             ),
           ),
         ],

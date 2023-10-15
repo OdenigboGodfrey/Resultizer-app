@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resultizer_merged/core/utils/app_sizes.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
-import 'package:resultizer_merged/features/match_detail/data/models/fixture_teams_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/fixture_teams_dto.dart';
 
 class ViewTeam extends StatelessWidget {
   final FixtureTeam team;

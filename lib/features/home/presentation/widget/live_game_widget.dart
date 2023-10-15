@@ -9,7 +9,7 @@ import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/match_odds_tile.dart';
-import 'package:resultizer_merged/features/match_detail/presentation/screens/fixture_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/fixture_screen.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/view/home_view/matchdtails.dart';

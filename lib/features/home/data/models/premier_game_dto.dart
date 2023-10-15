@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:resultizer_merged/features/home/data/enum/premier_game_enum.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/events_dto.dart';
 
 class PremierGameDTO {
     final String gameTime;
@@ -15,6 +15,7 @@ class PremierGameDTO {
     final String? gameCurrentTime;
     final String? matchStatusLong;
     final int? fixtureId;
+    List<EventModel> events = [];
 
   PremierGameDTO({required this.gameTime, required this.homeLogo, required this.homeTeam, required this.awayLogo, required this.awayTeam, required this.matchStatus, this.goals, this.gameCurrentTime, this.matchStatusLong, this.fixtureId});
 

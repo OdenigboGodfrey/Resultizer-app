@@ -5,6 +5,7 @@ import 'package:resultizer_merged/features/home/data/datasources/soccer_datasour
 import 'package:resultizer_merged/features/home/data/repositories/soccer_repository_implementation.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/day_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/repositories/soccer_repository.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 
@@ -18,6 +19,9 @@ void initHome() {
     )
     ..registerLazySingleton<LiveGamesUseCase>(
       () => LiveGamesUseCase(soccerRepository:  sl<SoccerRepository>()),
+    )
+    ..registerLazySingleton<FixtureDetailUseCase>(
+      () => FixtureDetailUseCase(soccerRepository:  sl<SoccerRepository>()),
     )
   ..registerLazySingleton<SoccerCubit>(
       () => SoccerCubit(
