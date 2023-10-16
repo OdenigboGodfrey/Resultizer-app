@@ -15,6 +15,7 @@ class ColorNotifire with ChangeNotifier {
   get background => isDark ? backgroundcolore : colorewhite;
 
   get bgcolore => isDark ? backgroundcolore : backgrounde;
+  // Color bgcolore = backgroundcolore; // = (isDark ? backgroundcolore : backgrounde);
   get reverseBgColore => isDark ? backgrounde : backgroundcolore;
   get search => isDark ? backgroundcolore1 : backgrounde;
 
@@ -37,6 +38,7 @@ class ColorNotifire with ChangeNotifier {
 
   void isavalable(bool value) {
     _isDark = value;
+    // bgcolore = (_isDark ? backgroundcolore : backgrounde);
     notifyListeners();
   }
 }

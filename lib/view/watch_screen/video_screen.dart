@@ -202,6 +202,7 @@ class _VideoScreenState extends State<VideoScreen> {
                       ],
                     ),
                   ),
+                  // highlights
                   ListTile(
                     leading: Text(
                       'Highlights',

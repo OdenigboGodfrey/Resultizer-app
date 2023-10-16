@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 class RecentFeedsModel {
   final String title;
   final String competition;
@@ -22,6 +24,18 @@ class RecentFeedsModel {
       videos: recentFeedsVideos,
     );
   }
+
+  String toJson() {
+    return jsonEncode({
+      title: title,
+      competition: competition,
+      competitionUrl: competitionUrl,
+      date: date.toString(),
+      matchviewUrl: matchviewUrl,
+      thumbnail: thumbnail,
+      videos: videos.toString(),
+    });
+  }
 }
 
 
@@ -38,5 +52,14 @@ class RecentFeedsVideosModel {
       id: json['id'],
       title: json['title'],
     );
+  }
+
+  @override
+   toString() {
+    return jsonEncode({
+      embed: embed,
+      id: id,
+      title: title,
+    });
   }
 }

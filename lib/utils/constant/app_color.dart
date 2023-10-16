@@ -27,9 +27,20 @@ extension HexColor on Color {
   }
 
   /// Prefixes a hash sign if [leadingHashSign] is set to `true` (default is `true`).
-  String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
-      '${alpha.toRadixString(16).padLeft(2, '0')}'
-      '${red.toRadixString(16).padLeft(2, '0')}'
-      '${green.toRadixString(16).padLeft(2, '0')}'
-      '${blue.toRadixString(16).padLeft(2, '0')}';
+  // String toHex({bool leadingHashSign = true}) => '${leadingHashSign ? '#' : ''}'
+  //     '${alpha.toRadixString(16).padLeft(2, '0')}'
+  //     '${red.toRadixString(16).padLeft(2, '0')}'
+  //     '${green.toRadixString(16).padLeft(2, '0')}'
+  //     '${blue.toRadixString(16).padLeft(2, '0')}';
+
+  String toHex() {
+  String hex = value.toRadixString(16);
+  // The color.value returns the color as an integer.
+  // We use toRadixString(16) to convert it to a hexadecimal string.
+  // The value may not include leading zeros, so you may want to pad it.
+  while (hex.length < 8) {
+    hex = '0$hex';
+  }
+  return '#${hex.toUpperCase()}'; // Add '#' and convert to uppercase for the standard hex format.
+}
 }

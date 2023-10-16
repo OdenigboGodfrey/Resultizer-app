@@ -116,7 +116,7 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
-                                          Container(
+                                          SizedBox(
                                             width: 120,
                                             child: Column(
                                               children: [

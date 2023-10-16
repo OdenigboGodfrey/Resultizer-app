@@ -63,7 +63,6 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
 
   List<RecentFeedsModel> recentFeeds = [];
 
-
   Future<List<RecentFeedsModel>> fetchData() async {
     if (recentFeeds.isNotEmpty) return recentFeeds;
     final cubit = BlocProvider.of<RecentFeedsCubit>(context);
@@ -130,7 +129,7 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                             for (RecentFeedsModel item in data!) {
                               widgets.add(GestureDetector(
                                 onTap: () {
-                                  Get.to(FeedDetailView(htmlContent: item.videos[0].embed, title: item.title));
+                                  Get.to(FeedDetailView(recentFeedsModel: item));
                                 },
                                 child: Padding(
                                   padding: const EdgeInsets.only(bottom: 15),
@@ -153,31 +152,6 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                                                   width: 125,
                                                 ),
                                               )),
-                                          // Positioned(
-                                          //   bottom: 10,
-                                          //   right: 10,
-                                          //   child: Container(
-                                          //     height: 24,
-                                          //     width: 44,
-                                          //     decoration: BoxDecoration(
-                                          //       borderRadius:
-                                          //           BorderRadius.circular(6),
-                                          //       color: Colors.black
-                                          //           .withOpacity(0.50),
-                                          //     ),
-                                          //     child: Center(
-                                          //         child: Text(
-                                          //       // time1[index],
-                                          //       formatTimeAgo(item.date),
-                                          //       style: const TextStyle(
-                                          //           fontFamily:
-                                          //               'Urbanist_semibold',
-                                          //           fontSize: 10,
-                                          //           fontWeight: FontWeight.w600,
-                                          //           color: Colors.white),
-                                          //     )),
-                                          //   ),
-                                          // ),
                                         ],
                                       ),
                                       const SizedBox(
@@ -188,7 +162,7 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           SizedBox(
-                                            width: (width*0.5),
+                                            width: (width * 0.5),
                                             child: Text(
                                               // title1[index],
                                               item.title,
@@ -196,7 +170,9 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                                                   fontFamily: 'Urbanist_bold',
                                                   fontWeight: FontWeight.w500,
                                                   fontSize: 16,
-                                                  color: notifire.textcolore, overflow: TextOverflow.ellipsis),
+                                                  color: notifire.textcolore,
+                                                  overflow:
+                                                      TextOverflow.ellipsis),
                                               maxLines: 1,
                                             ),
                                           ),
@@ -220,7 +196,8 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                                                 // video[index],
                                                 formatTimeAgo(item.date),
                                                 style: TextStyle(
-                                                    fontFamily: 'Urbanist_medium',
+                                                    fontFamily:
+                                                        'Urbanist_medium',
                                                     fontWeight: FontWeight.w500,
                                                     fontSize: 12,
                                                     color: notifire.textcolore),

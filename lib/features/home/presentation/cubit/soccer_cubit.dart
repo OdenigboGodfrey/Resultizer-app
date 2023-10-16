@@ -11,6 +11,25 @@ class SoccerCubit extends Cubit<SoccerStates> {
 
   final DayFixturesUseCase dayFixturesUseCase;
   
+  List day = [];
+  void getDaysOfNext7Days() {
+    var tempDay = [];
+    // Get the current date.
+    DateTime now = DateTime.now();
+
+    // Create an array to store the next 7 days.
+    // Loop over the next 7 days and add them to the array.
+    for (int i = 0; i < 7; i++) {
+      var futureTime = now.add(Duration(days: i));
+      tempDay.add({
+        'day': DateFormat('EEE').format(futureTime),
+        'date': DateFormat('dd').format(futureTime),
+        'dateTime': futureTime
+      });
+    }
+    day = tempDay;
+  }
+
   //List<SoccerFixture> dayFixtures = [];
   List<LeagueEventDTO> dayFixtures = [];
   

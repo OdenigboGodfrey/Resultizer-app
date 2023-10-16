@@ -27,24 +27,6 @@ class HomeScreenView extends StatefulWidget {
 }
 
 class _HomeScreenViewState extends State<HomeScreenView> {
-  void getDaysOfNext7Days() {
-    // Get the current date.
-    DateTime now = DateTime.now();
-
-    // Create an array to store the next 7 days.
-    // Loop over the next 7 days and add them to the array.
-    for (int i = 0; i < 7; i++) {
-      var futureTime = now.add(Duration(days: i));
-      day.add({
-        'day': DateFormat('EEE').format(futureTime),
-        'date': DateFormat('dd').format(futureTime),
-        'dateTime': futureTime
-      });
-      if (i == 0) {
-        selectedDay = day[0];
-      }
-    }
-  }
 
   int selectIndex = 0;
   int selected = 0;
@@ -160,7 +142,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     //   name: 'Rugby',
     // ),
   ];
-  List day = [];
+  // List day = [];
   Map<String, dynamic> selectedDay = {};
   final List dayz = [
     AppString.sun,
@@ -183,6 +165,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   int fillstar1 = 0;
   int fillstar2 = 0;
   int fillstar3 = 0;
+  late SoccerCubit cubit;
 
   List<LeagueEventDTO> fixtures = [];
   bool isLoading = true;
@@ -196,7 +179,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   refreshList() {
     fixtures = [];
     String date = DateFormat("yyyy-MM-dd").format(selectedDay['dateTime']);
-    final cubit = BlocProvider.of<SoccerCubit>(context);
     cubit.refreshList(date);
     setState(() {
       isLoadingNewDay = true;
@@ -204,7 +186,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   }
 
   Future getLists() async {
-    final cubit = BlocProvider.of<SoccerCubit>(context);
     String date = DateFormat("yyyy-MM-dd").format(selectedDay['dateTime']);
 
     if (cubit.dayFixtures.isEmpty) {
@@ -215,7 +196,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
 
   Future<List> fetchData() async {
     if (isLoadingNewDay) return fixtures;
-    getDaysOfNext7Days();
+    cubit.getDaysOfNext7Days();
+    selectedDay = cubit.day[0];
     await getLists();
     return fixtures;
   }
@@ -223,9 +205,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
+    cubit = BlocProvider.of<SoccerCubit>(context);
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
+    // print(day);
     return BlocConsumer<SoccerCubit, SoccerStates>(listener: (context, state) {
       if (state is SoccerLeagueGamessLoaded) {
         fixtures = state.leagues as List<LeagueEventDTO>;
@@ -366,7 +350,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           height: MediaQuery.of(context).size.height / 13,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
-                            itemCount: day.length,
+                            itemCount: cubit.day.length,
                             shrinkWrap: true,
                             padding: EdgeInsets.zero,
                             scrollDirection: Axis.horizontal,
@@ -375,7 +359,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                 onTap: () {
                                   setState(() {
                                     selected = index;
-                                    selectedDay = day[index];
+                                    selectedDay = cubit.day[index];
                                   });
                                   refreshList();
                                 },
@@ -400,7 +384,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                             MainAxisAlignment.spaceEvenly,
                                         children: [
                                           Text(
-                                            day[index]['day'],
+                                            cubit.day[index]['day'],
                                             style: TextStyle(
                                               color: selected == index
                                                   ? Colors.white
@@ -411,7 +395,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                             ),
                                           ),
                                           Text(
-                                            day[index]['date'],
+                                            cubit.day[index]['date'],
                                             style: TextStyle(
                                               color: selected == index
                                                   ? Colors.white

@@ -30,7 +30,7 @@ class OddModalWidget extends StatelessWidget {
         title: Container(color: AppColor.blackColor, child: Text(title)),
         content: SingleChildScrollView(
           child: Container(
-            height: odds.length < 5 ? 300 : MediaQuery.of(context).size.height,
+            height: odds.length < 5 ? 300 : null,
             color: AppColor.blackColor,
             child: Column(mainAxisAlignment: MainAxisAlignment.start, children: [
               for (var child in odds) buildOddRow(child),
