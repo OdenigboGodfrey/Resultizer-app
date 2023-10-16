@@ -5,6 +5,7 @@ import 'package:resultizer_merged/core/api/dio_helper.dart';
 import 'package:resultizer_merged/core/network/network_info.dart';
 import 'package:resultizer_merged/features/auth/auth_injector.dart';
 import 'package:resultizer_merged/features/home/home_injector.dart';
+import 'package:resultizer_merged/features/videos/videos_injector.dart';
 
 
 final sl = GetIt.instance;
@@ -13,6 +14,7 @@ void initApp() {
   initCore();
   initAuth();
   initHome();
+  initVideos();
 }
 
 void initCore() {

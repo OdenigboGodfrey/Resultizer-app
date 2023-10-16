@@ -3,11 +3,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
-import 'package:resultizer_merged/features/videos/presentation/screens/feeds.dart';
+import 'package:resultizer_merged/features/videos/presentation/screens/video_screen.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/view/favorite_screen/favorite_screen.dart';
-import 'package:resultizer_merged/view/home_view/news_view.dart';
 import 'package:resultizer_merged/view/watch_screen/watch_screen.dart';
 
 import '../../theme/themenotifer.dart';
@@ -24,7 +23,8 @@ class _BottomState extends State<Bottom> {
   List bottom = [
     const HomeScreenView(),
     const FavoriteScreen(),
-    const NewsviewScreen(),
+    // const NewsviewScreen(),
+    const WatchScreen(),
     const AccountScreenView(),
   ];
 
@@ -46,7 +46,7 @@ class _BottomState extends State<Bottom> {
             context,
             MaterialPageRoute(
               builder: (context) { 
-                return const FeedsView();
+                return const HighlightsViewScreen();
                 // return const WatchScreen();
               },
             ),

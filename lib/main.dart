@@ -13,6 +13,8 @@ import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_u
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
+import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/view/on_boarding/on_boarding_view.dart';
 import 'package:resultizer_merged/view/splash_view/splash_view.dart';
@@ -42,6 +44,8 @@ class MyApp extends StatelessWidget {
             create: (context) => LiveGamesCubit(sl<LiveGamesUseCase>())),
         BlocProvider<FixtureCubit>(
             create: (context) => FixtureCubit(fixtureDetailUseCase:  sl<FixtureDetailUseCase>())),
+        BlocProvider<RecentFeedsCubit>(
+            create: (context) => RecentFeedsCubit(sl<RecentFeedsUseCase>())),
         MultiProvider(providers: [
           ChangeNotifierProvider(
             create: (context) => ColorNotifire(),

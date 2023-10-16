@@ -26,6 +26,8 @@ class _ImageWithDefaultState extends State<ImageWithDefault> {
       errorWidget: (context, url, error) => Image.asset(widget.defaultImage.toString()),
       width: widget.width,
       height: widget.height,
+      fit: BoxFit.fill,
+
     );
   }
 }
