@@ -45,6 +45,7 @@ dependencies:
   cached_network_image: any
   fluttertoast: ^8.0.9
   flutter_inappwebview: ^5.8.0
+  cloud_firestore: ^4.11.0
 
 
 

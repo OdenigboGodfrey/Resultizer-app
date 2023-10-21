@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/settings_item.dart';
 import 'package:resultizer_merged/features/auth/presentation/screens/sign_in_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
@@ -66,21 +67,21 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             child: ListTile(
               leading: Image.asset('assets/images/Ellipse.png'),
               title: Text(
-                'Alon musk',
+                GlobalDataSource.userData.email ?? '...',
                 style: TextStyle(
                   fontFamily: "Urbanist_bold",
                   color: notifire.textcolore,
                   fontSize: 20,
                 ),
               ),
-              subtitle: Text(
-                'alonmusk@yourdomain.com',
-                style: TextStyle(
-                  fontFamily: "Urbanist_medium",
-                  color: notifire.textcolore,
-                  fontSize: 14,
-                ),
-              ),
+              // subtitle: Text(
+              //   GlobalDataSource.userData.email ?? '...',
+              //   style: TextStyle(
+              //     fontFamily: "Urbanist_medium",
+              //     color: notifire.textcolore,
+              //     fontSize: 14,
+              //   ),
+              // ),
               trailing: Image.asset(
                 AppAssets.edit,
                 height: 24,

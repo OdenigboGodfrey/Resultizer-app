@@ -6,6 +6,7 @@ import 'package:resultizer_merged/common/common_bottom_sheet.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/common/common_textfild.dart';
 import 'package:resultizer_merged/container_injector.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
@@ -39,16 +40,17 @@ class _SignInViewState extends State<SignInView> {
     final authCubit = BlocProvider.of<AuthCubit>(context);
 
     await authCubit.login(
-      email: 'odenigboebuka@yahoo.com',
-      password: 'Test@123',
-      // email: emailController.text.trim(),
-      // password: passwordController.text.trim(),
+      // email: 'odenigboebuka@yahoo.com',
+      // password: 'Test@123',
+      email: emailController.text.trim(),
+      password: passwordController.text.trim(),
     );
 
     final state = authCubit.state;
     if (state is AuthLoadFailed) {
       showErrorSnack(state.message);
     } else if (state is AuthLoadSuccess) {
+      GlobalDataSource.userData = state.data;
       showSuccessSnack('Login successful');
       Get.offAll(const Bottom());
     }

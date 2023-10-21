@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_bottom_sheet.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/common/common_textfild.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
@@ -27,6 +28,8 @@ class _SignUpViewState extends State<SignUpView> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   TextEditingController usernameController = TextEditingController();
+  TextEditingController firstNameController = TextEditingController();
+  TextEditingController lastNameController = TextEditingController();
 
   bool isObscureText = false;
   bool isDone = false;
@@ -54,12 +57,21 @@ class _SignUpViewState extends State<SignUpView> {
               email: emailController.text.trim(),
               password: passwordController.text.trim(),
               username: usernameController.text.trim(),
+              firstName: firstNameController.text.trim(),
+              lastName: lastNameController.text.trim(),
             );
-            Get.offAll(const FollowTeam());
+            if (user.id.isNotEmpty) {
+              GlobalDataSource.userData = user;
+              Get.offAll(const FollowTeam());
+            }
+            else {
+              showErrorSnack('Sign up failed, please try again.');
+            }
             // Get.offAll(const Bottom());
-          } catch (e) {
+          } catch (e, stackTrace) {
             showErrorSnack('Error during sign up');
             print("Error during signup: $e,");
+            print(stackTrace);
             // Handle the error (show an error message on screen or something similar)
           }
         },
@@ -160,6 +172,51 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 20,
                     ),
+                    // 
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Text(
+                    //     "First Name",
+                    //     style: TextStyle(
+                    //         fontSize: 15,
+                    //         fontFamily: "Urbanist_semiBold",
+                    //         color: notifire.textcolore),
+                    //   ),
+                    // ),
+                    // CommonTextfield(
+                    //   fieldController: firstNameController,
+                    //   onTap: () {},
+                    //   validator: (value) {
+                    //     return null;
+                    //   },
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.centerLeft,
+                    //   child: Text(
+                    //     "Last Name",
+                    //     style: TextStyle(
+                    //         fontSize: 15,
+                    //         fontFamily: "Urbanist_semiBold",
+                    //         color: notifire.textcolore),
+                    //   ),
+                    // ),
+                    // CommonTextfield(
+                    //   fieldController: lastNameController,
+                    //   onTap: () {},
+                    //   validator: (value) {
+                    //     return null;
+                    //   },
+                    // ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // 
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(

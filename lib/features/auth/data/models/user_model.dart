@@ -6,18 +6,21 @@ class UserModel extends User {
   final String id;
   final String email;
   final String username;
+  final String fullname;
   
-  const UserModel({required this.id, required this.email, required this.username}): super(email: email, id: id, username: username);
+  const UserModel({required this.id, required this.email, required this.username, required this.fullname}): super(id: id, email: email, username: username, fullname: fullname);
   
   UserModel copyWith({
     String? id,
     String? email,
     String? username,
+    String? fullname,
   }) {
     return UserModel(
       id: id ?? this.id,
       email: email ?? this.email,
-      username: username ?? this.username,
+      username: username ?? this.username, 
+      fullname: fullname ?? this.fullname,
     );
   }
 
@@ -26,6 +29,7 @@ class UserModel extends User {
       'id': id,
       'email': email,
       'username': username,
+      'fullname': fullname,
     };
   }
 
@@ -34,6 +38,7 @@ class UserModel extends User {
       id: map['id'] ?? '',
       email: map['email'] ?? '',
       username: map['username'] ?? '',
+      fullname: map['fullname'] ?? '',
     );
   }
 
