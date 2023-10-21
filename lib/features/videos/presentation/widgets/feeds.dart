@@ -1,4 +1,3 @@
-import 'package:date_picker_timeline/extra/color.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_inappwebview/flutter_inappwebview.dart';
@@ -7,16 +6,14 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/core/utils/format_time_ago.dart';
 import 'package:resultizer_merged/core/utils/random_array_subset.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
-import 'package:resultizer_merged/features/videos/data/model/recent_feeds_dto.dart';
+import 'package:resultizer_merged/features/videos/data/model/scorebat_model_dto.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/utils/constant/app_assets.dart';
-import 'package:resultizer_merged/utils/constant/app_color.dart';
 
 class FeedDetailView extends StatefulWidget {
-  final RecentFeedsModel recentFeedsModel;
+  final ScorebatVideoModel scorebatVideoModel;
 
-  const FeedDetailView({super.key, required this.recentFeedsModel});
+  const FeedDetailView({super.key, required this.scorebatVideoModel});
   // final String htmlContent;
   // final String title;
   // final String time;
@@ -38,19 +35,19 @@ class _FeedDetailViewState extends State<FeedDetailView> {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = BlocProvider.of<RecentFeedsCubit>(context);
+    final cubit = BlocProvider.of<ScorebatCubit>(context);
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     double height = MediaQuery.of(context).size.height;
     double width = MediaQuery.of(context).size.width;
     var highlightSuggestions = getRandomSubset(cubit.recentFeeds, 6);
     for (int i = 0; i < highlightSuggestions.length; i++) {
       var item = highlightSuggestions[i];
-      if (item.videos[0].id == widget.recentFeedsModel.videos[0].id) {
+      if (item.videos[0].id == widget.scorebatVideoModel.videos[0].id) {
         highlightSuggestions.remove(item);
       }
     } // 'background="${notifire.bgcolore.toHex()}"'
 
-    // print(widget.recentFeedsModel.toJson());
+    // print(widget.scorebatVideoModel.toJson());
 
     return Scaffold(
       backgroundColor: notifire.bgcolore,
@@ -65,10 +62,10 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                   height: height * 0.25,
                   child: InAppWebView(
                     initialData:
-                        // InAppWebViewInitialData(data: '''<body bgcolor="red">${widget.recentFeedsModel.videos[0].embed}</body>'''),
+                        // InAppWebViewInitialData(data: '''<body bgcolor="red">${widget.scorebatVideoModel.videos[0].embed}</body>'''),
                         InAppWebViewInitialData(
                             data:
-                                '''<body bgcolor="${(notifire.isDark ? 'black' : 'white')}" >${widget.recentFeedsModel.videos[0].embed}</body>'''),
+                                '''<body bgcolor="${(notifire.isDark ? 'black' : 'white')}" >${widget.scorebatVideoModel.videos[0].embed}</body>'''),
                     initialOptions: InAppWebViewGroupOptions(
                       crossPlatform: InAppWebViewOptions(),
                     ),
@@ -116,7 +113,7 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                       SizedBox(
                         width: width * 0.85,
                         child: Text(
-                          widget.recentFeedsModel.title,
+                          widget.scorebatVideoModel.title,
                           style: TextStyle(
                             fontFamily: 'Urbanist_bold',
                             fontWeight: FontWeight.w700,
@@ -138,7 +135,7 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                   Padding(
                     padding: const EdgeInsets.only(left: 10),
                     child: Text(
-                      widget.recentFeedsModel.competition,
+                      widget.scorebatVideoModel.competition,
                       style: TextStyle(
                           fontFamily: 'Urbanist_medium',
                           fontWeight: FontWeight.w500,
@@ -150,8 +147,8 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                     padding:
                         const EdgeInsets.only(left: 10, top: 10, bottom: 10),
                     child: Text(
-                      // widget.recentFeedsModel.time,
-                      formatTimeAgo(widget.recentFeedsModel.date),
+                      // widget.scorebatVideoModel.time,
+                      formatTimeAgo(widget.scorebatVideoModel.date),
                       style: TextStyle(
                           fontFamily: 'Urbanist_medium',
                           fontWeight: FontWeight.w500,
@@ -183,7 +180,7 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                       return GestureDetector(
                         onTap: () {
                           Get.to(FeedDetailView(
-                              recentFeedsModel: highlightSuggestions[index]));
+                              scorebatVideoModel: highlightSuggestions[index]));
                         },
                         child: Container(
                           color: notifire.bgcolore,
@@ -201,7 +198,7 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                                               BorderRadius.circular(5),
                                           child: ImageWithDefault(
                                             imageUrl: widget
-                                                .recentFeedsModel.thumbnail,
+                                                .scorebatVideoModel.thumbnail,
                                             height: 100,
                                             width: 125,
                                           ),

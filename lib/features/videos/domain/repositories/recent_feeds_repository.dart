@@ -1,7 +1,11 @@
 import 'package:dartz/dartz.dart';
 import 'package:resultizer_merged/core/error/error_handler.dart';
-import 'package:resultizer_merged/features/videos/data/model/recent_feeds_dto.dart';
+import 'package:resultizer_merged/features/videos/data/model/scorebat_model_dto.dart';
 
-abstract class RecentFeedsRepository {
-  Future<Either<Failure, List<RecentFeedsModel>>> getRecentFeeds();
+abstract class ScorebatRepository {
+  Future<Either<Failure, List<ScorebatVideoModel>>> getRecentFeeds();
+  Future<Either<Failure, List<ScorebatVideoModel>>> getHighlightsByCompetition(String competition);
+  Future<Either<Failure, List<ScorebatVideoModel>>> getHighlightsByTeam(String team);
+  Future<Either<Failure, List<Map>>> getTeams();
+  Future<Either<Failure, List<Map>>> getCompetitions();
 }

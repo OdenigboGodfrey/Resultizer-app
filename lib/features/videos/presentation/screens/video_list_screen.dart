@@ -7,72 +7,32 @@ import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/features/videos/data/model/scorebat_model_dto.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_state.dart';
-import 'package:resultizer_merged/features/videos/presentation/screens/competition_screen.dart';
-import 'package:resultizer_merged/features/videos/presentation/screens/team_screen.dart';
 import 'package:resultizer_merged/features/videos/presentation/widgets/feeds.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/utils/constant/app_assets.dart';
 
-class HighlightsViewScreen extends StatefulWidget {
-  const HighlightsViewScreen({super.key});
+class VideoListViewScreen extends StatefulWidget {
+  VideoListViewScreen({super.key, this.appbarTitle = "", required this.fetchData});
+  String appbarTitle = "";
+  final Function fetchData;
 
   @override
-  State<HighlightsViewScreen> createState() => _HighlightsViewScreenState();
+  State<VideoListViewScreen> createState() => _VideoListViewScreenState();
 }
 
-class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
+class _VideoListViewScreenState extends State<VideoListViewScreen> {
   ColorNotifire notifire = ColorNotifire();
-  List news = [
-    AppAssets.news,
-    AppAssets.news1,
-    AppAssets.news2,
-    AppAssets.news3,
-    AppAssets.news4,
-    AppAssets.news,
-  ];
-  List title1 = [
-    'Bellingham close to\nthe complete player\nafter England per',
-    'Rice claims England\nare starting to\nsilence the critics',
-    'Southgate hails\nEngland  young\nlions as France lie',
-    'Kane hopes Senegal\nstrike sparks scoring\nrun for England',
-    'Kane overtakes\nLineker as England\ntop tournament',
-    'Bellingham close to\nthe complete player\nafter England per',
-  ];
-  List subtitle1 = [
-    '1 hour ago',
-    '8 hours ago',
-    '15 hours ago',
-    '1 day ago',
-    '2 days ago',
-    '4 days ago'
-  ];
-  List time1 = [
-    '01:57',
-    '02:35',
-    '02:44',
-    '01:35',
-    '01:43',
-    '02:35',
-  ];
-  List video = [
-    '10 hours ago',
-    '18 hours ago',
-    '1 day ago',
-    '2 days ago',
-    '2 days ago',
-    '3 hours ago',
-  ];
 
-  List<ScorebatVideoModel> recentFeeds = [];
+  List<ScorebatVideoModel> list = [];
 
   Future<List<ScorebatVideoModel>> fetchData() async {
-    if (recentFeeds.isNotEmpty) return recentFeeds;
-    final cubit = BlocProvider.of<ScorebatCubit>(context);
-    recentFeeds = await cubit.getRecentFeeds().catchError((onError) {
-      throw onError;
-    });
+    if (list.isNotEmpty) return list;
+    // final cubit = BlocProvider.of<ScorebatCubit>(context);
+    list = await widget.fetchData();
+    // list = await cubit.getlist().catchError((onError) {
+    //   throw onError;
+    // });
 
-    return recentFeeds;
+    return list;
   }
 
   @override
@@ -94,7 +54,7 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                   child: Icon(Icons.arrow_back, color: notifire.textcolore),
                 ),
                 title: Text(
-                  "Watch",
+                  widget.appbarTitle.isNotEmpty ? widget.appbarTitle : "Watch List",
                   style: TextStyle(color: notifire.textcolore),
                 ),
               ),
@@ -104,54 +64,6 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
                 children: [
                   const SizedBox(
                     height: 5,
-                  ),
-                  ListTile(
-                    leading: Text(
-                      'Filter',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w700,
-                          fontFamily: 'Urbanist_bold',
-                          color: notifire.textcolore),
-                    ),
-                  ),
-                  ListTile(
-                    leading: Text(
-                      'By Competition',
-                      style: TextStyle(
-                          color: notifire.textcolore),
-                    ),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        Get.to(const CompetitionHighlightsViewScreen());
-                      },
-                      child: Image.asset(
-                        AppAssets.right,
-                        height: 24,
-                        width: 24,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  ListTile(
-                    leading: Text(
-                      'By Team',
-                      style: TextStyle(
-                          // fontSize: 24,
-                          color: notifire.textcolore),
-                    ),
-                    trailing: GestureDetector(
-                      onTap: () {
-                        Get.to(const TeamHighlightsViewScreen());
-                      },
-                      child: Image.asset(
-                        AppAssets.right,
-                        height: 24,
-                        width: 24,
-                      ),
-                    ),
                   ),
                   const SizedBox(
                     height: 5,

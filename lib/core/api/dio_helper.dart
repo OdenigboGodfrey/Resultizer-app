@@ -12,7 +12,7 @@ const String _apiKey =
     "ac2de663a4msh31a3aaa3a5e8808p122883jsnb520db3c2e87"; // Add your api key here
 const int _timeOut = 20000;
 const String _host = 'api-football-v1.p.rapidapi.com';
-const String scoreBatToken = 'MTIxOTE0XzE2OTcwODU0NzBfMDY4ZjNjYzgyMGY2MzBjMDQ5MmZkMjc0YmQyYTY3M2E4Y2QwMjYyYQ==';
+const String scoreBatToken = 'MTA2MjAyXzE2OTc0MzM0NjFfYmQ1ZWExN2NhNDZmODhiNjRiMTkwZjljNjMxZWQ3NzY5ZWE0MzQzYg';
 
 enum REQUESTTYPE {
   app,

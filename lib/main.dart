@@ -13,6 +13,10 @@ import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_u
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_teams.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
@@ -43,9 +47,16 @@ class MyApp extends StatelessWidget {
         BlocProvider<LiveGamesCubit>(
             create: (context) => LiveGamesCubit(sl<LiveGamesUseCase>())),
         BlocProvider<FixtureCubit>(
-            create: (context) => FixtureCubit(fixtureDetailUseCase:  sl<FixtureDetailUseCase>())),
-        BlocProvider<RecentFeedsCubit>(
-            create: (context) => RecentFeedsCubit(sl<RecentFeedsUseCase>())),
+            create: (context) =>
+                FixtureCubit(fixtureDetailUseCase: sl<FixtureDetailUseCase>())),
+        BlocProvider<ScorebatCubit>(
+            create: (context) => ScorebatCubit(
+                  sl<RecentFeedsUseCase>(),
+                  sl<HighlightByCompetitionUseCase>(),
+                  sl<HighlightByTeamUseCase>(),
+                  sl<ListTeamsUseCase>(),
+                  sl<ListCompetitionUseCase>(),
+                )),
         MultiProvider(providers: [
           ChangeNotifierProvider(
             create: (context) => ColorNotifire(),

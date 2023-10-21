@@ -1,20 +1,20 @@
 import 'dart:convert';
 
-class RecentFeedsModel {
+class ScorebatVideoModel {
   final String title;
   final String competition;
   final String matchviewUrl;
   final String competitionUrl;
   final String thumbnail;
   final DateTime date;
-  final List<RecentFeedsVideosModel> videos;
+  final List<ScorebatSingleVideoModel> videos;
 
-  RecentFeedsModel({required this.title, required this.competition, required this.matchviewUrl, required this.competitionUrl, required this.thumbnail, required this.date, required this.videos});
+  ScorebatVideoModel({required this.title, required this.competition, required this.matchviewUrl, required this.competitionUrl, required this.thumbnail, required this.date, required this.videos});
 
-  factory RecentFeedsModel.fromJson(Map<String, dynamic> json) {
+  factory ScorebatVideoModel.fromJson(Map<String, dynamic> json) {
     List<dynamic> videosList = json['videos'];
-    List<RecentFeedsVideosModel> recentFeedsVideos = videosList.map((e) => RecentFeedsVideosModel.fromJson(e)).toList();
-    return RecentFeedsModel(
+    List<ScorebatSingleVideoModel> recentFeedsVideos = videosList.map((e) => ScorebatSingleVideoModel.fromJson(e)).toList();
+    return ScorebatVideoModel(
       title: json['title'],
       competition: json['competition'],
       competitionUrl: json['competitionUrl'],
@@ -39,15 +39,15 @@ class RecentFeedsModel {
 }
 
 
-class RecentFeedsVideosModel {
+class ScorebatSingleVideoModel {
   final String id;
   final String title;
   final String embed;
 
-  RecentFeedsVideosModel({required this.id, required this.title, required this.embed});
+  ScorebatSingleVideoModel({required this.id, required this.title, required this.embed});
 
-  factory RecentFeedsVideosModel.fromJson(Map<String, dynamic> json) {
-    return RecentFeedsVideosModel(
+  factory ScorebatSingleVideoModel.fromJson(Map<String, dynamic> json) {
+    return ScorebatSingleVideoModel(
       embed: json['embed'],
       id: json['id'],
       title: json['title'],

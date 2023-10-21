@@ -12,4 +12,8 @@ class Endpoints {
   static const scoreBatBaseUrl = "https://www.scorebat.com/";
   static const socreBatV3VideoApi = "video-api/v3/";
   static const scoreBatRecentFeeds = "feed/";
+  static const scoreBatTeam = "team/";
+  static const scoreBatCompetition = "competition/";
+  static const scoreBatListCompetitions = "api/competition/e/";
+  static const scoreBatListTeams = "api/teamd/featured";
 }
