@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/competition_fixture_view.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/team_fixture_view.dart';
 
 import '../../common/common_appbar.dart';
 import '../../theme/themenotifer.dart';
@@ -18,6 +20,12 @@ class FavoriteScreen extends StatefulWidget {
 }
 
 class _FavoriteScreenState extends State<FavoriteScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    setState(() { selectIndex = 0; });
+  }
   int selectIndex = 0;
   ColorNotifire notifire = ColorNotifire();
   List text = [
@@ -83,7 +91,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      key: key,
+      
       drawer: const drawer1(),
       appBar: commonappbar(
         title: 'Resultizer'.tr,
@@ -161,7 +169,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
                       children: [
                         GestureDetector(
                           onTap: () {
-                            Get.to(const premierscreen());
+                            // Get.to(const premierscreen());
+                            // Get.to(const TeamFixtureScreenView(teamId: 16487,));
+                            Get.to(const CompetitionFixtureScreenView(competitionId: 254,));
                           },
                           child: ListView.builder(
                             physics: const NeverScrollableScrollPhysics(),

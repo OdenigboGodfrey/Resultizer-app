@@ -163,7 +163,7 @@ class _HomeViewState extends State<HomeView> {
     double width = size.width;
     return Scaffold(
       backgroundColor: notifire.background,
-      key: key,
+      
       drawer: const drawer1(),
       appBar: commonappbar(
           title: 'Resultizer', image: AppAssets.search, context: context),

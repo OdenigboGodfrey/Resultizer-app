@@ -46,7 +46,7 @@ class _NewsviewScreenState extends State<NewsviewScreen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      key: key,
+      
       drawer: const drawer1(),
       appBar: commonappbar(title: 'News', image: AppAssets.search, context: context),
       body: const SingleChildScrollView(

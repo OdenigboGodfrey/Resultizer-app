@@ -14,6 +14,8 @@ const int _timeOut = 20000;
 const String _host = 'api-football-v1.p.rapidapi.com';
 const String scoreBatToken = 'MTA2MjAyXzE2OTc0MzM0NjFfYmQ1ZWExN2NhNDZmODhiNjRiMTkwZjljNjMxZWQ3NzY5ZWE0MzQzYg';
 
+String testUrl = 'http://auxillorx-env.eba-gwzu32gm.us-east-2.elasticbeanstalk.com';
+
 enum REQUESTTYPE {
   app,
   scorebat,
@@ -34,7 +36,7 @@ class DioHelper {
       receiveDataWhenStatusError: true,
       receiveTimeout: _timeOut,
       connectTimeout: _timeOut,
-      headers: headers,
+      // headers: headers,
     );
     dio.interceptors.add(sl<LogInterceptor>());
     //dio.interceptors.add(sl<AppInterceptors>());
@@ -49,8 +51,10 @@ class DioHelper {
     if (requestType != REQUESTTYPE.app) {
       if (requestType == REQUESTTYPE.scorebat) baseUrl = Endpoints.scoreBatBaseUrl;
       dio.options.baseUrl = baseUrl.toString();
+      dio.options.headers = {_contentType: _applicationJson,};
     } else {
       dio.options.baseUrl = AppConstants.baseUrl;
+      dio.options.headers = headers;
     }
 
     return await dio.get(url, queryParameters: queryParams);

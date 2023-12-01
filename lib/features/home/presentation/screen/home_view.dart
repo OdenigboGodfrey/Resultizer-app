@@ -4,8 +4,11 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/core/widgets/snackbar.dart';
+import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_state.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/live_screen.dart';
@@ -166,6 +169,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   int fillstar2 = 0;
   int fillstar3 = 0;
   late SoccerCubit cubit;
+  // late FavouritesCubit favouritesCubit;
 
   List<LeagueEventDTO> fixtures = [];
   bool isLoading = true;
@@ -202,10 +206,14 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     return fixtures;
   }
 
+  
+
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     cubit = BlocProvider.of<SoccerCubit>(context);
+    // favouritesCubit = BlocProvider.of<FavouritesCubit>(context);
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
@@ -227,7 +235,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     }, builder: (context, state) {
       return Scaffold(
         backgroundColor: notifire.background,
-        key: key,
+        
         drawer: const drawer1(),
         appBar: commonappbar(
             title: 'Resultizer', image: AppAssets.search, context: context),
@@ -476,9 +484,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           premierType: 'UPCOMING',
                           notifire: notifire,
                           leagueEvent: item,
-                          onTap: () {
-                            Get.to(const premierscreen());
-                          }));
+                          ));
                         }
                         return Column(children: widgets);
                         // return Container();

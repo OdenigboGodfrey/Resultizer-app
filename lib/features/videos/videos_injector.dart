@@ -4,10 +4,10 @@ import 'package:resultizer_merged/core/network/network_info.dart';
 import 'package:resultizer_merged/features/videos/data/datasource/scorebat_hightligt_datasource.dart';
 import 'package:resultizer_merged/features/videos/data/repositories/recent_feeds_repository.dart';
 import 'package:resultizer_merged/features/videos/domain/repositories/recent_feeds_repository.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_teams.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_teams_usecase.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 

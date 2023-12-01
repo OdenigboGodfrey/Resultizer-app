@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/favorite_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/live_screen.dart';
 import 'package:resultizer_merged/features/videos/presentation/screens/video_screen.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/view/favorite_screen/favorite_screen.dart';
 import 'package:resultizer_merged/view/watch_screen/watch_screen.dart';
 
 import '../../theme/themenotifer.dart';
@@ -22,10 +22,11 @@ class _BottomState extends State<Bottom> {
   ColorNotifire notifire = ColorNotifire();
   List bottom = [
     const HomeScreenView(),
-    const FavoriteScreen(),
+    const FavoriteScreenView(),
     // const NewsviewScreen(),
     const WatchScreen(),
-    const AccountScreenView(),
+    const HighlightsViewScreen(),
+    // const AccountScreenView(),
   ];
 
   int _selectedIndex = 0;
@@ -46,7 +47,7 @@ class _BottomState extends State<Bottom> {
             context,
             MaterialPageRoute(
               builder: (context) { 
-                return const HighlightsViewScreen();
+                return const LiveScreenView();
                 // return const WatchScreen();
               },
             ),
@@ -202,7 +203,7 @@ class _BottomState extends State<Bottom> {
                         height: 5,
                       ),
                       Text(
-                        'Account',
+                        'Highlights',
                         style: TextStyle(
                             fontSize: 12,
                             color: _selectedIndex == 3

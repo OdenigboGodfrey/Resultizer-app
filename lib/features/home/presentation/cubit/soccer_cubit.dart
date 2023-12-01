@@ -1,15 +1,19 @@
 import 'package:bloc/bloc.dart';
 import 'package:resultizer_merged/core/utils/app_constants.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/competition_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/day_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_state.dart';
 import 'package:intl/src/intl/date_format.dart';
 
 
 class SoccerCubit extends Cubit<SoccerStates> {
-  SoccerCubit(this.dayFixturesUseCase): super(SoccerInitial());
+  SoccerCubit(this.dayFixturesUseCase, this.teamFixturesUseCase, this.competitionFixturesUseCase): super(SoccerInitial());
 
   final DayFixturesUseCase dayFixturesUseCase;
+  final TeamFixturesUseCase teamFixturesUseCase;
+  final CompetitionFixturesUseCase competitionFixturesUseCase;
   
   List day = [];
   void getDaysOfNext7Days() {
@@ -58,5 +62,40 @@ class SoccerCubit extends Cubit<SoccerStates> {
     dayFixtures = [];
     emit(SoccerLeagueGamesLoading());
     getFixtures(date);
+  }
+
+  List<LeagueEventDTO> teamFixtures = [];
+  Future<List<LeagueEventDTO>> getFixturesByTeam(int teamId) async {
+    teamFixtures = [];
+    final result = await teamFixturesUseCase(teamId);
+    result.fold((left) {
+      emit(TeamGamesLoadFailure(left.message));
+    }, (right) {
+      if (right.isNotEmpty) {
+        teamFixtures = right;
+        emit(TeamGamesLoaded(right));
+      } else {
+        emit(TeamGamesLoadFailure("No team matches found."));
+      }
+    });
+    return teamFixtures;
+  }
+
+  List<LeagueEventDTO> competitionFixtures = [];
+  Future<List<LeagueEventDTO>> getFixturesByCompetition(int competitionId) async {
+    competitionFixtures = [];
+    final result = await competitionFixturesUseCase(competitionId);
+    result.fold((left) {
+      emit(LeagueGamesLoadFailure(left.message));
+    }, (right) {
+      if (right.isNotEmpty) {
+        competitionFixtures = right;
+        emit(LeagueGamesLoaded(right));
+      } else {
+        emit(LeagueGamesLoadFailure("No competition matches found."));
+      }
+      
+    });
+    return competitionFixtures;
   }
 }

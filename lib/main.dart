@@ -7,16 +7,26 @@ import 'package:resultizer_merged/bloc_observer.dart';
 import 'package:resultizer_merged/container_injector.dart';
 import 'package:resultizer_merged/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:resultizer_merged/features/games/domain/usecase/leagues_usercase.dart';
+import 'package:resultizer_merged/features/games/domain/usecase/teams_usercase.dart';
+import 'package:resultizer_merged/features/games/presentation/cubit/leagues_cubit.dart';
+import 'package:resultizer_merged/features/games/presentation/cubit/teams_cubit.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/competition_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/day_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/favourite_league_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/favourite_matches_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/favourite_teams_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_teams.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_teams_usecase.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
@@ -43,7 +53,8 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>(
             create: (context) => AuthCubit(loginUseCase: sl<LoginUseCase>())),
         BlocProvider<SoccerCubit>(
-            create: (context) => SoccerCubit(sl<DayFixturesUseCase>())),
+            create: (context) => SoccerCubit(sl<DayFixturesUseCase>(),
+                sl<TeamFixturesUseCase>(), sl<CompetitionFixturesUseCase>())),
         BlocProvider<LiveGamesCubit>(
             create: (context) => LiveGamesCubit(sl<LiveGamesUseCase>())),
         BlocProvider<FixtureCubit>(
@@ -56,6 +67,25 @@ class MyApp extends StatelessWidget {
                   sl<HighlightByTeamUseCase>(),
                   sl<ListTeamsUseCase>(),
                   sl<ListCompetitionUseCase>(),
+                )),
+        BlocProvider<LeagueCubit>(
+            create: (context) => LeagueCubit(sl<LeagueUseCase>())),
+        BlocProvider<TeamsCubit>(
+            create: (context) => TeamsCubit(sl<TeamsUseCase>())),
+        BlocProvider<FavouritesCubit>(
+            create: (context) => FavouritesCubit(
+                  setFavouriteTeamsUseCase: sl<SetFavouriteTeamsUseCase>(),
+                  getFavouriteTeamsUseCase: sl<GetFavouriteTeamsUseCase>(),
+                  setFavouriteLeagueUseCase: sl<SetFavouriteLeagueUseCase>(),
+                  getFavouriteLeagueUseCase: sl<GetFavouriteLeagueUseCase>(),
+                  removeFavouriteTeamsUseCase:
+                      sl<RemoveFavouriteTeamsUseCase>(),
+                  removeFavouriteLeagueUseCase:
+                      sl<RemoveFavouriteLeagueUseCase>(),
+                  setFavouriteMatchesUseCase: sl<SetFavouriteMatchesUseCase>(),
+                  getFavouriteMatchesUseCase: sl<GetFavouriteMatchesUseCase>(),
+                  removeFavouriteMatchesUseCase:
+                      sl<RemoveFavouriteMatchesUseCase>(),
                 )),
         MultiProvider(providers: [
           ChangeNotifierProvider(

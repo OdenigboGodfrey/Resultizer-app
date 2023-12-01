@@ -71,7 +71,7 @@ class _SignUpViewState extends State<SignUpView> {
           } catch (e, stackTrace) {
             showErrorSnack('Error during sign up');
             print("Error during signup: $e,");
-            print(stackTrace);
+            // print(stackTrace);
             // Handle the error (show an error message on screen or something similar)
           }
         },

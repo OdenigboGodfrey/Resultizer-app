@@ -25,12 +25,11 @@ class FixtureScreen extends StatefulWidget {
   // const FixtureScreen({Key? key, required this.soccerFixture})
   //     : super(key: key);
   const FixtureScreen(
-      {Key? key,
+      {super.key, 
       required this.leagueName,
       required this.leagueLogo,
       required this.leagueSubtitle,
-      required this.game})
-      : super(key: key);
+      required this.game});
 
   final String leagueName;
   final String leagueLogo;
@@ -44,11 +43,25 @@ class FixtureScreen extends StatefulWidget {
 
 class _FixtureScreenState extends State<FixtureScreen> {
   ColorNotifire notifire = ColorNotifire();
-  List<String> goals = ['0','0'];
+  List<String> goals = ['0', '0'];
   int homeGoals = 0;
   int awayGoals = 0;
   int whoIsWinner = 0;
   Color currentColor = Colors.transparent;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    fetchData();
+  }
+
+  Future fetchData() async {
+      FixtureCubit cubit = context.read<FixtureCubit>();
+      if (widget.game.matchStatus != "NS") {
+        await cubit.getStatistics(widget.game.fixtureId!);
+      }
+    }
 
   @override
   Widget build(BuildContext context) {
@@ -57,33 +70,10 @@ class _FixtureScreenState extends State<FixtureScreen> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
-    
-    PremierGameDTO game = widget.game;
-    // game.odds = [
-    //   OddsModel(id: 0, name: '1x2', odds: [
-    //     OddValue(
-    //         value: 'home',
-    //         odd: '1.5',
-    //         handicap: false,
-    //         main: false,
-    //         suspended: false),
-    //     OddValue(
-    //         value: 'draw',
-    //         odd: '3.5',
-    //         handicap: false,
-    //         main: false,
-    //         suspended: false),
-    //     OddValue(
-    //         value: 'away',
-    //         odd: '2.0',
-    //         handicap: false,
-    //         main: false,
-    //         suspended: false),
-    //   ])
-    // ];
 
-    goals =
-        game.goals != null ? game.goals.toString().split(":") : goals;
+    PremierGameDTO game = widget.game;
+
+    goals = game.goals != null ? game.goals.toString().split(":") : goals;
     homeGoals = int.tryParse(goals[0]) ?? 0;
     awayGoals = int.tryParse(goals[1]) ?? 0;
 
@@ -162,7 +152,9 @@ class _FixtureScreenState extends State<FixtureScreen> {
                 //   height: 100,
                 // ),
                 EventsView(
-                  events: cubit.events.isNotEmpty ? cubit.events.reversed.toList(): [],
+                  events: cubit.events.isNotEmpty
+                      ? cubit.events.reversed.toList()
+                      : [],
                   color: currentColor,
                 ),
               if (state is FixtureOddsActive && state.status)
@@ -182,7 +174,6 @@ class _FixtureScreenState extends State<FixtureScreen> {
             child: tabBarButton(
               label: AppString.statistics,
               onPressed: () async {
-                notifire.isavalable(!notifire.isDark);
                 if (widget.game.matchStatus != "NS") {
                   await cubit.getStatistics(widget.game.fixtureId!);
                 } else {

@@ -8,6 +8,7 @@ class Endpoints {
   static const standings = "standings";
   static const bookies = "bookies";
   static const odds = "odds/live";
+  static const teams = "teams";
   // score bat
   static const scoreBatBaseUrl = "https://www.scorebat.com/";
   static const socreBatV3VideoApi = "video-api/v3/";

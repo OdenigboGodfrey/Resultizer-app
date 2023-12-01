@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
 import 'package:resultizer_merged/view/search_screen/search_screen.dart';
 
 import '../theme/themenotifer.dart';
@@ -15,45 +16,52 @@ List<DrawerModel> imagelist = [
     name: 'Football',
   ),
   DrawerModel(
-    image: AppAssets.frame1,
-    name: 'Tennis',
+    image: AppAssets.fillPerson,
+    name: 'Account',
+    action: () {
+      Get.to(const AccountScreenView());
+    }
   ),
-  DrawerModel(
-    image: AppAssets.frame2,
-    name: 'Basketball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame3,
-    name: 'Hockey',
-  ),
-  DrawerModel(
-    image: AppAssets.frame4,
-    name: 'Volleyball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame5,
-    name: 'Handball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame6,
-    name: 'Esports',
-  ),
-  DrawerModel(
-    image: AppAssets.frame7,
-    name: 'Baseball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame8,
-    name: 'Cricket',
-  ),
-  DrawerModel(
-    image: AppAssets.frame9,
-    name: 'Motorsport',
-  ),
-  DrawerModel(
-    image: AppAssets.frame10,
-    name: 'Rugby',
-  ),
+  // DrawerModel(
+  //   image: AppAssets.frame1,
+  //   name: 'Tennis',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame2,
+  //   name: 'Basketball',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame3,
+  //   name: 'Hockey',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame4,
+  //   name: 'Volleyball',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame5,
+  //   name: 'Handball',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame6,
+  //   name: 'Esports',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame7,
+  //   name: 'Baseball',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame8,
+  //   name: 'Cricket',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame9,
+  //   name: 'Motorsport',
+  // ),
+  // DrawerModel(
+  //   image: AppAssets.frame10,
+  //   name: 'Rugby',
+  // ),
 ];
 
 int selectIndex = 0;
@@ -62,7 +70,7 @@ final GlobalKey<ScaffoldState> key = GlobalKey();
 ColorNotifire notifire = ColorNotifire();
 
 PreferredSizeWidget commonappbar(
-    {required String title, required String image, IconData? icon, context}) {
+    {required String title, required String image, IconData? icon, context, Function? onTrailWidgetClick, Widget? trailWidget}) {
   notifire = Provider.of<ColorNotifire>(context, listen: true);
   return AppBar(
     backgroundColor: notifire.background,
@@ -89,9 +97,13 @@ PreferredSizeWidget commonappbar(
       ),
       GestureDetector(
           onTap: () {
-            Get.to(const SearchScreen());
+            if (onTrailWidgetClick != null) {
+              onTrailWidgetClick();
+            } else {
+              Get.to(const SearchScreen());
+            }
           },
-          child: Image.asset(
+          child: onTrailWidgetClick != null ? trailWidget : Image.asset(
             image,
             height: 28,
             width: 28,
@@ -155,6 +167,9 @@ class _drawer1State extends State<drawer1> {
                         onTap: () {
                           setState(() {
                             selectIndex = index;
+                            if (imagelist[index].action != null) {
+                              imagelist[index].action!();
+                            }
                             // Navigator.pop(context);
                           });
                         },

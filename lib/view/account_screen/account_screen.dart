@@ -52,7 +52,7 @@ class _Account_screenState extends State<Account_screen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      key: key,
+      
       drawer: const drawer1(),
       appBar: commonappbar(
           title: 'Account', image: AppAssets.more, context: context),
@@ -94,7 +94,6 @@ class _Account_screenState extends State<Account_screen> {
             padding: const EdgeInsets.symmetric(vertical: 15),
             itemCount: img.length,
             itemBuilder: (context, index) {
-              print('index $index ${img.length}');
               return GestureDetector(
                 onTap: () {
                   if (index == 0) {

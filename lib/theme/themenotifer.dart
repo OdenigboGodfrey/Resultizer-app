@@ -28,6 +28,7 @@ class ColorNotifire with ChangeNotifier {
 
   get deercolore => isDark ? drowercolore : const Color(0xffF0EFFC);
   get drwetextcode => isDark ? const Color(0xffFFFFFF) :  const Color(0xff5648DF);
+  get textColorOrange => Colors.orange[500];
   
   get borercolour => isDark ? const Color(0xff35383F) : const Color(0xffEEEEEE);
   get insidecolor => isDark ? const Color(0xff1F222A) : const Color(0xffFAFAFA);

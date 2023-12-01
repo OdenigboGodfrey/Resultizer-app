@@ -1,10 +1,10 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:resultizer_merged/core/usecase/usecase.dart';
 import 'package:resultizer_merged/features/videos/data/model/scorebat_model_dto.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons.dart';
-import 'package:resultizer_merged/features/videos/domain/usecase/list_teams.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons_usecase.dart';
+import 'package:resultizer_merged/features/videos/domain/usecase/list_teams_usecase.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_state.dart';
 
@@ -114,8 +114,6 @@ class ScorebatCubit extends Cubit<ScorebatStates> {
         },
       (right) {
         competitons = right;
-        print('competitons');
-        print(competitons);
         emit(TeamHighlightLoaded(competitons));
       },
     );

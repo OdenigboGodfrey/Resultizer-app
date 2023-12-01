@@ -174,9 +174,8 @@ class _LiveScreenState extends State<LiveScreenView> {
             } else {
               // If the Future completes successfully, use the data.
               final data = snapshot.data;
-              print('data returned length ' + data!.length.toString());
               List<LiveGameWidget> widgets = [];
-              for (var item in data) {
+              for (var item in data!) {
                 widgets.add(LiveGameWidget(leagueEvent: item));
               }
               return widgets.isNotEmpty ? Column(children: widgets) : const Text('No Live games at the moment, please check again later.');

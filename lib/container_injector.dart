@@ -4,6 +4,7 @@ import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:resultizer_merged/core/api/dio_helper.dart';
 import 'package:resultizer_merged/core/network/network_info.dart';
 import 'package:resultizer_merged/features/auth/auth_injector.dart';
+import 'package:resultizer_merged/features/games/games_injector.dart';
 import 'package:resultizer_merged/features/home/home_injector.dart';
 import 'package:resultizer_merged/features/videos/videos_injector.dart';
 
@@ -15,6 +16,7 @@ void initApp() {
   initAuth();
   initHome();
   initVideos();
+  initGames();
 }
 
 void initCore() {

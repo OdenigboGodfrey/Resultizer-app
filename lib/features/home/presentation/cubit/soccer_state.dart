@@ -15,3 +15,32 @@ class SoccerLeagueGamesLoadFailure extends SoccerStates {
 
 class SoccerLeagueGamesLoading extends SoccerStates {}
 
+// League games
+class LeagueGamesLoaded extends SoccerStates {
+  final List<dynamic> leagues;
+
+  LeagueGamesLoaded(this.leagues);
+}
+
+class LeagueGamesLoadFailure extends SoccerStates {
+  final String message;
+
+  LeagueGamesLoadFailure(this.message);
+}
+
+class LeagueGamesLoading extends SoccerStates {}
+
+// Team Games
+class TeamGamesLoaded extends SoccerStates {
+  final List<dynamic> leagues;
+
+  TeamGamesLoaded(this.leagues);
+}
+
+class TeamGamesLoadFailure extends SoccerStates {
+  final String message;
+
+  TeamGamesLoadFailure(this.message);
+}
+
+class TeamGamesLoading extends SoccerStates {}

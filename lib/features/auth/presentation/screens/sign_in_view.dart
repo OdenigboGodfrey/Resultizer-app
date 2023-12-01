@@ -12,6 +12,7 @@ import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_state.dart';
+import 'package:resultizer_merged/features/auth/presentation/screens/forget_password_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
@@ -40,10 +41,10 @@ class _SignInViewState extends State<SignInView> {
     final authCubit = BlocProvider.of<AuthCubit>(context);
 
     await authCubit.login(
-      // email: 'odenigboebuka@yahoo.com',
-      // password: 'Test@123',
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+      email: 'odenigboebuka@yahoo.com',
+      password: 'Test@1234',
+      // email: emailController.text.trim(),
+      // password: passwordController.text.trim(),
     );
 
     final state = authCubit.state;
@@ -57,7 +58,7 @@ class _SignInViewState extends State<SignInView> {
   }
 
   showErrorSnack(message) {
-    showSnack(context, message, Colors.red);
+    showSnack(context, 'Invalid email/password.', Colors.red);
   }
   showSuccessSnack(message) {
     showSnack(context, message, Colors.green);
@@ -243,7 +244,7 @@ class _SignInViewState extends State<SignInView> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Get.offAll(const ForgotPassword());
+                          Get.to(const ForgotPasswordView());
                         },
                         child: const Text(
                           "Forgot Password?",

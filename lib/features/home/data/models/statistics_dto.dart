@@ -7,9 +7,6 @@ class StatisticsModel {
 
   const StatisticsModel({required this.team, required this.statistics});
 
-  @override
-  List<Object?> get props => [team, statistics];
-
   factory StatisticsModel.fromJson(Map<String, dynamic> json) {
     print('json ${json}');
     List<dynamic> statisticsList = [];
@@ -42,7 +39,7 @@ class StatisticItemModel {
     }
     catch(error, stackTrace) {
       print('error ${error} ---------- stackTrace ${stackTrace}');
-      return StatisticItemModel(
+      return const StatisticItemModel(
         type: 'err',
         value: 'err',
       );

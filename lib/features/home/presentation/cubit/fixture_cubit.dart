@@ -7,6 +7,7 @@ import 'package:resultizer_merged/core/error/error_handler.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/events_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/fixture_model_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/lineup_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/statistics_dto.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
@@ -43,7 +44,6 @@ class FixtureCubit extends Cubit<FixtureState> {
     } else {
       emit(FixtureStatisticsLoaded(statistics: statistics));
     }
-    print('statistics ${statistics}');
   }
 
   List<Lineup> lineups = [];
@@ -70,9 +70,7 @@ class FixtureCubit extends Cubit<FixtureState> {
   List<EventModel> events = [];
 
   Future<void> getEvents(int fixtureId) async {
-    print('events ${events}');
     if (events.isEmpty) {
-      print('events is empty');
       emit(FixtureEventsLoading());
       final result = await getData(fixtureId);
       result.fold(
@@ -87,15 +85,13 @@ class FixtureCubit extends Cubit<FixtureState> {
       );
       
     } else {
-      print('events not empty');
       emit(FixtureEventsLoaded(events: events));
     }
   }
 
   Future<Either<Failure, List<FullFixtureModel>>> getData(int fixtureId) async {
     final result = await fixtureDetailUseCase(fixtureId);
-    return result;
-      
+    return result;   
   }
 
   // bool oddsBarActive = false;

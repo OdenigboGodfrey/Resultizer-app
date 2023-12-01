@@ -54,7 +54,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      key: key,
+
       drawer: const drawer1(),
       appBar:
           commonappbar(title: 'More', image: AppAssets.more, context: context),

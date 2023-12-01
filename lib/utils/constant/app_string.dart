@@ -27,6 +27,7 @@ class AppString {
   static const String followTeams = "Follow Teams";
   static const String pickAFew =
       "Pick a few teams to follow. It will be seen later on your favorite tab page.";
+static const String sendReset = "Send Reset Link";
 
   static const String setNotification = "Set Notifications";
   static const String chooseTheTeam = "Choose the team notification you want.";
@@ -49,7 +50,7 @@ class AppString {
   static const String confirm = "Confirm";
   static const String forgotPassword = "Forgot Password ";
   static const String enterYourEmail =
-      "Enter your email address to get an OTP code to reset your password.";
+      "Enter your email address to get a password reset link.";
   static const String youGotMail = "You’ve got mail";
   static const String weHaveSentThe =
       "We have sent the OTP verification code to your email address. Check your email and enter the code below.";
