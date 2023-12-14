@@ -1,17 +1,27 @@
+import 'dart:convert';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:resultizer_merged/core/error/firebase_error_handler.dart';
+import 'package:resultizer_merged/core/utils/custom_promise.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
-void setFullName(User? user, {firstName, lastName}) async {
+Future<bool> setUserInfoFireStore(User? user, UserModel userModel) async {
   final userDocRef =
-      FirebaseFirestore.instance.collection('users').doc(user!.uid);
+      FirebaseFirestore.instance.collection(AppString.usersCollectionKey).doc(userModel.email.toLowerCase());
+  DocumentSnapshot documentSnapshot = await userDocRef.get();
+  Map<String, dynamic> existingData = {};
+  if (documentSnapshot.exists) {
+    existingData = documentSnapshot.data() as Map<String, dynamic>;
+  }
 
-  // Set the 'fullname' field in Firestore
-  await userDocRef.set({
-    'fullname': '$firstName $lastName',
+  // save to Firestore
+  bool result = await customPromise(() async {
+    await userDocRef.set(userModel.toMap());
   });
+  return result;
 }
 
 abstract class AuthDatasource {
@@ -61,27 +71,33 @@ class FirebaseAuthDatasource implements AuthDatasource {
     try {
       final userCred = await authInstance.signInWithEmailAndPassword(
           email: email, password: password);
-      var fullName = '...';
+      var _email = userCred.user!.email.toString().replaceAll('odenigbo', 'Odenigbo');
+      Map<dynamic, dynamic> userData = {};
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(userCred.user!.uid)
+          .collection(AppString.usersCollectionKey)
+          .doc(_email)
           .get();
-
       if (documentSnapshot.exists) {
         // Retrieve the 'fullname' field from the document
-        fullName =
-            (documentSnapshot.data() as Map<String, dynamic>)['fullname'];
-        fullName = fullName.toString();
+        userData  =
+            (documentSnapshot.data() as Map<dynamic, dynamic>);
+        
       }
 
+      List roles = jsonDecode(userData['roles']);
       userModel = UserModel(
           id: userCred.user!.uid,
           email: email,
-          username: userCred.user!.displayName ?? '',
-          fullname: fullName);
-    } on FirebaseAuthException catch (e) {
+          username: userData['username'] ?? (userCred.user!.displayName ?? ''),
+          fullname: userData['fullname'] ?? '',
+          roles: roles.map((e) => e.toString()).toList(),
+        );
+    } on FirebaseAuthException catch (e, stackTrace) {
+      print(stackTrace);
       parseFirebaseException(e.code);
-    } catch (e) {
+    } catch (e, stackTrace) {
+      print(e);
+      print(stackTrace);
       throw Exception(e);
     }
     return userModel!;
@@ -98,7 +114,10 @@ class FirebaseAuthDatasource implements AuthDatasource {
         idToken: googleAuth?.idToken,
       );
       final userCred = await authInstance.signInWithCredential(credential);
-      // setFullName(userCred.user,firstName: googleUser?.displayName.toString(), lastName: '');
+      // setFullName(userCred.user, firstName: googleUser?.displayName.toString(), lastName: '');
+      
+      userModel?.fullname = googleUser?.displayName.toString();
+      setUserInfoFireStore(userCred.user, userModel!);
 
       userModel = UserModel(
           id: userCred.user!.uid,
@@ -116,25 +135,26 @@ class FirebaseAuthDatasource implements AuthDatasource {
   }
 
   @override
-  Future<UserModel> signUpWithEmail(
-      {
-        required String email,
-        required String password,
-        required String username,
-        required String firstName,
-        required String lastName,
-      }) async {
+  Future<UserModel> signUpWithEmail({
+    required String email,
+    required String password,
+    required String username,
+    required String firstName,
+    required String lastName,
+  }) async {
     UserModel? userModel;
     try {
       var fullname = '$firstName $lastName';
       final userCred = await authInstance.createUserWithEmailAndPassword(
           email: email, password: password);
       userCred.user!.updateDisplayName(username);
-      // setFullName(userCred.user, firstName: firstName, lastName: lastName);
       userModel = UserModel(
           id: userCred.user!.uid,
           email: email,
-          username: userCred.user!.displayName ?? username, fullname: fullname);
+          username: userCred.user!.displayName ?? username,
+          fullname: fullname);
+      // setFullName(userCred.user, firstName: firstName, lastName: lastName);
+      setUserInfoFireStore(userCred.user, userModel);
     } on FirebaseAuthException catch (e) {
       parseFirebaseException(e.code);
     } catch (e, stackTrace) {

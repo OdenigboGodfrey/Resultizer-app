@@ -87,7 +87,7 @@ class _CompetitionFixtureScreenViewState extends State<CompetitionFixtureScreenV
         child: Scaffold(
           backgroundColor: notifire.background,
           
-          drawer: const drawer1(),
+          drawer: drawer1(),
           appBar: AppBar(
                 actionsIconTheme:
                     IconThemeData(color: notifire.reverseBgColore),

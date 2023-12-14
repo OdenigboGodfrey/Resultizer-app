@@ -90,7 +90,7 @@ class _TeamFixtureScreenViewState extends State<TeamFixtureScreenView> {
         child: Scaffold(
           backgroundColor: notifire.background,
           
-          drawer: const drawer1(),
+          drawer: drawer1(),
           // appBar: commonappbar(
           //     title: 'Resultizer', image: AppAssets.search, context: context),
           appBar: AppBar(

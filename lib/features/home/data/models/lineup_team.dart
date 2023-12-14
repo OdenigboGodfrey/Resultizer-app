@@ -2,24 +2,25 @@
 import 'package:resultizer_merged/features/home/data/models/fixture_teams_dto.dart';
 
 class LineupTeam extends FixtureTeam {
-  final LineupColors colors;
+  LineupColors? colors;
 
   LineupTeam(
       {required int id,
       required String name,
       required String logo,
-      required this.colors})
+      this.colors})
       : super(id: id, name: name, logo: logo);
 
   factory LineupTeam.fromJson(Map<String, dynamic> json) {
-    try {
-      return LineupTeam(id: json['id'], name: json['name'], logo: json['logo'], colors: LineupColors.fromJson(json['colors']));
+    LineupColors lineupColors;
+    LineupTeam lineupTeam;
+    
+    lineupTeam = LineupTeam(id: json['id'] ?? 0, name: json['name'] ?? '', logo: json['logo'] ?? '' );
+    if (json.containsKey('colors') && json['colors'] != null) {
+      lineupColors = LineupColors.fromJson(json['colors']);
+      lineupTeam.colors = lineupColors;
     }
-    catch(err, stackTrace) {
-      print('err $err');
-      print('stackTrace $stackTrace');
-      return LineupTeam(id: json['id'], name: json['name'], logo: json['logo'], colors: LineupColors.fromJson(json['colors']));
-    }
+    return lineupTeam;
   }
 }
 

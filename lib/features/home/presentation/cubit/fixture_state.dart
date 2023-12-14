@@ -73,3 +73,25 @@ class FixtureOddsLoadingFailure extends FixtureState {
 
   FixtureOddsLoadingFailure({required this.message});
 }
+
+
+class FixtureChatLoading extends FixtureState {}
+
+class FixtureChatActive extends FixtureState {
+  final bool status;
+
+  FixtureChatActive({required this.status});
+}
+
+class FixtureChatLoaded extends FixtureState {
+  final List<OddsModel> odds;
+  // final List<dynamic> events;
+
+  FixtureChatLoaded({required this.odds});
+}
+
+class FixtureChatLoadingFailure extends FixtureState {
+  final String message;
+
+  FixtureChatLoadingFailure({required this.message});
+}

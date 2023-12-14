@@ -6,13 +6,15 @@ import 'package:resultizer_merged/core/api/dio_helper.dart';
 import 'package:resultizer_merged/core/dto/response_dto.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/utils/custom_promise.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/games/data/model/team_list_item_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
-const String favouriteTeamsDocumentName = 'favourite-teams';
-const String favouriteLeaguesDocumentName = 'favourite-leagues';
-const String favouriteMatchesDocumentName = 'favourite-matches';
+const String favouriteTeamsDocumentName = AppString.favouriteTeamCollectionKey;
+const String favouriteLeaguesDocumentName = AppString.favouriteLeaguesCollectionKey;
+const String favouriteMatchesDocumentName = AppString.favouriteMatchesCollectionKey;
 
 abstract class FavouritesDatasource {
   final FirebaseAuth authInstance = FirebaseAuth.instance;
@@ -34,25 +36,7 @@ class FirebaseFavouriteDatasource implements FavouritesDatasource {
 
   FirebaseFavouriteDatasource({required this.dioHelper});
 
-  Future<dynamic> customPromise(Function action) async {
-    Completer<dynamic> completer = Completer<dynamic>();
-
-    // Simulate an asynchronous operation
-    action().then((value) {
-      completer.complete(true);
-    }).catchError((err) {
-      completer.complete(false);
-    });
-
-    return completer.future;
-    // Future.delayed(Duration(seconds: 2), () {
-    //   // Resolve the promise with a value
-    //   completer.complete(42);
-    // });
-
-    // // Return the future associated with the completer
-    // return completer.future;
-  }
+  
 
   @override
   final FirebaseAuth authInstance = FirebaseAuth.instance;

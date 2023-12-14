@@ -51,7 +51,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
    _navigateToSignIn() async {
     await Future.delayed(
         const Duration(seconds: 3)); // 3 seconds delay for splash
-    Navigator.pushReplacement(
+    Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) =>

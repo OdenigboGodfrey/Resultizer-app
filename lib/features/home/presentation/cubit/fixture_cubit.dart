@@ -9,6 +9,7 @@ import 'package:resultizer_merged/features/home/data/models/events_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/fixture_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/lineup_dto.dart';
+import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/statistics_dto.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 // import '../../domain/use_cases/events_usecase.dart';
@@ -66,7 +67,7 @@ class FixtureCubit extends Cubit<FixtureState> {
     }
   }
 
-  // FullFixtureModel? fixture;
+  late FullFixtureModel fixture;
   List<EventModel> events = [];
 
   Future<void> getEvents(int fixtureId) async {
@@ -83,7 +84,6 @@ class FixtureCubit extends Cubit<FixtureState> {
           emit(FixtureEventsLoaded(events: right[0].events!));
         },
       );
-      
     } else {
       emit(FixtureEventsLoaded(events: events));
     }
@@ -91,7 +91,7 @@ class FixtureCubit extends Cubit<FixtureState> {
 
   Future<Either<Failure, List<FullFixtureModel>>> getData(int fixtureId) async {
     final result = await fixtureDetailUseCase(fixtureId);
-    return result;   
+    return result;
   }
 
   // bool oddsBarActive = false;
@@ -100,7 +100,12 @@ class FixtureCubit extends Cubit<FixtureState> {
     emit(FixtureOddsActive(status: true));
   }
 
+  void emitChatBar() {
+    emit(FixtureChatActive(status: true));
+  }
+
   void setData(FullFixtureModel payload) {
+    fixture = payload;
     if (payload.events != null) events = payload.events!;
     statistics = payload.statistics!;
     lineups = payload.lineups!;
@@ -112,5 +117,20 @@ class FixtureCubit extends Cubit<FixtureState> {
     lineups = [];
   }
 
-  
+  generatePremierGame() {
+    var item = PremierGameDTO(
+        gameTime: fixture.fixture.date.toString(),
+        homeLogo: fixture.teams.home.logo,
+        homeTeam: fixture.teams.home.name!,
+        awayLogo: fixture.teams.away.logo,
+        awayTeam: fixture.teams.away.name!,
+        matchStatus: fixture.fixture.status.short!,
+        matchTime: DateTime.parse(fixture.fixture.date!),
+        fixtureId: fixture.fixture.id,
+        gameCurrentTime: fixture.fixture.status.seconds,
+        goals: "${fixture.goals!.home ?? 0}:${fixture.goals!.away ?? 0}",
+        matchStatusLong: fixture.fixture.status.long,
+    );
+    return item;
+  }
 }

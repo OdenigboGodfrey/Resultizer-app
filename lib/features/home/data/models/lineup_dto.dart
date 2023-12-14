@@ -32,8 +32,8 @@ class Lineup {
     }
     
     return Lineup(
-        coachName: json['coach']['name'],
-        formation: json['formation'],
+        coachName: json['coach']['name'] ?? '',
+        formation: json['formation'] ?? '',
         startXI: startXI,
         substitutes: substitutes,
         team: LineupTeam.fromJson(json['team']));

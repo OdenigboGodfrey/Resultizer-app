@@ -20,6 +20,7 @@ class LineUpPlayer {
         name: player['name'],
         number: player['number'],
         grid: player['grid']!=null ? player['grid'].toString() : '',
-        pos: player['pos']);
+        pos: player['pos'] ?? ''
+      );
   }
 }

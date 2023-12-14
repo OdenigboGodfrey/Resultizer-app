@@ -15,6 +15,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/favourite_teams
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 
@@ -101,5 +102,7 @@ void initHome() {
           setFavouriteMatchesUseCase: sl<SetFavouriteMatchesUseCase>(),
           getFavouriteMatchesUseCase: sl<GetFavouriteMatchesUseCase>(),
           removeFavouriteMatchesUseCase: sl<RemoveFavouriteMatchesUseCase>(),
-        ));
+        ))
+    ..registerLazySingleton<ChatCubit>(() => ChatCubit())
+  ;
 }

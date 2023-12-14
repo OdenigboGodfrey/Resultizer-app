@@ -6,21 +6,24 @@ class UserModel extends User {
   final String id;
   final String email;
   final String username;
-  final String fullname;
+  String? fullname;
+  List<String>? roles = [];
   
-  const UserModel({required this.id, required this.email, required this.username, required this.fullname}): super(id: id, email: email, username: username, fullname: fullname);
+  UserModel({required this.id, required this.email, required this.username, required this.fullname, this.roles}): super(id: id, email: email, username: username, fullname: fullname, roles: roles);
   
   UserModel copyWith({
     String? id,
     String? email,
     String? username,
     String? fullname,
+    List<String>? roles,
   }) {
     return UserModel(
       id: id ?? this.id,
       email: email ?? this.email,
       username: username ?? this.username, 
       fullname: fullname ?? this.fullname,
+      roles: roles ?? [],
     );
   }
 
@@ -30,6 +33,7 @@ class UserModel extends User {
       'email': email,
       'username': username,
       'fullname': fullname,
+      'roles': jsonEncode(roles ?? []),
     };
   }
 
@@ -39,6 +43,7 @@ class UserModel extends User {
       email: map['email'] ?? '',
       username: map['username'] ?? '',
       fullname: map['fullname'] ?? '',
+      roles: map['roles'] ?? []
     );
   }
 
@@ -57,7 +62,8 @@ class UserModel extends User {
     return other is UserModel &&
         other.id == id &&
         other.email == email &&
-        other.username == username;
+        other.username == username &&
+        other.roles == roles;
   }
 
   @override

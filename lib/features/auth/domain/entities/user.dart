@@ -4,12 +4,14 @@ class User extends Equatable {
   final String id;
   final String email;
   final String username;
-  final String fullname;
-  const User({
+  String? fullname;
+  List<String>? roles = [];
+  User({
     required this.id,
     required this.email,
     required this.username,
     required this.fullname,
+    this.roles,
   });
 
   @override

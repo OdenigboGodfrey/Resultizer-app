@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 
 import '../../common/common_appbar.dart';
 import '../../theme/themenotifer.dart';
@@ -46,8 +47,8 @@ class _NewsviewScreenState extends State<NewsviewScreen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      
-      drawer: const drawer1(),
+      key: GlobalDataSource.scaffoldKey,
+      drawer: drawer1(),
       appBar: commonappbar(title: 'News', image: AppAssets.search, context: context),
       body: const SingleChildScrollView(
 

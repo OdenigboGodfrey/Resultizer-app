@@ -41,8 +41,8 @@ class _SignInViewState extends State<SignInView> {
     final authCubit = BlocProvider.of<AuthCubit>(context);
 
     await authCubit.login(
-      email: 'odenigboebuka@yahoo.com',
-      password: 'Test@1234',
+      email: emailController.text.trim().isNotEmpty ? emailController.text.trim() : 'odenigboebuka@yahoo.com',
+      password: passwordController.text.trim().isNotEmpty ? passwordController.text.trim() : 'Test@1234',
       // email: emailController.text.trim(),
       // password: passwordController.text.trim(),
     );

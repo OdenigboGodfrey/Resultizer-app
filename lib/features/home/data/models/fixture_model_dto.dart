@@ -5,13 +5,15 @@ import 'package:resultizer_merged/features/home/data/models/statistics_dto.dart'
 class FixtureModel {
   final int id;
   final Status status;
+  final String? date;
   FixtureModel({required this.id,
-    required this.status,});
+    required this.status, this.date});
 
     factory FixtureModel.fromJson(Map<String, dynamic> json) {
     return FixtureModel(
       id: json['id'],
       status: Status.fromJson(json['status']),
+      date: json['date']
     );
   }
 }
@@ -27,6 +29,7 @@ class FullFixtureModel {
   final List<EventModel>? events;
   List<StatisticsModel>? statistics;
   List<Lineup>? lineups;
+  Goals? goals;
 
   FullFixtureModel({
     // required this.id,
@@ -39,6 +42,7 @@ class FullFixtureModel {
     this.events,
     this.statistics,
     this.lineups,
+    this.goals,
   });
 
   factory FullFixtureModel.fromJson(Map<String, dynamic> json) {
@@ -67,6 +71,9 @@ class FullFixtureModel {
       dynamicList = json['lineups'];
       lineups = dynamicList.map((value) => Lineup.fromJson(value)).toList();
     }
+
+    Goals goals = Goals(away: '0', home: '0');
+    if (json.containsKey('goals')) goals = Goals.fromJson(json['goals']);
     
 
     return FullFixtureModel(
@@ -81,6 +88,24 @@ class FullFixtureModel {
       events: eventList,
       statistics: statisticsList,
       lineups: lineups,
+      goals: goals,
+    );
+  }
+}
+
+class Goals {
+  final String home;
+  final String away;
+
+  Goals({
+    required this.home,
+    required this.away,
+  });
+
+  factory Goals.fromJson(Map<String, dynamic> json) {
+    return Goals(
+      home: json['home'].toString() ?? '0',
+      away: json['away'].toString() ?? '0',
     );
   }
 }
@@ -89,11 +114,13 @@ class Status {
   final String long;
   final int elapsed;
   final String seconds;
+  final String? short;
 
   Status({
     required this.long,
     required this.elapsed,
     required this.seconds,
+    this.short,
   });
 
   factory Status.fromJson(Map<String, dynamic> json) {
@@ -101,6 +128,7 @@ class Status {
       long: json['long'] ?? '',
       elapsed: json['elapsed'] ?? 0,
       seconds: json['seconds'] ?? '',
+      short: json['short'] ?? '',
     );
   }
 }

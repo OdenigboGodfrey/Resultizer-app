@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
@@ -180,12 +181,51 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
     var favouriteMatchesValue = favouritesMatches.values.toList();
     return Scaffold(
       backgroundColor: notifire.background,
-      drawer: const drawer1(),
+      // appBar: AppBar(
+      //     title: Text('Drawer Example'),
+      //     actions: [Text('Action 1')],
+      //   ),
+      // drawer: Drawer(
+      //     child: ListView(
+      //       padding: EdgeInsets.zero,
+      //       children: <Widget>[
+      //         DrawerHeader(
+      //           decoration: BoxDecoration(
+      //             color: Colors.blue,
+      //           ),
+      //           child: Text(
+      //             'Drawer Header',
+      //             style: TextStyle(
+      //               color: Colors.white,
+      //               fontSize: 24,
+      //             ),
+      //           ),
+      //         ),
+      //         ListTile(
+      //           leading: Icon(Icons.home),
+      //           title: Text('Home'),
+      //           onTap: () {
+      //             // Add functionality here for Home
+      //           },
+      //         ),
+      //         ListTile(
+      //           leading: Icon(Icons.settings),
+      //           title: Text('Settings'),
+      //           onTap: () {
+      //             // Add functionality here for Settings
+      //           },
+      //         ),
+      //         // Add more ListTile widgets for other options
+      //       ],
+      //     ),
+      //   ),
+      key: GlobalDataSource.scaffoldKey,
       appBar: commonappbar(
         title: 'Resultizer'.tr,
         image: AppAssets.search,
         context: context,
       ),
+      drawer: drawer1(),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.only(left: 15, right: 15),
@@ -804,199 +844,10 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
                             ),
                           ),
                         ]),
-              // : DefaultTabController(
-              //     length: 3,
-              //     initialIndex: 0,
-              //     child: Column(
-              //       children: [
-              //         TabBar(
-              //           dividerColor: notifire.background,
-              //           isScrollable: true,
-              //           tabs: const [
-              //             Tab(
-              //               text: 'World Cup 2022',
-
-              //             ),
-              //             Tab(
-              //               text: 'Premier League',
-              //             ),
-              //             Tab(
-              //               text: 'Champions League',
-              //             ),
-              //           ],
-              //         ),
-              //         SizedBox(
-              //           height: 600,
-              //           width: Get.size.width,
-              //           child: TabBarView(
-              //             children: [
-              //               Padding(
-              //                 padding: const EdgeInsets.only(right: 10),
-              //                 child: Column(
-              //                   children: [
-              //                     wouldcup(
-              //                         title: 'Netherlands',
-              //                         image: AppAssets.flag1,
-              //                         subtitle: 'Netherlands'),
-              //                     wouldcup(
-              //                         title: 'Argentina',
-              //                         image: AppAssets.flag2,
-              //                         subtitle: 'Argentina'),
-              //                     wouldcup(
-              //                         title: 'Croatia',
-              //                         image: AppAssets.flag3,
-              //                         subtitle: 'Croatia'),
-              //                     wouldcup(
-              //                         title: 'Morocco',
-              //                         image: AppAssets.flag4,
-              //                         subtitle: 'Morocco'),
-              //                     wouldcup(
-              //                         title: 'Portugal',
-              //                         image: AppAssets.flag5,
-              //                         subtitle: 'Portugal'),
-              //                     ElevatedButton(
-              //                       onPressed: () {},
-              //                       child: const Row(
-              //                         mainAxisAlignment:
-              //                             MainAxisAlignment.center,
-              //                         children: [
-              //                           Icon(
-              //                             Icons.add,
-              //                             color: AppColor.pinkColor,
-              //                           ),
-              //                           SizedBox(
-              //                             width: 10,
-              //                           ),
-              //                           Text(
-              //                             'Add Teams',
-              //                             style: TextStyle(
-              //                                 fontFamily:
-              //                                     'Urbanist_bold',
-              //                                 fontSize: 16,
-              //                                 fontWeight:
-              //                                     FontWeight.w700),
-              //                           )
-              //                         ],
-              //                       ),
-              //                     ),
-              //                   ],
-              //                 ),
-              //               ),
-              //               Padding(
-              //                 padding: const EdgeInsets.only(right: 10),
-              //                 child: Column(
-              //                   children: [
-              //                     wouldcup(
-              //                         title: 'Arsenal',
-              //                         image: AppAssets.team1,
-              //                         subtitle: 'Arsenal'),
-              //                     wouldcup(
-              //                         title: 'Manchester United',
-              //                         image: AppAssets.team3,
-              //                         subtitle: 'Manchester United'),
-              //                     wouldcup(
-              //                         title: 'Chelsea',
-              //                         image: AppAssets.chelsea,
-              //                         subtitle: 'Chelsea'),
-              //                     wouldcup(
-              //                         title: 'Newcastle United',
-              //                         image: AppAssets.follow3,
-              //                         subtitle: 'Newcastle United'),
-              //                     wouldcup(
-              //                         title: 'Manchester City',
-              //                         image: AppAssets.team2,
-              //                         subtitle: 'Manchester City'),
-              //                   ],
-              //                 ),
-              //               ),
-              //               Column(
-              //                 children: [
-              //                   wouldcup(
-              //                       title: 'Netherlands',
-              //                       image: AppAssets.flag1,
-              //                       subtitle: 'Netherlands'),
-              //                   wouldcup(
-              //                       title: 'Argentina',
-              //                       image: AppAssets.flag2,
-              //                       subtitle: 'Argentina'),
-              //                   wouldcup(
-              //                       title: 'Croatia',
-              //                       image: AppAssets.flag3,
-              //                       subtitle: 'Croatia'),
-              //                   wouldcup(
-              //                       title: 'Morocco',
-              //                       image: AppAssets.flag4,
-              //                       subtitle: 'Morocco'),
-              //                   wouldcup(
-              //                       title: 'Portugal',
-              //                       image: AppAssets.flag5,
-              //                       subtitle: 'Portugal'),
-              //                 ],
-              //               ),
-              //             ],
-              //           ),
-              //         ),
-              //       ],
-              //     ),
-              //   ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget wouldcup(
-      {required String title,
-      required String image,
-      required String subtitle}) {
-    return ListView.builder(
-      physics: const NeverScrollableScrollPhysics(),
-      shrinkWrap: true,
-      scrollDirection: Axis.vertical,
-      itemCount: 1,
-      itemBuilder: (context, index) {
-        return GestureDetector(
-          onTap: () {
-            Get.to(const premierscreen());
-          },
-          child: Container(
-            height: 88,
-            margin: const EdgeInsets.symmetric(vertical: 10),
-            decoration: BoxDecoration(
-              color: notifire.insidecolor,
-              borderRadius: BorderRadius.circular(16),
-              border: Border.all(color: notifire.borercolour, width: 1),
-            ),
-            child: Center(
-              child: ListTile(
-                leading: Image.asset(
-                  image,
-                  height: 40,
-                  width: 40,
-                ),
-                title: Text(
-                  title,
-                  style: TextStyle(
-                      fontFamily: 'Urbanist_bold',
-                      fontWeight: FontWeight.w700,
-                      fontSize: 20,
-                      color: notifire.textcolore),
-                ),
-                subtitle: Text(
-                  subtitle,
-                  style: TextStyle(
-                      fontFamily: 'Urbanist_medium',
-                      fontWeight: FontWeight.w500,
-                      fontSize: 14,
-                      color: notifire.textcolore),
-                ),
-                trailing: star(onTap: (tap) {}),
-              ),
-            ),
-          ),
-        );
-      },
     );
   }
 

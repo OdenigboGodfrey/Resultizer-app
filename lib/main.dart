@@ -5,6 +5,10 @@ import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/bloc_observer.dart';
 import 'package:resultizer_merged/container_injector.dart';
+import 'package:resultizer_merged/features/account/domain/usecase/manage_chat_usecase.dart';
+import 'package:resultizer_merged/features/account/domain/usecase/user_detail_usecase.dart';
+import 'package:resultizer_merged/features/account/presentation/cubit/manage_chat_cubit.dart';
+import 'package:resultizer_merged/features/account/presentation/cubit/user_detail_cubit.dart';
 import 'package:resultizer_merged/features/auth/domain/use_cases/login_use_case.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:resultizer_merged/features/games/domain/usecase/leagues_usercase.dart';
@@ -19,6 +23,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/favourite_teams
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
@@ -86,6 +91,17 @@ class MyApp extends StatelessWidget {
                   getFavouriteMatchesUseCase: sl<GetFavouriteMatchesUseCase>(),
                   removeFavouriteMatchesUseCase:
                       sl<RemoveFavouriteMatchesUseCase>(),
+                )),
+        BlocProvider<ChatCubit>(create: (context) => ChatCubit()),
+        BlocProvider<UserDetailCubit>(
+            create: (context) => UserDetailCubit(
+                sl<FetchUserDetailUseCase>(), sl<UpdateUserDetailUseCase>())),
+        BlocProvider<ManageChatCubit>(
+            create: (context) => ManageChatCubit(
+                  countChatUseCase: sl<CountChatUseCase>(),
+                  getChatMetaUseCase: sl<GetChatMetaUseCase>(),
+                  deleteChatUseCase:  sl<DeleteChatUseCase>(),
+                  deleteChatMetaUseCase:  sl<DeleteChatMetaUseCase>(),
                 )),
         MultiProvider(providers: [
           ChangeNotifierProvider(

@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
@@ -30,7 +31,6 @@ class HomeScreenView extends StatefulWidget {
 }
 
 class _HomeScreenViewState extends State<HomeScreenView> {
-
   int selectIndex = 0;
   int selected = 0;
   dynamic selectedValue;
@@ -192,7 +192,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   Future getLists() async {
     String date = DateFormat("yyyy-MM-dd").format(selectedDay['dateTime']);
 
-    if (cubit.dayFixtures.isEmpty) {
+    if (cubit.dayFixtures.isEmpty && !cubit.hasRunForDayFixtures) {
       await cubit.getFixtures(date);
     }
     fixtures = cubit.dayFixtures;
@@ -205,9 +205,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     await getLists();
     return fixtures;
   }
-
-  
-
 
   @override
   Widget build(BuildContext context) {
@@ -235,8 +232,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     }, builder: (context, state) {
       return Scaffold(
         backgroundColor: notifire.background,
-        
-        drawer: const drawer1(),
+        key: GlobalDataSource.scaffoldKey,
+        drawer: drawer1(),
         appBar: commonappbar(
             title: 'Resultizer', image: AppAssets.search, context: context),
         body: ListView(
@@ -474,25 +471,31 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                         );
                       } else if (snapshot.hasError) {
                         print('snapshot.error ${snapshot.error}');
-                        return const Text('An error occurred, Please restart the application');
+                        return const Text(
+                            'An error occurred, Please restart the application');
                       } else {
                         // If the Future completes successfully, use the data.
                         final data = snapshot.data;
-                        List<PremierWidget> widgets = [];
-                        for(var item in data!) {
-                          widgets.add(PremierWidget(
-                          premierType: 'UPCOMING',
-                          notifire: notifire,
-                          leagueEvent: item,
-                          ));
+                        if (data!.isNotEmpty) {
+                          List<PremierWidget> widgets = [];
+                          for (var item in data!) {
+                            widgets.add(PremierWidget(
+                              premierType: 'UPCOMING',
+                              notifire: notifire,
+                              leagueEvent: item,
+                            ));
+                          }
+                          return Column(children: widgets);
+                        } else {
+                          return const Text(
+                            'No upcoming matches');
                         }
-                        return Column(children: widgets);
+
                         // return Container();
                       }
                     },
                   ),
-                  
-                  
+
                   // Premier League
                   // ListView.builder(
                   //   physics: const NeverScrollableScrollPhysics(),
@@ -624,7 +627,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                   //     );
                   //   },
                   // ),
-                
                 ],
               ),
             ),

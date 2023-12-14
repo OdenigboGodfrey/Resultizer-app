@@ -6,10 +6,12 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/features/account/data/models/chat_item_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/fixture_teams_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/chat/chats_view.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/events_view.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/fixture_details.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/lineups_view.dart';
@@ -25,7 +27,7 @@ class FixtureScreen extends StatefulWidget {
   // const FixtureScreen({Key? key, required this.soccerFixture})
   //     : super(key: key);
   const FixtureScreen(
-      {super.key, 
+      {super.key,
       required this.leagueName,
       required this.leagueLogo,
       required this.leagueSubtitle,
@@ -48,30 +50,44 @@ class _FixtureScreenState extends State<FixtureScreen> {
   int awayGoals = 0;
   int whoIsWinner = 0;
   Color currentColor = Colors.transparent;
+  late PremierGameDTO _game;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    _game = widget.game;
     fetchData();
   }
 
-  Future fetchData() async {
-      FixtureCubit cubit = context.read<FixtureCubit>();
-      if (widget.game.matchStatus != "NS") {
-        await cubit.getStatistics(widget.game.fixtureId!);
-      }
+  late FixtureCubit cubit;
+
+  Future updateData() async {
+    if (_game.matchTime.isBefore(DateTime.now())) {
+      cubit.getEvents(_game.fixtureId!).then((value) {
+        _game = cubit.generatePremierGame();
+        setState(() {});
+      });
     }
+  }
+
+  Future fetchData() async {
+    cubit = context.read<FixtureCubit>();
+    updateData();
+    if (_game.matchStatus != "NS") {
+      await cubit.getStatistics(_game.fixtureId!);
+    }
+  }
+
+  late double width;
 
   @override
   Widget build(BuildContext context) {
     FixtureCubit cubit = context.read<FixtureCubit>();
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     Size size = MediaQuery.of(context).size;
-    double height = size.height;
-    double width = size.width;
+    width = size.width;
 
-    PremierGameDTO game = widget.game;
+    PremierGameDTO game = _game;
 
     goals = game.goals != null ? game.goals.toString().split(":") : goals;
     homeGoals = int.tryParse(goals[0]) ?? 0;
@@ -161,6 +177,19 @@ class _FixtureScreenState extends State<FixtureScreen> {
                 OddAccordion(
                   oddsData: game.odds,
                 ),
+              if (state is FixtureChatActive && state.status)
+                ChatView(
+                    chatMeta: ChatMetaDTO(
+                        homeTeam: game.homeTeam,
+                        awayTeam: game.awayTeam,
+                        homeTeamLogo: game.homeLogo,
+                        awayTeamLogo: game.awayLogo,
+                        leagueName: widget.leagueName,
+                        matchTime: game.matchTime,
+                        fixtureId: _game.fixtureId!,
+                        leagueLogo: widget.leagueLogo,
+                        leagueSubtitle: widget.leagueSubtitle,
+                      )),
             ],
           ),
         );
@@ -168,53 +197,67 @@ class _FixtureScreenState extends State<FixtureScreen> {
     );
   }
 
-  Widget buildTabBar(FixtureCubit cubit) => Row(
-        children: [
-          Expanded(
-            child: tabBarButton(
-              label: AppString.statistics,
-              onPressed: () async {
-                if (widget.game.matchStatus != "NS") {
-                  await cubit.getStatistics(widget.game.fixtureId!);
-                } else {
-                  Fluttertoast.showToast(
-                      msg: AppString.noStats,
-                      backgroundColor: AppColor.blackColor);
-                }
-              },
-            ),
+  Widget buildTabBar(FixtureCubit cubit) => SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Container(
+          width: width * 1.2,
+          child: Row(
+            children: [
+              Expanded(
+                child: tabBarButton(
+                  label: AppString.statistics,
+                  onPressed: () async {
+                    if (_game.matchStatus != "NS") {
+                      await cubit.getStatistics(_game.fixtureId!);
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: AppString.noStats,
+                          backgroundColor: AppColor.blackColor);
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: tabBarButton(
+                  label: AppString.lineups,
+                  onPressed: () async {
+                    await cubit.getLineups(_game.fixtureId!);
+                  },
+                ),
+              ),
+              Expanded(
+                child: tabBarButton(
+                  label: AppString.events,
+                  onPressed: () async {
+                    if (_game.matchStatus != "NS") {
+                      await cubit.getEvents(_game.fixtureId!);
+                    } else {
+                      Fluttertoast.showToast(
+                          msg: AppString.noEvents,
+                          backgroundColor: AppColor.blackColor);
+                    }
+                  },
+                ),
+              ),
+              Expanded(
+                child: tabBarButton(
+                  label: AppString.odds,
+                  onPressed: () async {
+                    cubit.emitOddsBar();
+                  },
+                ),
+              ),
+              Expanded(
+                child: tabBarButton(
+                  label: AppString.chats,
+                  onPressed: () async {
+                    cubit.emitChatBar();
+                  },
+                ),
+              ),
+            ],
           ),
-          Expanded(
-            child: tabBarButton(
-              label: AppString.lineups,
-              onPressed: () async {
-                await cubit.getLineups(widget.game.fixtureId!);
-              },
-            ),
-          ),
-          Expanded(
-            child: tabBarButton(
-              label: AppString.events,
-              onPressed: () async {
-                if (widget.game.matchStatus != "NS") {
-                  await cubit.getEvents(widget.game.fixtureId!);
-                } else {
-                  Fluttertoast.showToast(
-                      msg: AppString.noEvents,
-                      backgroundColor: AppColor.blackColor);
-                }
-              },
-            ),
-          ),
-          Expanded(
-            child: tabBarButton(
-              label: AppString.odds,
-              onPressed: () async {
-                cubit.emitOddsBar();
-              },
-            ),
-          ),
-        ],
+        ),
       );
 
   Widget tabBarButton(

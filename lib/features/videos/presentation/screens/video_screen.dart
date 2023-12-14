@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/format_time_ago.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/features/videos/data/model/scorebat_model_dto.dart';
@@ -84,7 +85,8 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
     return BlocBuilder<ScorebatCubit, ScorebatStates>(
         builder: (context, state) => Scaffold(
               backgroundColor: notifire.bgcolore,
-              drawer: const drawer1(),
+              key: GlobalDataSource.scaffoldKey,
+              drawer: drawer1(),
               appBar: commonappbar(
                   title: 'Watch', image: AppAssets.search, context: context),
               // appBar: AppBar(

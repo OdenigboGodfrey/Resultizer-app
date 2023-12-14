@@ -36,6 +36,7 @@ class SoccerCubit extends Cubit<SoccerStates> {
 
   //List<SoccerFixture> dayFixtures = [];
   List<LeagueEventDTO> dayFixtures = [];
+  bool hasRunForDayFixtures = false;
   
   Future<List<LeagueEventDTO>> getFixtures(String date) async {
     dayFixtures = [];
@@ -55,11 +56,13 @@ class SoccerCubit extends Cubit<SoccerStates> {
         emit(SoccerLeagueGamessLoaded(filteredFixtures));
       },
     );
+    hasRunForDayFixtures = true;
     return filteredFixtures;
   }
 
   refreshList(String date) {
     dayFixtures = [];
+    hasRunForDayFixtures = false;
     emit(SoccerLeagueGamesLoading());
     getFixtures(date);
   }

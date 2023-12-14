@@ -14,7 +14,6 @@ class TeamsCubit extends Cubit<TeamsStates> {
   
   Future<List<TeamListItemDTO>> getTeams(int leagueId) async {
     teamList = [];
-    print('widget.leagueEvent.leagueId cubit ${leagueId}');
     emit(TeamsLoading());
     final fixtures = await teamsUseCase(leagueId);
     fixtures.fold(

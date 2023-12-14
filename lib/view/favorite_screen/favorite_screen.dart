@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/competition_fixture_view.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/team_fixture_view.dart';
 
@@ -91,8 +92,8 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      
-      drawer: const drawer1(),
+      key: GlobalDataSource.scaffoldKey,
+      drawer: drawer1(),
       appBar: commonappbar(
         title: 'Resultizer'.tr,
         image: AppAssets.search,

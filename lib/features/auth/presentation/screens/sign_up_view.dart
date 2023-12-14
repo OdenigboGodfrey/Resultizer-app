@@ -172,51 +172,51 @@ class _SignUpViewState extends State<SignUpView> {
                     const SizedBox(
                       height: 20,
                     ),
-                    // 
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: Text(
-                    //     "First Name",
-                    //     style: TextStyle(
-                    //         fontSize: 15,
-                    //         fontFamily: "Urbanist_semiBold",
-                    //         color: notifire.textcolore),
-                    //   ),
-                    // ),
-                    // CommonTextfield(
-                    //   fieldController: firstNameController,
-                    //   onTap: () {},
-                    //   validator: (value) {
-                    //     return null;
-                    //   },
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // Align(
-                    //   alignment: Alignment.centerLeft,
-                    //   child: Text(
-                    //     "Last Name",
-                    //     style: TextStyle(
-                    //         fontSize: 15,
-                    //         fontFamily: "Urbanist_semiBold",
-                    //         color: notifire.textcolore),
-                    //   ),
-                    // ),
-                    // CommonTextfield(
-                    //   fieldController: lastNameController,
-                    //   onTap: () {},
-                    //   validator: (value) {
-                    //     return null;
-                    //   },
-                    // ),
-                    // const SizedBox(
-                    //   height: 20,
-                    // ),
-                    // 
+                    
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "First Name",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: "Urbanist_semiBold",
+                            color: notifire.textcolore),
+                      ),
+                    ),
+                    CommonTextfield(
+                      fieldController: firstNameController,
+                      onTap: () {},
+                      validator: (value) {
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        "Last Name",
+                        style: TextStyle(
+                            fontSize: 15,
+                            fontFamily: "Urbanist_semiBold",
+                            color: notifire.textcolore),
+                      ),
+                    ),
+                    CommonTextfield(
+                      fieldController: lastNameController,
+                      onTap: () {},
+                      validator: (value) {
+                        return null;
+                      },
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    
                     Align(
                       alignment: Alignment.centerLeft,
                       child: Text(
@@ -238,7 +238,6 @@ class _SignUpViewState extends State<SignUpView> {
                         onTap: () {
                           setState(() {
                             isObscureText = !isObscureText;
-                            debugPrint("isObscureText--- $isObscureText");
                           });
                         },
                         child: isObscureText

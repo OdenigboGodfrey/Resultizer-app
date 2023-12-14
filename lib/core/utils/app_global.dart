@@ -1,4 +1,5 @@
 import 'package:dio/src/response.dart';
+import 'package:flutter/material.dart';
 
 class GlobalDataSource {
   static dynamic userData = {};
@@ -24,4 +25,5 @@ class GlobalDataSource {
   }
   static dynamic allLeagues;
   static dynamic allLeagueTeams = {};
+  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 }

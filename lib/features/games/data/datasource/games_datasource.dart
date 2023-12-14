@@ -8,6 +8,7 @@ import 'package:dio/src/response.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/games/data/model/team_list_item_dto.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 const String documentName = 'favourites';
 Future<bool> setFavouriteTeam(
@@ -68,7 +69,7 @@ class FirebaseGamesDatasource implements GamesDatasource {
           email: email, password: password);
       var fullName = '...';
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
-          .collection('users')
+          .collection(AppString.usersCollectionKey)
           .doc(userCred.user!.uid)
           .get();
 

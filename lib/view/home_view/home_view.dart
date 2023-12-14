@@ -3,6 +3,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/view/home_view/live_screen.dart';
 import 'package:resultizer_merged/view/home_view/premierleague.dart';
@@ -163,8 +164,8 @@ class _HomeViewState extends State<HomeView> {
     double width = size.width;
     return Scaffold(
       backgroundColor: notifire.background,
-      
-      drawer: const drawer1(),
+      key: GlobalDataSource.scaffoldKey,
+      drawer: drawer1(),
       appBar: commonappbar(
           title: 'Resultizer', image: AppAssets.search, context: context),
       body: ListView(

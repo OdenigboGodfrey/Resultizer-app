@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/view/account_screen/about_screen.dart';
 import 'package:resultizer_merged/view/account_screen/general_screen.dart';
 import 'package:resultizer_merged/view/account_screen/help_screen.dart';
@@ -52,8 +53,8 @@ class _Account_screenState extends State<Account_screen> {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      
-      drawer: const drawer1(),
+      key: GlobalDataSource.scaffoldKey,
+      drawer: drawer1(),
       appBar: commonappbar(
           title: 'Account', image: AppAssets.more, context: context),
       body: Column(

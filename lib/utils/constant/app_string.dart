@@ -92,6 +92,7 @@ static const String sendReset = "Send Reset Link";
   static const String lineups = 'Lineups';
   static const String events = 'Events';
   static const String odds = 'Odds';
+  static const String chats = 'Chats';
 
   static const String noStats = 'No statistics to show';
   static const String noLineUp = 'No Line up information to show';
@@ -108,4 +109,14 @@ static const String sendReset = "Send Reset Link";
   static const String yellowCard = 'Yellow Card';
   static const String missedPenalty= 'Missed Penalty';
   static const String assist = 'Assist';
+
+  static const String tipster = 'tipster';
+  static const String admin = 'admin';
+
+  static const String usersCollectionKey = 'users';
+  static const String chatCollectionKey = 'chat';
+  static const String chatMetaCollectionKey = 'chat-meta';
+  static const String favouriteTeamCollectionKey = 'favourite-teams';
+  static const String favouriteLeaguesCollectionKey = 'favourite-leagues';
+  static const String favouriteMatchesCollectionKey = 'favourite-matches';
 }
