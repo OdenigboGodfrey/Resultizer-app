@@ -46,7 +46,7 @@ class _ManageChatsScreenState extends State<ManageChatsScreen> {
 
   getChatMeta() async {
     manageChatCubit = context.read<ManageChatCubit>();
-    chatMetas = await manageChatCubit.getChatMeta();
+    chatMetas = await manageChatCubit.getAllChatMeta();
     setState(() {});
   }
 

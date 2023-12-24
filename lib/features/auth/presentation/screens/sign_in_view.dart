@@ -17,7 +17,7 @@ import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/view/bottom_navigation_bar/bottonnavigation.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 import 'package:resultizer_merged/view/forget_password/forget_pass/forget_password_view.dart';
 
 class SignInView extends StatefulWidget {

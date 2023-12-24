@@ -49,10 +49,10 @@ class ManageChatImplementation implements ManageChatRepository {
   }
 
   @override
-  Future<Either<Failure, Iterable<DataSnapshot>>> getChatMeta() async {
+  Future<Either<Failure, Iterable<DataSnapshot>>> getAllChatMeta() async {
     if (await networkInfo.isConnected) {
       try {
-        final result = await dataSource.getChatsMeta();
+        final result = await dataSource.getAllChatMeta();
         return Right(result);
       } catch (e, stackTrace) {
         print(e);

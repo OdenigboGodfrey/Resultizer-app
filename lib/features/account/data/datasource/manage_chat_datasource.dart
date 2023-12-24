@@ -8,7 +8,7 @@ abstract class ManageChatDataSource {
   // Future<bool> readListen(Function emitter);
   Future<int> countChat(int fixtureId);
   Future<bool> deleteChat(int fixtureId);
-  Future<Iterable<DataSnapshot>> getChatsMeta();
+  Future<Iterable<DataSnapshot>> getAllChatMeta();
   Future<bool> deleteChatMeta(int fixtureId);
 }
 
@@ -46,7 +46,7 @@ class FirebaseManageChatDataSource extends ManageChatDataSource {
   }
 
   @override
-  Future<Iterable<DataSnapshot>> getChatsMeta() async {
+  Future<Iterable<DataSnapshot>> getAllChatMeta() async {
     var key = AppString.chatMetaCollectionKey;
     var getResult = await chatMetaRef.ref(key).get();
     return getResult.children;

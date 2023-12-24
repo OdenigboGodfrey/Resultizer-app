@@ -133,6 +133,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             title: 'Logout',
             onSwitchChanged: (switchValue) {},
             onOpenIconPressed: () {
+              GlobalDataSource.clearData();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const SignInView()),

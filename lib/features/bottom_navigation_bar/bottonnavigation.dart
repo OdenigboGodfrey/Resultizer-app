@@ -4,6 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/favorite_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/live_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/screen/tips_screen.dart';
+import 'package:resultizer_merged/features/home/presentation/widget/chat/chats_view.dart';
 import 'package:resultizer_merged/features/videos/presentation/screens/video_screen.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
@@ -24,7 +26,7 @@ class _BottomState extends State<Bottom> {
     const HomeScreenView(),
     const FavoriteScreenView(),
     // const NewsviewScreen(),
-    const WatchScreen(),
+    TipsScreenView(),
     const HighlightsViewScreen(),
     // const AccountScreenView(),
   ];
@@ -168,7 +170,7 @@ class _BottomState extends State<Bottom> {
                         height: 5,
                       ),
                       Text(
-                        'News',
+                        'Tips',
                         style: TextStyle(
                             fontSize: 12,
                             color: _selectedIndex == 2

@@ -12,6 +12,11 @@ class GlobalDataSource {
   static dynamic favouriteLeagues = {};
   static List favouriteMatchIds = [];
   static dynamic favouriteLeagueMatches = {};
+  static dynamic allLeagues;
+  static dynamic allLeagueTeams = {};
+
+  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
   static void writeToFavouriteMatches(dynamic data) {
     if (favouriteLeagueMatches[data['leagueId']] != null) {
       // write as existing
@@ -23,7 +28,19 @@ class GlobalDataSource {
       favouriteLeagueMatches[data['leagueId']] = data;
     }
   }
-  static dynamic allLeagues;
-  static dynamic allLeagueTeams = {};
-  static GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+
+  static void clearData() {
+    GlobalDataSource.userData = {};
+    GlobalDataSource.settings = {
+      'refreshFavouriteTeam': true,
+      'refreshFavouriteLeague': true,
+      'refreshFavouriteMatches': true,
+    };
+    GlobalDataSource.favouriteTeams = {};
+    GlobalDataSource.favouriteLeagues = {};
+    GlobalDataSource.favouriteMatchIds = [];
+    GlobalDataSource.favouriteLeagueMatches = {};
+    GlobalDataSource.allLeagues;
+    GlobalDataSource.allLeagueTeams = {};
+  }
 }

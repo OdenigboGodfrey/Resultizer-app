@@ -243,73 +243,73 @@ class _HomeScreenViewState extends State<HomeScreenView> {
               height: 10,
             ),
             // Team name
-            Padding(
-              padding: const EdgeInsets.only(left: 20),
-              child: SizedBox(
-                height: height / 22,
-                child: ListView.separated(
-                  itemCount: imagelist.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectIndex = index;
-                        });
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          color: selectIndex == index
-                              ? AppColor.pinkColor
-                              : notifire.background,
-                          borderRadius: BorderRadius.circular(25),
-                          border: Border.all(
-                            width: 2,
-                            color: AppColor.pinkColor,
-                          ),
-                        ),
-                        child: Center(
-                          child: Row(
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8),
-                                child: Image.asset(
-                                  imagelist[index].image.toString(),
-                                  color: selectIndex == index
-                                      ? Colors.white
-                                      : notifire.textcolore,
-                                ),
-                              ),
-                              Text(
-                                imagelist[index].name.toString(),
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: "Urbanist_medium",
-                                  color: selectIndex == index
-                                      ? Colors.white
-                                      : AppColor.pinkColor,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20),
+            //   child: SizedBox(
+            //     height: height / 22,
+            //     child: ListView.separated(
+            //       itemCount: imagelist.length,
+            //       scrollDirection: Axis.horizontal,
+            //       separatorBuilder: (context, index) {
+            //         return const SizedBox(
+            //           width: 10,
+            //         );
+            //       },
+            //       itemBuilder: (context, index) {
+            //         return GestureDetector(
+            //           onTap: () {
+            //             setState(() {
+            //               selectIndex = index;
+            //             });
+            //           },
+            //           child: Container(
+            //             padding: const EdgeInsets.symmetric(
+            //               horizontal: 10,
+            //             ),
+            //             clipBehavior: Clip.antiAlias,
+            //             decoration: BoxDecoration(
+            //               color: selectIndex == index
+            //                   ? AppColor.pinkColor
+            //                   : notifire.background,
+            //               borderRadius: BorderRadius.circular(25),
+            //               border: Border.all(
+            //                 width: 2,
+            //                 color: AppColor.pinkColor,
+            //               ),
+            //             ),
+            //             child: Center(
+            //               child: Row(
+            //                 children: [
+            //                   Padding(
+            //                     padding: const EdgeInsets.all(8),
+            //                     child: Image.asset(
+            //                       imagelist[index].image.toString(),
+            //                       color: selectIndex == index
+            //                           ? Colors.white
+            //                           : notifire.textcolore,
+            //                     ),
+            //                   ),
+            //                   Text(
+            //                     imagelist[index].name.toString(),
+            //                     style: TextStyle(
+            //                       fontSize: 14,
+            //                       fontWeight: FontWeight.w600,
+            //                       fontFamily: "Urbanist_medium",
+            //                       color: selectIndex == index
+            //                           ? Colors.white
+            //                           : AppColor.pinkColor,
+            //                     ),
+            //                     overflow: TextOverflow.ellipsis,
+            //                   ),
+            //                 ],
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),

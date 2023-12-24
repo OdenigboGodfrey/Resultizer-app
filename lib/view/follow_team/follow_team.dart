@@ -12,7 +12,7 @@ import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/utils/model/follow_to_model.dart';
 import 'package:resultizer_merged/utils/model/set_notification_model.dart';
-import 'package:resultizer_merged/view/bottom_navigation_bar/bottonnavigation.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 
 import '../../common/common_textfild.dart';
 import '../../theme/themenotifer.dart';

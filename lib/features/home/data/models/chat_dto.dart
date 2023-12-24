@@ -4,12 +4,14 @@ class ChatDTO {
   final String message;
   String userId;
   DateTime dateTime = DateTime.now();
+  int fixtureId;
 
   ChatDTO({
     // this.image,
     required this.name,
     required this.message,
     this.userId = '',
+    required this.fixtureId,
   });
 
   dynamic toJson() {
@@ -18,6 +20,7 @@ class ChatDTO {
       "message": message,
       "userId": userId,
       "dateTime": dateTime.toString(),
+      "fixtureId": fixtureId,
     };
   }
 }

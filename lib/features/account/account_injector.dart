@@ -34,8 +34,8 @@ void initAccount() {
     ..registerLazySingleton<CountChatUseCase>(
       () => CountChatUseCase(sl<ManageChatRepository>()),
     )
-    ..registerLazySingleton<GetChatMetaUseCase>(
-      () => GetChatMetaUseCase(sl<ManageChatRepository>()),
+    ..registerLazySingleton<GetAllChatMetaUseCase>(
+      () => GetAllChatMetaUseCase(sl<ManageChatRepository>()),
     )
     ..registerLazySingleton<DeleteChatUseCase>(
       () => DeleteChatUseCase(sl<ManageChatRepository>()),
@@ -49,7 +49,7 @@ void initAccount() {
         ))
     ..registerLazySingleton<ManageChatCubit>(() => ManageChatCubit(
           countChatUseCase: sl<CountChatUseCase>(),
-          getChatMetaUseCase: sl<GetChatMetaUseCase>(),
+          getAllChatMetaUseCase: sl<GetAllChatMetaUseCase>(),
           deleteChatUseCase: sl<DeleteChatUseCase>(),
           deleteChatMetaUseCase: sl<DeleteChatMetaUseCase>(),
         ));

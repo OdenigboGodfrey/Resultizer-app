@@ -4,12 +4,12 @@ import 'package:resultizer_merged/core/error/error_handler.dart';
 import 'package:resultizer_merged/core/usecase/usecase.dart';
 import 'package:resultizer_merged/features/account/domain/repository/manage_chat_repository.dart';
 
-class GetChatMetaUseCase implements UseCase<Iterable<DataSnapshot>, NoParams> {
+class GetAllChatMetaUseCase implements UseCase<Iterable<DataSnapshot>, NoParams> {
   final ManageChatRepository _repository;
-  GetChatMetaUseCase(this._repository);
+  GetAllChatMetaUseCase(this._repository);
   @override
   Future<Either<Failure, Iterable<DataSnapshot>>> call(NoParams params) async {
-    return await _repository.getChatMeta();
+    return await _repository.getAllChatMeta();
   }
 }
 

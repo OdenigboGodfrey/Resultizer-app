@@ -74,6 +74,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
             leading: SizedBox(
               width: 0.1 * width,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // widget.leagueEvent.games[index].gameTime
                   if (!(currentDate == matchDate.day &&
@@ -101,58 +102,89 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
               child: Row(
                 children: [
                   Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Row(
-                        children: [
-                          ImageWithDefault(
-                            defaultImageUri: 'assets/images/no_image.png',
-                            imageUrl: item.homeTeamLogo,
-                            height: 30,
-                            width: 30,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            item.homeTeam,
-                            style: TextStyle(
-                              fontFamily: 'Urbanist_bold',
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: notifire.textcolore,
+                      if (item.fixtureId == 0)
+                        Row(
+                          children: [
+                            ImageWithDefault(
+                              defaultImageUri: 'assets/images/no_image.png',
+                              imageUrl: item.homeTeamLogo,
+                              height: 30,
+                              width: 30,
                             ),
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 5,
-                      ),
-                      Row(
-                        children: [
-                          ImageWithDefault(
-                            defaultImageUri: 'assets/images/no_image.png',
-                            imageUrl: item.awayTeamLogo,
-                            height: 30,
-                            width: 30,
-                          ),
-                          const SizedBox(
-                            width: 10,
-                          ),
-                          Text(
-                            item.awayTeam,
-                            style: TextStyle(
-                              fontFamily: 'Urbanist_bold',
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              color: notifire.textcolore,
+                            const SizedBox(
+                              width: 10,
                             ),
-                            maxLines: 2,
-                            softWrap: true,
-                          ),
-                        ],
-                      ),
+                            Text(
+                              'General Tips',
+                              style: TextStyle(
+                                fontFamily: 'Urbanist_bold',
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                color: notifire.textcolore,
+                              ),
+                              maxLines: 2,
+                              softWrap: true,
+                            ),
+                          ],
+                        ),
+                      if (item.fixtureId != 0)
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                ImageWithDefault(
+                                  defaultImageUri: 'assets/images/no_image.png',
+                                  imageUrl: item.homeTeamLogo,
+                                  height: 30,
+                                  width: 30,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  item.homeTeam,
+                                  style: TextStyle(
+                                    fontFamily: 'Urbanist_bold',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: notifire.textcolore,
+                                  ),
+                                  maxLines: 2,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(
+                              height: 5,
+                            ),
+                            Row(
+                              children: [
+                                ImageWithDefault(
+                                  defaultImageUri: 'assets/images/no_image.png',
+                                  imageUrl: item.awayTeamLogo,
+                                  height: 30,
+                                  width: 30,
+                                ),
+                                const SizedBox(
+                                  width: 10,
+                                ),
+                                Text(
+                                  item.awayTeam,
+                                  style: TextStyle(
+                                    fontFamily: 'Urbanist_bold',
+                                    fontSize: 13,
+                                    fontWeight: FontWeight.w700,
+                                    color: notifire.textcolore,
+                                  ),
+                                  maxLines: 2,
+                                  softWrap: true,
+                                ),
+                              ],
+                            ),
+                          ],
+                        )
                     ],
                   ),
                   const SizedBox(
@@ -205,27 +237,28 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                 const SizedBox(
                   width: 5,
                 ),
-                GestureDetector(
-                  child: Icon(
-                    Icons.arrow_forward_ios,
-                    color: notifire.textcolore,
-                  ),
-                  onTap: () {
-                    Get.to(FixtureScreen(
-                        leagueName: item.leagueName,
-                        leagueLogo: item.leagueLogo,
-                        leagueSubtitle: item.leagueSubtitle,
-                        game: PremierGameDTO(
-                            gameTime: gameTime,
-                            homeLogo: item.awayTeamLogo,
-                            homeTeam: item.awayTeam,
-                            awayLogo: item.awayTeamLogo,
-                            awayTeam: item.awayTeam,
-                            matchStatus: '',
-                            matchTime: item.matchTime,
-                            fixtureId: item.fixtureId)));
-                  },
-                )
+                if (item.fixtureId != 0)
+                  GestureDetector(
+                    child: Icon(
+                      Icons.arrow_forward_ios,
+                      color: notifire.textcolore,
+                    ),
+                    onTap: () {
+                      Get.to(FixtureScreen(
+                          leagueName: item.leagueName,
+                          leagueLogo: item.leagueLogo,
+                          leagueSubtitle: item.leagueSubtitle,
+                          game: PremierGameDTO(
+                              gameTime: gameTime,
+                              homeLogo: item.awayTeamLogo,
+                              homeTeam: item.awayTeam,
+                              awayLogo: item.awayTeamLogo,
+                              awayTeam: item.awayTeam,
+                              matchStatus: '',
+                              matchTime: item.matchTime,
+                              fixtureId: item.fixtureId)));
+                    },
+                  )
               ]),
             ),
           ),

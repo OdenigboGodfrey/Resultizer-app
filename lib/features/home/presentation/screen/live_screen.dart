@@ -15,9 +15,6 @@ import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/view/home_view/detail_screen.dart';
 import 'package:resultizer_merged/view/home_view/matchdtails.dart';
 
-// import '../../theme/themenotifer.dart';
-// import '../../utils/constant/app_assets.dart';
-// import '../../utils/constant/app_color.dart';
 
 class LiveScreenView extends StatefulWidget {
   const LiveScreenView({super.key});
@@ -30,10 +27,6 @@ class _LiveScreenState extends State<LiveScreenView> {
   @override
   void initState() {
     super.initState();
-    // Future.microtask(() {
-    //   // getDaysOfNext7Days();
-    //   getLiveGames();
-    // });
   }
 
   List<LeagueEventDTO> fixtures = [];
@@ -45,9 +38,6 @@ class _LiveScreenState extends State<LiveScreenView> {
       print('error ${error}');
       showSnack(context, ErrorMessageType.exception, Colors.red);
     });
-    // if (cubit.matches.isEmpty) {
-    //   await cubit.getLiveGames();
-    // }
     fixtures = cubit.matches;
   }
 

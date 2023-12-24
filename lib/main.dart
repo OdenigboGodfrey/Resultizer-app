@@ -28,6 +28,7 @@ import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cu
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
+import 'package:resultizer_merged/features/splash_view/splash_view.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton_usecase.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_team_usecase.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/list_competitons_usecase.dart';
@@ -35,7 +36,6 @@ import 'package:resultizer_merged/features/videos/domain/usecase/list_teams_usec
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/view/on_boarding/on_boarding_view.dart';
 import 'package:resultizer_merged/view/splash_view/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:resultizer_merged/firebase_options.dart';
@@ -99,7 +99,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ManageChatCubit>(
             create: (context) => ManageChatCubit(
                   countChatUseCase: sl<CountChatUseCase>(),
-                  getChatMetaUseCase: sl<GetChatMetaUseCase>(),
+                  getAllChatMetaUseCase: sl<GetAllChatMetaUseCase>(),
                   deleteChatUseCase:  sl<DeleteChatUseCase>(),
                   deleteChatMetaUseCase:  sl<DeleteChatMetaUseCase>(),
                 )),
@@ -116,7 +116,7 @@ class MyApp extends StatelessWidget {
         //   colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
         //   useMaterial3: true,
         // ),
-        home: SplashView(),
+        home: SplashScreenView(),
       ),
     );
 

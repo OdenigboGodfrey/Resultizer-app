@@ -80,36 +80,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
     '2',
     '0',
   ];
-  List<favoriteModel> competion2 = [
-    favoriteModel(
-      image: AppAssets.image1,
-      title: 'World Cup 2022',
-      subTitle: 'FIFA',
-    ),
-    favoriteModel(
-        image: AppAssets.image2, title: 'Premier League', subTitle: 'England'),
-    favoriteModel(
-      image: AppAssets.chapion,
-      title: 'Champions League',
-      subTitle: 'UEFA',
-    ),
-    favoriteModel(
-      image: AppAssets.eurpa,
-      title: 'Europa League',
-      subTitle: 'UEFA',
-    ),
-    favoriteModel(
-      image: AppAssets.luliga,
-      title: 'LaLiga Santander',
-      subTitle: 'Spain',
-    ),
-    favoriteModel(
-      image: AppAssets.eradivi,
-      title: 'Eredivisie',
-      subTitle: 'Netherlands',
-    ),
-  ];
-
+  
   late FavouritesCubit favouritesCubit;
   Map<dynamic, LeagueDTO> favouritesLeagues = {};
   Map<dynamic, TeamListItemDTO> favouritesTeams = {};
@@ -181,47 +152,9 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
     var favouriteMatchesValue = favouritesMatches.values.toList();
     return Scaffold(
       backgroundColor: notifire.background,
-      // appBar: AppBar(
-      //     title: Text('Drawer Example'),
-      //     actions: [Text('Action 1')],
-      //   ),
-      // drawer: Drawer(
-      //     child: ListView(
-      //       padding: EdgeInsets.zero,
-      //       children: <Widget>[
-      //         DrawerHeader(
-      //           decoration: BoxDecoration(
-      //             color: Colors.blue,
-      //           ),
-      //           child: Text(
-      //             'Drawer Header',
-      //             style: TextStyle(
-      //               color: Colors.white,
-      //               fontSize: 24,
-      //             ),
-      //           ),
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.home),
-      //           title: Text('Home'),
-      //           onTap: () {
-      //             // Add functionality here for Home
-      //           },
-      //         ),
-      //         ListTile(
-      //           leading: Icon(Icons.settings),
-      //           title: Text('Settings'),
-      //           onTap: () {
-      //             // Add functionality here for Settings
-      //           },
-      //         ),
-      //         // Add more ListTile widgets for other options
-      //       ],
-      //     ),
-      //   ),
       key: GlobalDataSource.scaffoldKey,
       appBar: commonappbar(
-        title: 'Resultizer'.tr,
+        title: 'Favourites'.tr,
         image: AppAssets.search,
         context: context,
       ),

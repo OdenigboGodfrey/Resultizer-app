@@ -7,14 +7,14 @@ import 'package:resultizer_merged/features/account/presentation/cubit/manage_cha
 class ManageChatCubit extends Cubit<ManageChatStates> {
   ManageChatCubit(
       {required this.countChatUseCase,
-      required this.getChatMetaUseCase,
+      required this.getAllChatMetaUseCase,
       required this.deleteChatUseCase,
       required this.deleteChatMetaUseCase,
     })
       : super(ManageChatInitial());
 
   final CountChatUseCase countChatUseCase;
-  final GetChatMetaUseCase getChatMetaUseCase;
+  final GetAllChatMetaUseCase getAllChatMetaUseCase;
   final DeleteChatUseCase deleteChatUseCase;
   final DeleteChatMetaUseCase deleteChatMetaUseCase;
 
@@ -32,9 +32,9 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
     return count;
   }
 
-  Future<List<ChatMetaDTO>> getChatMeta() async {
+  Future<List<ChatMetaDTO>> getAllChatMeta() async {
     // emit(ManageChatLoading());
-    final result = await getChatMetaUseCase(NoParams());
+    final result = await getAllChatMetaUseCase(NoParams());
     List<ChatMetaDTO> response = [];
     result.fold(
       (left) {

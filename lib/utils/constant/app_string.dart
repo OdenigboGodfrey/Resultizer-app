@@ -92,11 +92,12 @@ static const String sendReset = "Send Reset Link";
   static const String lineups = 'Lineups';
   static const String events = 'Events';
   static const String odds = 'Odds';
-  static const String chats = 'Chats';
+  static const String chats = 'Tips';
 
-  static const String noStats = 'No statistics to show';
+  static const String noStats = 'No Statistics to show';
   static const String noLineUp = 'No Line up information to show';
   static const String noEvents = 'No Events to show';
+  static const String noOdds = 'No Odds to show';
 
   static const String homeString = 'home';
   static const String drawString = 'draw';
