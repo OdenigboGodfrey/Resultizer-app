@@ -206,6 +206,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     return fixtures;
   }
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -232,10 +234,10 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     }, builder: (context, state) {
       return Scaffold(
         backgroundColor: notifire.background,
-        key: GlobalDataSource.scaffoldKey,
+        key: scaffoldKey,
         drawer: drawer1(),
         appBar: commonappbar(
-            title: 'Resultizer', image: AppAssets.search, context: context),
+            title: 'Resultizer', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
         body: ListView(
           padding: EdgeInsets.zero,
           children: [

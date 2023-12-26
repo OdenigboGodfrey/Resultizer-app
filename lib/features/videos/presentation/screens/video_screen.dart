@@ -77,6 +77,8 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
     return recentFeeds;
   }
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -85,10 +87,10 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
     return BlocBuilder<ScorebatCubit, ScorebatStates>(
         builder: (context, state) => Scaffold(
               backgroundColor: notifire.bgcolore,
-              key: GlobalDataSource.scaffoldKey,
+              key: scaffoldKey,
               drawer: drawer1(),
               appBar: commonappbar(
-                  title: 'Watch', image: AppAssets.search, context: context),
+                  title: 'Watch', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
               // appBar: AppBar(
               //   actionsIconTheme:
               //       IconThemeData(color: notifire.reverseBgColore),

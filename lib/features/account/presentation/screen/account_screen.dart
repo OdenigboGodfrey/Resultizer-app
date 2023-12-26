@@ -52,15 +52,17 @@ class _AccountScreenViewState extends State<AccountScreenView> {
     'Logout',
   ];
   int net = 0;
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+  
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Scaffold(
       backgroundColor: notifire.background,
-      key: GlobalDataSource.scaffoldKey,
+      key: scaffoldKey,
       drawer: drawer1(),
       appBar:
-          commonappbar(title: 'More', image: AppAssets.more, context: context),
+          commonappbar(title: 'More', image: AppAssets.more, context: context, scaffoldKey: scaffoldKey),
       body: Column(
         children: [
           GestureDetector(

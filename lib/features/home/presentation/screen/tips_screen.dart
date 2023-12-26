@@ -21,6 +21,7 @@ class _LiveScreenState extends State<TipsScreenView> {
   }
 
   ColorNotifire notifire = ColorNotifire();
+  var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -29,17 +30,17 @@ class _LiveScreenState extends State<TipsScreenView> {
     double width = size.width;
     return Scaffold(
         backgroundColor: notifire.background,
-        key: GlobalDataSource.scaffoldKey,
+        key: scaffoldKey,
         drawer: drawer1(),
         appBar: commonappbar(
-            title: 'Tips', image: AppAssets.search, context: context),
+            title: 'Tips', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
         body: SingleChildScrollView(
-          child: Container(
+          padding: const EdgeInsets.all(0),
+          child: SizedBox(
             width: width,
             height: height * 0.85,
             child: ChatView()
           ),
-          padding: EdgeInsets.all(0),
         ));
   }
 }

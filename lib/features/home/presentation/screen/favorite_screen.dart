@@ -143,6 +143,8 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
     }
   }
 
+  var scaffoldKey = GlobalKey<ScaffoldState>();
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -152,11 +154,12 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
     var favouriteMatchesValue = favouritesMatches.values.toList();
     return Scaffold(
       backgroundColor: notifire.background,
-      key: GlobalDataSource.scaffoldKey,
+      key: scaffoldKey,
       appBar: commonappbar(
         title: 'Favourites'.tr,
         image: AppAssets.search,
         context: context,
+        scaffoldKey: scaffoldKey,
       ),
       drawer: drawer1(),
       body: SingleChildScrollView(

@@ -167,7 +167,7 @@ class _HomeViewState extends State<HomeView> {
       key: GlobalDataSource.scaffoldKey,
       drawer: drawer1(),
       appBar: commonappbar(
-          title: 'Resultizer', image: AppAssets.search, context: context),
+          title: 'Resultizer', image: AppAssets.search, context: context,scaffoldKey: GlobalDataSource.scaffoldKey,),
       body: ListView(
         padding: EdgeInsets.zero,
         children: [

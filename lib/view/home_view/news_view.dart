@@ -49,7 +49,7 @@ class _NewsviewScreenState extends State<NewsviewScreen> {
       backgroundColor: notifire.background,
       key: GlobalDataSource.scaffoldKey,
       drawer: drawer1(),
-      appBar: commonappbar(title: 'News', image: AppAssets.search, context: context),
+      appBar: commonappbar(title: 'News', image: AppAssets.search, context: context, scaffoldKey: GlobalDataSource.scaffoldKey,),
       body: const SingleChildScrollView(
 
       ),

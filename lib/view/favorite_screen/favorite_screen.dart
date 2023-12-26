@@ -98,6 +98,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         title: 'Resultizer'.tr,
         image: AppAssets.search,
         context: context,
+        scaffoldKey: GlobalDataSource.scaffoldKey,
       ),
       body: SingleChildScrollView(
         child: Padding(

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
@@ -18,7 +19,9 @@ void buildDrawerListItems() {
     DrawerModel(
       image: AppAssets.frame,
       name: 'Football',
-    ),
+     action: () {
+        Get.off(const Bottom());
+      }),
   ];
   drawerListItems.add(DrawerModel(
       image: AppAssets.fillPerson,
@@ -35,20 +38,23 @@ late GlobalKey<ScaffoldState> key;
 
 ColorNotifire notifire = ColorNotifire();
 
-PreferredSizeWidget commonappbar(
-    {required String title,
-    required String image,
-    IconData? icon,
-    context,
-    Function? onTrailWidgetClick,
-    Widget? trailWidget}) {
+PreferredSizeWidget commonappbar({
+      required String title,
+      required String image,
+      IconData? icon,
+      context,
+      Function? onTrailWidgetClick,
+      Widget? trailWidget,
+      required GlobalKey<ScaffoldState> scaffoldKey,
+    }) {
   notifire = Provider.of<ColorNotifire>(context, listen: true);
-  key = GlobalDataSource.scaffoldKey;
+  // key = GlobalDataSource.scaffoldKey;
+  var key = scaffoldKey;
   return AppBar(
     backgroundColor: notifire.background,
     leading: GestureDetector(
         onTap: () {
-          print('opening drawer ${key.currentState}');
+          print('opening drawer ${key!.currentState}');
           if (key.currentState != null) {
             // Access the state
             key.currentState!.openDrawer();
@@ -120,7 +126,7 @@ class _drawer1State extends State<drawer1> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "resultizer",
+                  "Resultizer",
                   style: TextStyle(
                     fontFamily: "Urbanist_bold",
                     color: notifire.textcolore,
@@ -160,9 +166,7 @@ class _drawer1State extends State<drawer1> {
                               child: Image.asset(
                                 drawerListItems[index].image.toString(),
                                 height: 28,
-                                color: selectIndex == index
-                                    ? AppColor.pinkColor
-                                    : notifire.textcolore,
+                                color: notifire.textcolore,
                               ),
                             ),
                             Text(
@@ -171,9 +175,7 @@ class _drawer1State extends State<drawer1> {
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Urbanist_bold",
-                                  color: selectIndex == index
-                                      ? AppColor.pinkColor
-                                      : notifire.textcolore),
+                                  color:notifire.textcolore),
                             ),
                           ],
                         ),

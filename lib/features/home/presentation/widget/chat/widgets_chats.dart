@@ -2,10 +2,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 
 import 'package:readmore/readmore.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/get_initials.dart';
+import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 
 class InputCommentUser extends StatelessWidget {
@@ -87,6 +89,7 @@ class CardChat extends StatelessWidget {
   final String message;
   final DateTime dateTime;
   final int fixtureId;
+  ColorNotifire notifire = ColorNotifire();
 
   CardChat({
     //required this.image,
@@ -101,6 +104,7 @@ class CardChat extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
+    notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Container(
       margin: const EdgeInsets.symmetric(vertical: 6.0),
       child: Row(
@@ -130,7 +134,7 @@ class CardChat extends StatelessWidget {
                 ),
                 Text(
                   message,
-                  style: theme.textTheme.bodyText2,
+                  style: TextStyle(color: notifire.textcolore),
                 ),
               ],
             ),

@@ -128,6 +128,8 @@ class _ChatViewState extends State<ChatView> {
                         EdgeInsets.symmetric(horizontal: 10.0, vertical: 0.0),
                     children: [
                       SizedBox(height: 15.0),
+                      if (existingChat.isEmpty)
+                        Center(child: Text('No recent tips to show', style: TextStyle(color: notifire.textcolore),)),
                       for (int i = 0; i < existingChat.length; i++)
                         ShakeListTransition(
                           duration: Duration(milliseconds: (i + 2) * 300),

@@ -56,7 +56,7 @@ class _Account_screenState extends State<Account_screen> {
       key: GlobalDataSource.scaffoldKey,
       drawer: drawer1(),
       appBar: commonappbar(
-          title: 'Account', image: AppAssets.more, context: context),
+          title: 'Account', image: AppAssets.more, context: context, scaffoldKey: GlobalDataSource.scaffoldKey),
       body: Column(
         children: [
           GestureDetector(
