@@ -101,6 +101,9 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
 
   void addToFavouritesTeamsList(
       BuildContext context, TeamListItemDTO teamListItem) async {
+    if (GlobalDataSource.userData.id == '0') {
+      return showSnack(context, 'Invalid Action', Colors.red);
+    }
     if (favouritesTeams.containsKey(teamListItem.id.toString())) {
       favouritesCubit.removeTeam(teamListItem).then((value) {
         showSnack(context, 'Team removed from favourites', Colors.green);
@@ -123,6 +126,9 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
 
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
+    if (GlobalDataSource.userData.id == '0') {
+      return showSnack(context, 'Invalid Action', Colors.red);
+    }
     if (favouritesLeagues.containsKey(league.id.toString())) {
       favouritesCubit.removeLeague(league).then((value) {
         showSnack(context, 'League removed from favourites', Colors.green);
@@ -157,7 +163,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
       key: scaffoldKey,
       appBar: commonappbar(
         title: 'Favourites'.tr,
-        image: AppAssets.search,
+        
         context: context,
         scaffoldKey: scaffoldKey,
       ),
@@ -648,6 +654,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
                             const SizedBox(
                               height: 10,
                             ),
+                            if (GlobalDataSource.userData.id != '0')
                             ElevatedButton(
                               onPressed: () {
                                 Get.to(const ListLeaguesView());
@@ -755,6 +762,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
                           const SizedBox(
                             height: 10,
                           ),
+                          if (GlobalDataSource.userData.id != '0')
                           ElevatedButton(
                             onPressed: () {
                               Get.to(const ListLeaguesView());

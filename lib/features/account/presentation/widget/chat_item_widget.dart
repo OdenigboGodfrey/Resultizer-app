@@ -248,6 +248,7 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                           leagueName: item.leagueName,
                           leagueLogo: item.leagueLogo,
                           leagueSubtitle: item.leagueSubtitle,
+                          leagueId: item.leagueId,
                           game: PremierGameDTO(
                               gameTime: gameTime,
                               homeLogo: item.awayTeamLogo,
@@ -256,7 +257,10 @@ class _ChatItemWidgetState extends State<ChatItemWidget> {
                               awayTeam: item.awayTeam,
                               matchStatus: '',
                               matchTime: item.matchTime,
-                              fixtureId: item.fixtureId)));
+                              fixtureId: item.fixtureId,
+                              awayTeamId: item.awayTeamId,
+                              homeTeamId: item.homeTeamId,
+                          )));
                     },
                   )
               ]),

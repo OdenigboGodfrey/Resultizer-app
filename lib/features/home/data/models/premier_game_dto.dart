@@ -18,7 +18,10 @@ class PremierGameDTO {
   List<EventModel> events = [];
   DateTime matchTime;
 
-  PremierGameDTO(
+  final int homeTeamId;
+  final int awayTeamId;
+
+  PremierGameDTO( 
       {required this.gameTime,
       required this.homeLogo,
       required this.homeTeam,
@@ -30,6 +33,7 @@ class PremierGameDTO {
       this.gameCurrentTime,
       this.matchStatusLong,
       this.fixtureId,
+      required this.homeTeamId, required this.awayTeamId,
       });
 
   Map<String, dynamic> toJson() {
@@ -47,6 +51,8 @@ class PremierGameDTO {
       'fixtureId': fixtureId,
       'matchTime': matchTime.toString(),
       'matchStatus': matchStatus,
+      'homeTeamId': homeTeamId,
+      'awayTeamId': awayTeamId,
     };
   }
 
@@ -70,6 +76,8 @@ class PremierGameDTO {
         gameCurrentTime:  json['gameCurrentTime'] ?? '',
         goals:  json['goals'] ?? '',
         matchStatusLong:  json['matchStatusLong'] ?? '',
+        homeTeamId: json['homeTeamId'],
+        awayTeamId: json['awayTeamId'],
     );
 
     if (json['odds'] != null) {

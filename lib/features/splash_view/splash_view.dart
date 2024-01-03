@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/container_injector.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/utils/app_session.dart';
+import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 import 'package:resultizer_merged/features/on_boarding/on_boarding_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
@@ -19,15 +23,32 @@ class SplashScreenView extends StatefulWidget {
 
 class _SplashScreenView extends State<SplashScreenView> {
   ColorNotifire notifire = ColorNotifire();
+  
   @override
   void initState() {
     super.initState();
+    navigate();
+  }
+
+  void navigate() {
     Future.delayed(
       const Duration(
         seconds: 4,
       ),
-      () {
-        Navigator.pushAndRemoveUntil(
+      () async {
+        
+        var userData = await AppSession.getItem("userData");
+        
+        if (userData != null) {
+          GlobalDataSource.userData = User.fromMap(userData);
+          return Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const Bottom(),
+            ),
+            (route) => false);
+        } 
+        return Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
               builder: (context) => const OnBoardingScreenView(),
@@ -35,6 +56,7 @@ class _SplashScreenView extends State<SplashScreenView> {
             (route) => false);
       },
     );
+  
   }
 
   @override

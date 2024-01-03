@@ -15,6 +15,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/favourite_teams
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/team_stats_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
@@ -35,6 +36,9 @@ void initHome() {
             networkInfo: sl<NetworkInfoImpl>()))
     ..registerLazySingleton<DayFixturesUseCase>(
       () => DayFixturesUseCase(soccerRepository: sl<SoccerRepository>()),
+    )
+    ..registerLazySingleton<PastFixturesUseCase>(
+      () => PastFixturesUseCase(soccerRepository: sl<SoccerRepository>()),
     )
     ..registerLazySingleton<LiveGamesUseCase>(
       () => LiveGamesUseCase(soccerRepository: sl<SoccerRepository>()),
@@ -86,11 +90,17 @@ void initHome() {
       () => RemoveFavouriteMatchesUseCase(
           favouriteRepository: sl<FavouriteRepository>()),
     )
+    ..registerLazySingleton<TeamStatsUseCase>(
+      () => TeamStatsUseCase(
+          soccerRepository: sl<SoccerRepository>()),
+    )
     //
     ..registerLazySingleton<SoccerCubit>(() => SoccerCubit(
           sl<DayFixturesUseCase>(),
           sl<TeamFixturesUseCase>(),
           sl<CompetitionFixturesUseCase>(),
+          sl<TeamStatsUseCase>(),
+          sl<PastFixturesUseCase>(),
         ))
     ..registerLazySingleton<FavouritesCubit>(() => FavouritesCubit(
           setFavouriteTeamsUseCase: sl<SetFavouriteTeamsUseCase>(),

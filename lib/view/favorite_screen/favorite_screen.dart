@@ -96,7 +96,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       drawer: drawer1(),
       appBar: commonappbar(
         title: 'Resultizer'.tr,
-        image: AppAssets.search,
+        
         context: context,
         scaffoldKey: GlobalDataSource.scaffoldKey,
       ),

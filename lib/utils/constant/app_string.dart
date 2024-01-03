@@ -88,11 +88,12 @@ static const String sendReset = "Send Reset Link";
 
   static const String vs = 'vs';
 
-  static const String statistics = 'Statistics';
+  static const String statistics = 'Stats';
   static const String lineups = 'Lineups';
   static const String events = 'Events';
   static const String odds = 'Odds';
   static const String chats = 'Tips';
+  static const String teamInfo = 'Info';
 
   static const String noStats = 'No Statistics to show';
   static const String noLineUp = 'No Line up information to show';

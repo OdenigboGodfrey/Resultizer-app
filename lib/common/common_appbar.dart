@@ -40,7 +40,7 @@ ColorNotifire notifire = ColorNotifire();
 
 PreferredSizeWidget commonappbar({
       required String title,
-      required String image,
+      String? image,
       IconData? icon,
       context,
       Function? onTrailWidgetClick,
@@ -77,6 +77,7 @@ PreferredSizeWidget commonappbar({
         icon,
         size: 28,
       ),
+      if (image != null || onTrailWidgetClick != null)
       GestureDetector(
           onTap: () {
             if (onTrailWidgetClick != null) {
@@ -88,7 +89,7 @@ PreferredSizeWidget commonappbar({
           child: onTrailWidgetClick != null
               ? trailWidget
               : Image.asset(
-                  image,
+                  image!,
                   height: 28,
                   width: 28,
                   color: notifire.textcolore,

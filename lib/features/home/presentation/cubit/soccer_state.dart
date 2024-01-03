@@ -44,3 +44,17 @@ class TeamGamesLoadFailure extends SoccerStates {
 }
 
 class TeamGamesLoading extends SoccerStates {}
+
+
+
+class TeamStatsLoading extends SoccerStates {}
+
+class TeamStatsLoaded extends SoccerStates {
+  final dynamic data;
+  TeamStatsLoaded({required this.data});
+}
+class TeamStatsLoadingFailure extends SoccerStates {
+  final String message;
+
+  TeamStatsLoadingFailure(this.message);
+}

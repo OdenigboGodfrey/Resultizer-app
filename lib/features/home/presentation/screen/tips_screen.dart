@@ -33,7 +33,7 @@ class _LiveScreenState extends State<TipsScreenView> {
         key: scaffoldKey,
         drawer: drawer1(),
         appBar: commonappbar(
-            title: 'Tips', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
+            title: 'Tips',  context: context, scaffoldKey: scaffoldKey),
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(0),
           child: SizedBox(

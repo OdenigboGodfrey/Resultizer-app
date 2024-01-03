@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
@@ -16,9 +17,7 @@ import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 
 class ListTeamsView extends StatefulWidget {
-  const ListTeamsView(
-      {super.key,
-      required this.league});
+  const ListTeamsView({super.key, required this.league});
   final LeagueDTO league;
 
   @override
@@ -67,6 +66,9 @@ class _ListTeamsViewState extends State<ListTeamsView> {
 
   void addToFavouritesTeamsList(
       BuildContext context, TeamListItemDTO teamListItem) async {
+    if (GlobalDataSource.userData.id == '0') {
+      return showSnack(context, 'Invalid Action', Colors.red);
+    }
     if (favouritesTeams.containsKey(teamListItem.id.toString())) {
       favouritesCubit.removeTeam(teamListItem).then((value) {
         showSnack(context, 'Team removed from favourites', Colors.green);
@@ -89,6 +91,10 @@ class _ListTeamsViewState extends State<ListTeamsView> {
 
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
+    
+    if (GlobalDataSource.userData.id == '0') {
+      return showSnack(context, 'Invalid Action', Colors.red);
+    }
     if (favouritesLeagues.containsKey(league.id.toString())) {
       favouritesCubit.removeLeague(league).then((value) {
         showSnack(context, 'League removed from favourites', Colors.green);
@@ -196,7 +202,8 @@ class _ListTeamsViewState extends State<ListTeamsView> {
                             for (TeamListItemDTO item in data) {
                               widgets.add(GestureDetector(
                                 onTap: () {
-                                  Get.to(TeamFixtureScreenView(teamId: item.id));
+                                  Get.to(
+                                      TeamFixtureScreenView(teamId: item.id));
                                   print('clicked');
                                 },
                                 child: Container(

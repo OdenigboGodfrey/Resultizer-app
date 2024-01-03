@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/core/error/error_message_types.dart';
+import 'package:resultizer_merged/core/widgets/expandDropDown.widget.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
@@ -48,10 +49,10 @@ class _LiveScreenState extends State<LiveScreenView> {
 
   ColorNotifire notifire = ColorNotifire();
   int selectIndex = 0;
-  List text = [
-    'Fixtures',
-    'Results',
-  ];
+  // List text = [
+  //   'Fixtures',
+  //   'Results',
+  // ];
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -75,66 +76,71 @@ class _LiveScreenState extends State<LiveScreenView> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20, top: 10),
-              child: SizedBox(
-                height: 45,
-                child: ListView.separated(
-                  itemCount: text.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (context, index) {
-                    return const SizedBox(
-                      width: 10,
-                    );
-                  },
-                  itemBuilder: (context, index) {
-                    return GestureDetector(
-                      onTap: () {
-                        setState(() {
-                          selectIndex = index;
-                          // getLiveGames();
-                        });
-                      },
-                      child: Container(
-                        width: 185,
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 10,
-                        ),
-                        clipBehavior: Clip.antiAlias,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(25),
-                          color: selectIndex == index
-                              ? AppColor.pinkColor
-                              : notifire.background,
-                          border: Border.all(
-                            width: 2,
-                            color: selectIndex == index
-                                ? AppColor.pinkColor
-                                : AppColor.pinkColor,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            text[index],
-                            style: TextStyle(
-                                fontSize: 14,
-                                fontWeight: FontWeight.w600,
-                                fontFamily: "gilroy_medium",
-                                color: selectIndex == index
-                                    ? Colors.white
-                                    : AppColor.pinkColor),
-                            overflow: TextOverflow.ellipsis,
-                          ),
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ),
+            // Padding(
+            //   padding: const EdgeInsets.only(left: 20, top: 10),
+            //   child: SizedBox(
+            //     height: 45,
+            //     child: ListView.separated(
+            //       itemCount: 1,
+            //       scrollDirection: Axis.horizontal,
+            //       separatorBuilder: (context, index) {
+            //         return const SizedBox(
+            //           width: 10,
+            //         );
+            //       },
+            //       itemBuilder: (context, index) {
+            //         return GestureDetector(
+            //           onTap: () {
+            //             setState(() {
+            //               selectIndex = index;
+            //               // getLiveGames();
+            //             });
+            //           },
+            //           child: Container(
+            //             width: 185,
+            //             padding: const EdgeInsets.symmetric(
+            //               horizontal: 10,
+            //             ),
+            //             clipBehavior: Clip.antiAlias,
+            //             decoration: BoxDecoration(
+            //               borderRadius: BorderRadius.circular(25),
+            //               color: selectIndex == index
+            //                   ? AppColor.pinkColor
+            //                   : notifire.background,
+            //               border: Border.all(
+            //                 width: 2,
+            //                 color: selectIndex == index
+            //                     ? AppColor.pinkColor
+            //                     : AppColor.pinkColor,
+            //               ),
+            //             ),
+            //             child: Center(
+            //               child: Text(
+            //                 text[index],
+            //                 style: TextStyle(
+            //                     fontSize: 14,
+            //                     fontWeight: FontWeight.w600,
+            //                     fontFamily: "gilroy_medium",
+            //                     color: selectIndex == index
+            //                         ? Colors.white
+            //                         : AppColor.pinkColor),
+            //                 overflow: TextOverflow.ellipsis,
+            //               ),
+            //             ),
+            //           ),
+            //         );
+            //       },
+            //     ),
+            //   ),
+            // ),
+            
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-              child: livematch(selectIndex),
+              child: Column(
+                children: [
+                  livematch(selectIndex),
+                ],
+              ),
             ),
           ],
         ),

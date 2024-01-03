@@ -92,7 +92,7 @@ class _TeamFixtureScreenViewState extends State<TeamFixtureScreenView> {
           
           drawer: drawer1(),
           // appBar: commonappbar(
-          //     title: 'Resultizer', image: AppAssets.search, context: context),
+          //     title: 'Resultizer',  context: context),
           appBar: AppBar(
                 actionsIconTheme:
                     IconThemeData(color: notifire.reverseBgColore),

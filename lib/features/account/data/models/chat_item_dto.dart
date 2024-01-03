@@ -8,8 +8,11 @@ class ChatMetaDTO {
   final int fixtureId;
   final String leagueLogo;
   final String leagueSubtitle;
+  final int homeTeamId;
+  final int awayTeamId;
+  final int leagueId;
 
-  ChatMetaDTO(
+  ChatMetaDTO(  
       {required this.homeTeam,
       required this.awayTeam,
       required this.homeTeamLogo,
@@ -19,6 +22,9 @@ class ChatMetaDTO {
       required this.fixtureId,
       required this.leagueLogo,
       required this.leagueSubtitle,
+      required this.homeTeamId, 
+      required this.awayTeamId,
+      required this.leagueId,
     });
 
   dynamic toMap() {
@@ -32,6 +38,9 @@ class ChatMetaDTO {
       'fixtureId': fixtureId,
       'leagueLogo': leagueLogo,
       'leagueSubtitle': leagueSubtitle,
+      'homeTeamId': homeTeamId,
+      'awayTeamId': awayTeamId,
+      'leagueId': leagueId,
     };
   }
 
@@ -46,6 +55,9 @@ class ChatMetaDTO {
       fixtureId: json['fixtureId'],
       leagueLogo: json['leagueLogo'] ?? '',
       leagueSubtitle: json['leagueSubtitle'] ?? '',
+      awayTeamId: json['awayTeamId'],
+      homeTeamId: json['homeTeamId'],
+      leagueId: json['leagueId'],
     );
   }
 }

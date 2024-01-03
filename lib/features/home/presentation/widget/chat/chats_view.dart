@@ -35,7 +35,11 @@ class ChatView extends StatefulWidget {
             matchTime: DateTime.now(),
             fixtureId: 0,
             leagueLogo: '',
-            leagueSubtitle: '');
+            leagueSubtitle: '',
+            awayTeamId: 0,
+            homeTeamId: 0,
+            leagueId: 0,
+        );
   }
   ChatMetaDTO? chatMeta;
 
@@ -203,6 +207,7 @@ class _ChatViewState extends State<ChatView> {
                                                 leagueLogo: item['leagueLogo'],
                                                 leagueSubtitle:
                                                     item['leagueSubtitle'],
+                                                leagueId: item['leagueId'],   
                                                 game: PremierGameDTO(
                                                     gameTime: gameTime,
                                                     homeLogo:
@@ -214,7 +219,10 @@ class _ChatViewState extends State<ChatView> {
                                                     matchStatus: '',
                                                     matchTime: DateTime.parse(item['matchTime']),
                                                     fixtureId:
-                                                        item['fixtureId'])));
+                                                        item['fixtureId'],
+                                                    awayTeamId: item['awayTeamId'],
+                                                    homeTeamId: item['homeTeamId'],
+                                                        )));
                                           }).catchError((onError, stackTrace) {
                                             print('error');
                                             print(onError);

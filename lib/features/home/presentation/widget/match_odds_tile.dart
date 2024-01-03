@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:resultizer_merged/core/utils/app_sizes.dart';
+import 'package:resultizer_merged/core/utils/convert_mediaQuery.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/odd_modal_widget.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
@@ -19,15 +20,20 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
   @override
   void initState() {
     super.initState();
-    _buildOdds(setState);
+    
   }
 
   bool _isExpanded = false;
   String betName = 'Who Will Win?';
   List<Widget> oddsWidgets = [];
+  bool _isLoaded = false;
 
   @override
   Widget build(BuildContext context) {
+    if (!_isLoaded) {
+      _isLoaded = true;
+      _buildOdds(setState, context);
+    }
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -40,12 +46,12 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
           children: [
             Text(
               betName,
-              style: const TextStyle(
+              style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: AppSize.s18,
+                  fontSize: ConvertToMediaQuery.convertFontSizeToMediaQuery(AppSize.s14, context),
                   color: AppColor.offWhite),
             ),
-            const SizedBox(height: AppSize.s8),
+            SizedBox(height:  ConvertToMediaQuery.convertHeightToMediaQuery(AppSize.s8, context)),
             Wrap(
               spacing: 0,
               runSpacing: 0,
@@ -57,7 +63,7 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
     );
   }
 
-  void _buildOdds(Function setState) {
+  void _buildOdds(Function setState, BuildContext context) {
     List<Widget> _oddsWidgets = [];
     bool oddsProcessed =
         false; // Flag to check if a relevant set of odds has been processed
@@ -82,9 +88,9 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
           switch (odd.value.toLowerCase()) {
             case 'home':
               cardColor = AppColor.blackColor;
-              displayIcon = const Icon(
+              displayIcon = Icon(
                 Icons.home,
-                size: AppSize.s20,
+                size:  ConvertToMediaQuery.convertWidthToMediaQuery(AppSize.s20, context),
                 color: AppColor.offWhite,
               );
               displayText = '${double.parse(odd.odd).toStringAsFixed(2)}';
@@ -92,22 +98,22 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
               break;
             case 'draw':
               cardColor = AppColor.blackColor;
-              displayIcon = const Icon(Icons.horizontal_rule,
-                  size: AppSize.s18, color: AppColor.offWhite);
+              displayIcon = Icon(Icons.horizontal_rule,
+                  size: ConvertToMediaQuery.convertWidthToMediaQuery(AppSize.s18, context), color: AppColor.offWhite);
               displayText = '${double.parse(odd.odd).toStringAsFixed(2)}';
               teamText = 'X';
               break;
             case 'away':
               cardColor = AppColor.blackColor;
-              displayIcon = const Icon(Icons.directions_walk,
-                  size: AppSize.s20, color: AppColor.offWhite);
+              displayIcon = Icon(Icons.directions_walk,
+                  size: ConvertToMediaQuery.convertWidthToMediaQuery(AppSize.s20, context), color: AppColor.offWhite);
               displayText = '${double.parse(odd.odd).toStringAsFixed(2)}';
               teamText = '2';
               break;
             default:
               cardColor = AppColor.blackColor;
-              displayIcon = const Icon(Icons.help,
-                  size: AppSize.s18, color: AppColor.offWhite);
+              displayIcon = Icon(Icons.help,
+                  size: ConvertToMediaQuery.convertWidthToMediaQuery(AppSize.s18, context), color: AppColor.offWhite);
               displayText =
                   'Unknown: ${double.parse(odd.odd).toStringAsFixed(2)}';
               teamText = '';
@@ -117,8 +123,8 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
           // setState(() {
           _oddsWidgets.add(
             Container(
-              height: 70,
-              width: 70,
+              height: ConvertToMediaQuery.convertHeightToMediaQuery(50, context),
+              width: ConvertToMediaQuery.convertWidthToMediaQuery(60, context),
               color: AppColor.blackColor,
               child: Card(
                 color: cardColor,
@@ -169,8 +175,8 @@ class _MatchOddsTileState extends State<MatchOddsTile> {
                 );
               },
               child: Container(
-                height: 70,
-                width: 70,
+                height: ConvertToMediaQuery.convertHeightToMediaQuery(50, context),
+                width: ConvertToMediaQuery.convertWidthToMediaQuery(60, context),
                 color: AppColor.blackColor,
                 child: Card(
                   color: AppColor.blackColor,

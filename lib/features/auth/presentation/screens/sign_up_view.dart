@@ -5,6 +5,7 @@ import 'package:resultizer_merged/common/common_bottom_sheet.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/common/common_textfild.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/utils/app_session.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
@@ -62,6 +63,7 @@ class _SignUpViewState extends State<SignUpView> {
             );
             if (user.id.isNotEmpty) {
               GlobalDataSource.userData = user;
+              AppSession.saveItem('userData', GlobalDataSource.userData.toMap());
               Get.offAll(const Bottom());
             }
             else {

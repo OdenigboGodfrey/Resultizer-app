@@ -79,6 +79,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           child: search(
                             text: 'Search Country',
                             image: AppAssets.search,
+                            
                           ),
                         ),
                       ),

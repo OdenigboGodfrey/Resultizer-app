@@ -248,6 +248,10 @@ class FavouritesCubit extends Cubit<FavouritesStates> {
     );
   }
 
+  // Future initFn() {
+
+  // }
+
   // refreshList(String date) {
   //   matches = [];
   //   emit(FavouritesLoading());

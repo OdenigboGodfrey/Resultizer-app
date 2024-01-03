@@ -17,19 +17,36 @@ class SoccerRepositoryImplementation implements SoccerRepository {
       {required this.soccerDataSource, required this.networkInfo});
 
   @override
-  Future<Either<Failure, List>> getDayFixtures({required String date}) async {
+  Future<Either<Failure, List>> getUpcomingFixtures({required String date}) async {
     if (!(await networkInfo.isConnected)) {
       return const Left(
           Failure(code: 00, message: ErrorMessageType.networkConnectError));
     }
 
     try {
-      final result = await soccerDataSource.getDayFixtures(date: date);
+      final result = await soccerDataSource.getUpcomingFixtures(date: date);
       return Right(result);
     } on DioError catch (error) {
       return Left(ErrorHandler.handle(error).failure);
     }
   }
+
+  @override
+  Future<Either<Failure, List>> getFixturesByDate({required String date}) async {
+    if (!(await networkInfo.isConnected)) {
+      return const Left(
+          Failure(code: 00, message: ErrorMessageType.networkConnectError));
+    }
+
+    try {
+      final result = await soccerDataSource.getFixturesByDate(date: date);
+      return Right(result);
+    } on DioError catch (error) {
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  
 
   @override
   Future<Either<Failure, List>> getLiveFootballMatches() async {
@@ -113,6 +130,25 @@ class SoccerRepositoryImplementation implements SoccerRepository {
     try {
       final result = await soccerDataSource.getMatchByTeam(teamId);
       if (result.isNotEmpty) {
+        return Right(result);
+      }
+      return const Left(
+          Failure(code: 00, message: ErrorMessageType.noDataFound));
+    } catch (error, stackTrace) {
+      print(stackTrace);
+      return Left(ErrorHandler.handle(error).failure);
+    }
+  }
+
+  @override
+  Future<Either<Failure, dynamic>> getTeamStatistic(int teamId, int leagueId) async {
+    if (!(await networkInfo.isConnected)) {
+      return const Left(
+          Failure(code: 00, message: ErrorMessageType.networkConnectError));
+    }
+    try {
+      final result = await soccerDataSource.getTeamStatistic(teamId, leagueId);
+      if (result != null) {
         return Right(result);
       }
       return const Left(

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
@@ -79,6 +80,9 @@ class _ListLeaguesViewState extends State<ListLeaguesView> {
 
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
+    if (GlobalDataSource.userData.id == '0') {
+      return showSnack(context, 'Invalid Action', Colors.red);
+    }
     if (favouritesLeagues.containsKey(league.id.toString())) {
       favouritesCubit.removeLeague(league).then((value) {
         showSnack(context, 'League removed from favourites', Colors.green);
@@ -190,10 +194,17 @@ class _ListLeaguesViewState extends State<ListLeaguesView> {
                                             fontSize: 14,
                                             color: notifire.textcolore),
                                       ),
-                                      trailing: star(onTap: (rating) {
-                                        // run logic to handle favourite add/remove
-                                        addToFavouritesLeaguesList(context, item);
-                                      }, initialRating: favouritesLeagues.containsKey(item.id.toString()) ? 1 : 0 ),
+                                      trailing: star(
+                                          onTap: (rating) {
+                                            // run logic to handle favourite add/remove
+                                            addToFavouritesLeaguesList(
+                                                context, item);
+                                          },
+                                          initialRating:
+                                              favouritesLeagues.containsKey(
+                                                      item.id.toString())
+                                                  ? 1
+                                                  : 0),
                                     ),
                                   ),
                                 ),
@@ -238,7 +249,6 @@ class _ListLeaguesViewState extends State<ListLeaguesView> {
 
   Widget star({required Function(double) onTap, double initialRating = 0}) {
     return RatingBar.builder(
-      
       itemSize: 24,
       initialRating: initialRating,
       direction: Axis.horizontal,

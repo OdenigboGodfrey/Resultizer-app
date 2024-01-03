@@ -82,16 +82,20 @@ class FixtureChatActive extends FixtureState {
 
   FixtureChatActive({required this.status});
 }
-
 class FixtureChatLoaded extends FixtureState {
   final List<OddsModel> odds;
   // final List<dynamic> events;
 
   FixtureChatLoaded({required this.odds});
 }
-
 class FixtureChatLoadingFailure extends FixtureState {
   final String message;
 
   FixtureChatLoadingFailure({required this.message});
+}
+
+class FixtureTeamStatsActive extends FixtureState {
+  final bool status;
+
+  FixtureTeamStatsActive({required this.status});
 }

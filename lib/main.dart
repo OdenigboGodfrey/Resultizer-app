@@ -23,6 +23,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/favourite_teams
 import 'package:resultizer_merged/features/home/domain/use_cases/fixture_detail_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/live_fixtures_usecase.dart';
 import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_usecase.dart';
+import 'package:resultizer_merged/features/home/domain/use_cases/team_stats_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
@@ -58,8 +59,13 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthCubit>(
             create: (context) => AuthCubit(loginUseCase: sl<LoginUseCase>())),
         BlocProvider<SoccerCubit>(
-            create: (context) => SoccerCubit(sl<DayFixturesUseCase>(),
-                sl<TeamFixturesUseCase>(), sl<CompetitionFixturesUseCase>())),
+            create: (context) => SoccerCubit(
+                  sl<DayFixturesUseCase>(),
+                  sl<TeamFixturesUseCase>(),
+                  sl<CompetitionFixturesUseCase>(),
+                  sl<TeamStatsUseCase>(),
+                  sl<PastFixturesUseCase>(),
+                )),
         BlocProvider<LiveGamesCubit>(
             create: (context) => LiveGamesCubit(sl<LiveGamesUseCase>())),
         BlocProvider<FixtureCubit>(
@@ -100,8 +106,8 @@ class MyApp extends StatelessWidget {
             create: (context) => ManageChatCubit(
                   countChatUseCase: sl<CountChatUseCase>(),
                   getAllChatMetaUseCase: sl<GetAllChatMetaUseCase>(),
-                  deleteChatUseCase:  sl<DeleteChatUseCase>(),
-                  deleteChatMetaUseCase:  sl<DeleteChatMetaUseCase>(),
+                  deleteChatUseCase: sl<DeleteChatUseCase>(),
+                  deleteChatMetaUseCase: sl<DeleteChatMetaUseCase>(),
                 )),
         MultiProvider(providers: [
           ChangeNotifierProvider(

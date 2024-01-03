@@ -5,7 +5,7 @@ import 'package:resultizer_merged/features/home/data/models/league_event_dto.dar
 
 abstract class SoccerRepository {
 
-  Future<Either<Failure, List<dynamic>>> getDayFixtures({
+  Future<Either<Failure, List<dynamic>>> getUpcomingFixtures({
     required String date,
   });
 
@@ -20,7 +20,10 @@ abstract class SoccerRepository {
   });
   Future<Either<Failure, List<LeagueEventDTO>>> getMatchByTeam(int teamId);
   Future<Either<Failure, List<LeagueEventDTO>>> getMatchByCompetition(int competitionId);
-
+  Future<Either<Failure, dynamic>> getTeamStatistic(int teamId, int leagueId);
+  Future<Either<Failure, List<dynamic>>> getFixturesByDate({
+    required String date,
+  });
   
 
   //Future<Either<Failure, List<SoccerFixture>>> getLiveFixtures();

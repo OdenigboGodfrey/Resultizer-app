@@ -91,8 +91,6 @@ class FirebaseChatDataSource extends ChatDataSource {
   Future<Map<dynamic, dynamic>> getChatMeta(int fixtureId) async {
     var key = "${AppString.chatMetaCollectionKey}/$fixtureId";
     var getResult = await chatRef.ref(key).get();
-    print('getResult.value');
-    print(getResult.value);
     if (!getResult.exists) return {};
     return getResult.value as Map<dynamic, dynamic>;
   }

@@ -5,6 +5,7 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/utils/app_session.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/manage_chats_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/settings_item.dart';
@@ -87,11 +88,11 @@ class _AccountScreenViewState extends State<AccountScreenView> {
                   fontSize: 14,
                 ),
               ),
-              trailing: Image.asset(
-                AppAssets.edit,
-                height: 24,
-                width: 24,
-              ),
+              // trailing: Image.asset(
+              //   AppAssets.edit,
+              //   height: 24,
+              //   width: 24,
+              // ),
             ),
           ),
           // SettingsItemWidget(
@@ -136,6 +137,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             onSwitchChanged: (switchValue) {},
             onOpenIconPressed: () {
               GlobalDataSource.clearData();
+              AppSession.clear();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => const SignInView()),
@@ -144,113 +146,6 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             switchValue: notifire.isDark,
             buttonIcon: Icons.logout,
           ),
-          // ListView.builder(
-          //   physics: const NeverScrollableScrollPhysics(),
-          //   shrinkWrap: true,
-          //   scrollDirection: Axis.vertical,
-          //   padding: const EdgeInsets.symmetric(vertical: 15),
-          //   itemCount: img.length,
-          //   itemBuilder: (context, index) {
-          //     print('index $index ${img.length}');
-          //     return GestureDetector(
-          //       onTap: () {
-          //         if (index == 0) {
-          //           Get.to(const ParsnalScreen());
-          //         } else if (index == 1) {
-          //           Get.to(const NotificationScreen());
-          //         } else if (index == 2) {
-          //           Get.to(const GeneralScreen());
-          //         } else if (index == 3) {
-          //           Get.to(const Securityscreen());
-          //         } else if (index == 4) {
-          //         } else if (index == 5) {
-          //           Get.to(const HelpScreen());
-          //         } else if (index == 6) {
-          //           Get.to(const AboutScreen());
-          //         }
-          //         // Log out Bottom Sheet
-          //         else {
-          //           showModalBottomSheet(
-          //             context: context,
-          //             builder: (context) {
-          //               return Container(
-          //                 height: 271,
-          //                 width: Get.width,
-          //                 decoration: BoxDecoration(
-          //                   borderRadius: const BorderRadius.vertical(
-          //                       top: Radius.circular(28)),
-          //                   color: notifire.bgcolore,
-          //                 ),
-          //                 child: Column(
-          //                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          //                   children: [
-          //                     const Text(
-          //                       'Logout',
-          //                       style: TextStyle(
-          //                         fontFamily: "Urbanist_bold",
-          //                         color: Color(0xffF75555),
-          //                         fontSize: 24,
-          //                       ),
-          //                     ),
-          //                     Padding(
-          //                       padding:
-          //                           const EdgeInsets.symmetric(horizontal: 15),
-          //                       child: Divider(
-          //                         height: 10,
-          //                         thickness: 1,
-          //                         color: notifire.borercolour,
-          //                       ),
-          //                     ),
-          //                     Text(
-          //                       'Are you sure you want to log out?',
-          //                       style: TextStyle(
-          //                           fontFamily: "Urbanist_bold",
-          //                           fontSize: 20,
-          //                           color: notifire.textcolore),
-          //                     ),
-          //                     Row(
-          //                       mainAxisAlignment:
-          //                           MainAxisAlignment.spaceAround,
-          //                       children: [
-          //                         const SizedBox(
-          //                           width: 10,
-          //                         ),
-          //                         CommonButton(
-          //                           height: 58,
-          //                           width: 185,
-          //                           color: AppColor.babyPinkColor,
-          //                           buttonName: 'Cancel',
-          //                           onTap: () => Navigator.pop(context),
-          //                         ),
-          //                         const Expanded(
-          //                             child: SizedBox(
-          //                           width: 10,
-          //                         )),
-          //                         CommonButton(
-          //                           onTap: () {
-          //                             Get.to(const SignView());
-          //                           },
-          //                           height: 58,
-          //                           width: 185,
-          //                           color: AppColor.pinkColor,
-          //                           buttonName: 'Yes, Logout',
-          //                           textColor: Colors.white,
-          //                         ),
-          //                         const SizedBox(
-          //                           width: 10,
-          //                         ),
-          //                       ],
-          //                     ),
-          //                   ],
-          //                 ),
-          //               );
-          //             },
-          //           );
-          //         }
-          //       },
-          //     );
-          //   },
-          // ),
         ],
       ),
     );

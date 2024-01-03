@@ -90,7 +90,7 @@ class _HighlightsViewScreenState extends State<HighlightsViewScreen> {
               key: scaffoldKey,
               drawer: drawer1(),
               appBar: commonappbar(
-                  title: 'Watch', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
+                  title: 'Watch',  context: context, scaffoldKey: scaffoldKey),
               // appBar: AppBar(
               //   actionsIconTheme:
               //       IconThemeData(color: notifire.reverseBgColore),

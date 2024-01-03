@@ -32,7 +32,7 @@ class HomeScreenView extends StatefulWidget {
 
 class _HomeScreenViewState extends State<HomeScreenView> {
   int selectIndex = 0;
-  int selected = 0;
+  // int selected = 0;
   dynamic selectedValue;
   ColorNotifire notifire = ColorNotifire();
   List cup = [
@@ -147,15 +147,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   ];
   // List day = [];
   Map<String, dynamic> selectedDay = {};
-  final List dayz = [
-    AppString.sun,
-    AppString.mon,
-    AppString.tod,
-    AppString.wet,
-    AppString.thu,
-    AppString.fri,
-    AppString.sat,
-  ];
+
   final List date = [
     AppString.date1,
     AppString.date2,
@@ -165,9 +157,6 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     AppString.date6,
     AppString.date7,
   ];
-  int fillstar1 = 0;
-  int fillstar2 = 0;
-  int fillstar3 = 0;
   late SoccerCubit cubit;
   // late FavouritesCubit favouritesCubit;
 
@@ -181,8 +170,20 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   }
 
   refreshList() {
-    fixtures = [];
     String date = DateFormat("yyyy-MM-dd").format(selectedDay['dateTime']);
+    updateData(date);
+  }
+
+  updateData(String date, {bool onlyFutureGames = true }) {
+    fixtures = [];
+    cubit.refreshList(date, onlyFutureGames: onlyFutureGames);
+    setState(() {
+      isLoadingNewDay = true;
+    });
+  }
+
+  handleDatePickerAction(String date) {
+    fixtures = [];
     cubit.refreshList(date);
     setState(() {
       isLoadingNewDay = true;
@@ -193,7 +194,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     String date = DateFormat("yyyy-MM-dd").format(selectedDay['dateTime']);
 
     if (cubit.dayFixtures.isEmpty && !cubit.hasRunForDayFixtures) {
-      await cubit.getFixtures(date);
+      await cubit.getUpcomingFixtures(date);
     }
     fixtures = cubit.dayFixtures;
   }
@@ -237,7 +238,10 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         key: scaffoldKey,
         drawer: drawer1(),
         appBar: commonappbar(
-            title: 'Resultizer', image: AppAssets.search, context: context, scaffoldKey: scaffoldKey),
+            title: 'Resultizer',
+            
+            context: context,
+            scaffoldKey: scaffoldKey),
         body: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -365,7 +369,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                               return GestureDetector(
                                 onTap: () {
                                   setState(() {
-                                    selected = index;
+                                    cubit.selected = index;
                                     selectedDay = cubit.day[index];
                                   });
                                   refreshList();
@@ -381,7 +385,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                       width: MediaQuery.of(context).size.width /
                                           8.48,
                                       decoration: BoxDecoration(
-                                        color: selected == index
+                                        color: cubit.selected == index
                                             ? AppColor.pinkColor
                                             : notifire.background,
                                         borderRadius: BorderRadius.circular(16),
@@ -393,7 +397,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                           Text(
                                             cubit.day[index]['day'],
                                             style: TextStyle(
-                                              color: selected == index
+                                              color: cubit.selected == index
                                                   ? Colors.white
                                                   : notifire.textcolore,
                                               fontFamily: 'Urbanist_semibold',
@@ -404,7 +408,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                           Text(
                                             cubit.day[index]['date'],
                                             style: TextStyle(
-                                              color: selected == index
+                                              color: cubit.selected == index
                                                   ? Colors.white
                                                   : notifire.textcolore,
                                               fontSize: 14,
@@ -430,23 +434,33 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                         width: 10,
                       ),
                       GestureDetector(
-                          onTap: () {
-                            showDatePicker(
-                                context: context,
-                                builder: (context, child) {
-                                  return Theme(
-                                      data: Theme.of(context).copyWith(
-                                        colorScheme: const ColorScheme.light(
-                                            primary: AppColor.pinkColor,
-                                            onPrimary: Colors.white,
-                                            onSurface: AppColor.blackColor,
-                                            surface: Color(0xffFFFFFF)),
-                                      ),
-                                      child: child!);
-                                },
-                                initialDate: DateTime.now(),
-                                firstDate: DateTime(2000),
-                                lastDate: DateTime(2101));
+                          onTap: () async {
+                            DateTime? picked = await showDatePicker(
+                              context: context,
+                              builder: (context, child) {
+                                return Theme(
+                                    data: Theme.of(context).copyWith(
+                                      colorScheme: const ColorScheme.light(
+                                          primary: AppColor.pinkColor,
+                                          onPrimary: Colors.white,
+                                          onSurface: AppColor.blackColor,
+                                          surface: Color(0xffFFFFFF)),
+                                    ),
+                                    child: child!);
+                              },
+                              initialDate: DateTime.now(),
+                              firstDate: DateTime(2000),
+                              lastDate: DateTime(2101),
+                            );
+
+                            if (picked != null) {
+                              setState(() {
+                                cubit.selected = -1;
+                                // selectedDay = cubit.day[index];
+                              });
+                              String date = DateFormat("yyyy-MM-dd").format(picked);
+                              updateData(date, onlyFutureGames: false);
+                            }
                           },
                           child: Image.asset(
                             AppAssets.calender,
@@ -489,146 +503,13 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                           }
                           return Column(children: widgets);
                         } else {
-                          return const Text(
-                            'No upcoming matches');
+                          return const Text('No upcoming matches');
                         }
 
                         // return Container();
                       }
                     },
                   ),
-
-                  // Premier League
-                  // ListView.builder(
-                  //   physics: const NeverScrollableScrollPhysics(),
-                  //   scrollDirection: Axis.vertical,
-                  //   shrinkWrap: true,
-                  //   itemCount: 1,
-                  //   itemBuilder: (context, index) {
-                  //     return Column(
-                  //       children: [
-                  //         GestureDetector(
-                  //           onTap: () {
-                  //             Get.to(const premierscreen());
-                  //           },
-                  //           child: Stack(
-                  //             clipBehavior: Clip.none,
-                  //             children: [
-                  //               Container(
-                  //                 height: 450,
-                  //                 decoration: BoxDecoration(
-                  //                     color: notifire.insidecolor,
-                  //                     border: Border.all(
-                  //                         color: notifire.borercolour,
-                  //                         width: 1),
-                  //                     borderRadius: BorderRadius.circular(20)),
-                  //                 child: Column(
-                  //                   mainAxisAlignment: MainAxisAlignment.center,
-                  //                   children: [
-                  //                     ListTile(
-                  //                       leading: Image.asset(
-                  //                         AppAssets.image2,
-                  //                         height: 30,
-                  //                         width: 30,
-                  //                       ),
-                  //                       title: Row(
-                  //                         children: [
-                  //                           Text(
-                  //                             'Premier League',
-                  //                             style: TextStyle(
-                  //                               fontFamily: 'Urbanist_bold',
-                  //                               fontSize: 15,
-                  //                               fontWeight: FontWeight.w700,
-                  //                               color: notifire.textcolore,
-                  //                             ),
-                  //                           ),
-                  //                           const SizedBox(
-                  //                             width: 5,
-                  //                           ),
-                  //                           const Icon(Icons.star,
-                  //                               color: Colors.amber, size: 13),
-                  //                         ],
-                  //                       ),
-                  //                       subtitle: Text('England',
-                  //                           style: TextStyle(
-                  //                             fontSize: 13,
-                  //                             fontWeight: FontWeight.w500,
-                  //                             fontFamily: 'Urbanist-medium',
-                  //                             color: notifire.textcolore,
-                  //                           )),
-                  //                       trailing: Icon(
-                  //                         Icons.arrow_forward_ios_rounded,
-                  //                         size: 16,
-                  //                         color: notifire.textcolore,
-                  //                       ),
-                  //                     ),
-                  //                     Padding(
-                  //                       padding: const EdgeInsets.symmetric(
-                  //                           horizontal: 20),
-                  //                       child: Divider(
-                  //                         height: 10,
-                  //                         thickness: 1,
-                  //                         color: notifire.borercolour,
-                  //                       ),
-                  //                     ),
-                  //                     Padding(
-                  //                       padding: const EdgeInsets.symmetric(
-                  //                           horizontal: 20),
-                  //                       child: Divider(
-                  //                         height: 10,
-                  //                         thickness: 1,
-                  //                         color: notifire.borercolour,
-                  //                       ),
-                  //                     ),
-                  //                     Padding(
-                  //                       padding: const EdgeInsets.symmetric(
-                  //                           horizontal: 20),
-                  //                       child: Divider(
-                  //                         height: 10,
-                  //                         thickness: 1,
-                  //                         color: notifire.borercolour,
-                  //                       ),
-                  //                     ),
-                  //                     Padding(
-                  //                       padding: const EdgeInsets.symmetric(
-                  //                           horizontal: 20),
-                  //                       child: Divider(
-                  //                         height: 10,
-                  //                         thickness: 1,
-                  //                         color: notifire.borercolour,
-                  //                       ),
-                  //                     ),
-                  //                   ],
-                  //                 ),
-                  //               ),
-                  //               Positioned(
-                  //                 left: Get.width * 0.35,
-                  //                 top: -18,
-                  //                 child: Container(
-                  //                   height: 34,
-                  //                   width: 80,
-                  //                   decoration: BoxDecoration(
-                  //                     borderRadius: BorderRadius.circular(50),
-                  //                     color: Colors.deepOrange,
-                  //                   ),
-                  //                   child: const Center(
-                  //                     child: Text(
-                  //                       'LIVE',
-                  //                       style: TextStyle(
-                  //                           fontFamily: 'Urbanist_bold',
-                  //                           fontWeight: FontWeight.w700,
-                  //                           color: Colors.white),
-                  //                     ),
-                  //                   ),
-                  //                 ),
-                  //               ),
-                  //             ],
-                  //           ),
-                  //         ),
-                  //       ],
-                  //     );
-                  //   },
-                  // ),
                 ],
               ),
             ),

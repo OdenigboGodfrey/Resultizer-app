@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:resultizer_merged/core/utils/app_sizes.dart';
+import 'package:resultizer_merged/core/utils/convert_mediaQuery.dart';
 import 'package:resultizer_merged/core/utils/random_colour.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
@@ -31,7 +32,6 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
   }
 
   // widget values
-  final double containerHeight = 380;
   final LeagueEventDTO leagueEvent;
 
   final double containerBorderRadius = 24;
@@ -41,6 +41,7 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
 
   @override
   Widget build(BuildContext context) {
+    final double containerHeight = 380;
     return ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         scrollDirection: Axis.vertical,
@@ -53,6 +54,7 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                   leagueName: widget.leagueEvent.leagueTitle,
                   leagueLogo: widget.leagueEvent.leagueImage,
                   leagueSubtitle: widget.leagueEvent.leagueSubTitle,
+                  leagueId: widget.leagueEvent.leagueId,
                   game: games[index]));
               // widget.onTap();
             },
@@ -112,12 +114,14 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                       const SizedBox(
                                         height: 20,
                                       ),
+                                      // live child content
                                       Row(
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceAround,
                                         children: [
+                                          // home team
                                           SizedBox(
-                                            width: 120,
+                                            width: ConvertToMediaQuery.convertWidthToMediaQuery(80, context),
                                             child: Column(
                                               children: [
                                                 // Image.asset(AppAssets.team3, height: 80,),
@@ -126,39 +130,43 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                                       'assets/images/no_image.png',
                                                   imageUrl:
                                                       games[index].homeLogo,
-                                                  height: 80,
+                                                  height: ConvertToMediaQuery.convertHeightToMediaQuery(50, context),
                                                   width: null,
                                                 ),
                                                 Text(
                                                   games[index].homeTeam,
-                                                  style: const TextStyle(
+                                                  textAlign: TextAlign.center,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
                                                       fontFamily:
                                                           'Urbanist_bold',
                                                       fontWeight:
                                                           FontWeight.w700,
-                                                      fontSize: 18,
+                                                      fontSize: ConvertToMediaQuery.convertFontSizeToMediaQuery(16, context),
                                                       color: Colors.white),
                                                 ),
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            width: 120,
+                                          // game info
+                                          SizedBox(
+                                            width: ConvertToMediaQuery.convertWidthToMediaQuery(80, context),
                                             child: Column(
                                               children: [
                                                 Text(
                                                   games[index].goals.toString(),
-                                                  style: const TextStyle(
+                                                  style: TextStyle(
                                                       fontFamily:
                                                           'Urbanist_bold',
                                                       fontWeight:
                                                           FontWeight.w700,
-                                                      fontSize: 40,
+                                                      fontSize: ConvertToMediaQuery.convertFontSizeToMediaQuery(20, context),
                                                       color: Colors.white),
                                                 ),
                                                 Container(
-                                                  height: 26,
-                                                  width: 66,
+                                                  height: ConvertToMediaQuery.convertHeightToMediaQuery(26, context),
+                                                  width: ConvertToMediaQuery.convertWidthToMediaQuery(66, context),
                                                   decoration: BoxDecoration(
                                                     borderRadius:
                                                         BorderRadius.circular(
@@ -177,12 +185,12 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                                                 .gameCurrentTime ??
                                                             games[index]
                                                                 .matchStatus, // widget.leagueEvent.liveGameTime,
-                                                        style: const TextStyle(
+                                                        style: TextStyle(
                                                             fontFamily:
                                                                 'Urbanist_bold',
                                                             fontWeight:
                                                                 FontWeight.w700,
-                                                            fontSize: 12,
+                                                            fontSize: ConvertToMediaQuery.convertHeightToMediaQuery(12, context),
                                                             color:
                                                                 Colors.white),
                                                       ),
@@ -192,8 +200,9 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                               ],
                                             ),
                                           ),
-                                          Container(
-                                            width: 120,
+                                          // away team
+                                          SizedBox(
+                                            width: ConvertToMediaQuery.convertWidthToMediaQuery(80, context),
                                             child: Column(
                                               children: [
                                                 // Image.asset(
@@ -205,17 +214,20 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                                                       'assets/images/no_image.png',
                                                   imageUrl:
                                                       games[index].awayLogo,
-                                                  height: 80,
+                                                  height:  ConvertToMediaQuery.convertHeightToMediaQuery(50, context),
                                                   width: null,
                                                 ),
                                                 Text(
                                                   games[index].awayTeam,
-                                                  style: const TextStyle(
+                                                  textAlign: TextAlign.center,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  maxLines: 2,
+                                                  style: TextStyle(
                                                       fontFamily:
                                                           'Urbanist_bold',
                                                       fontWeight:
                                                           FontWeight.w700,
-                                                      fontSize: 18,
+                                                      fontSize: ConvertToMediaQuery.convertFontSizeToMediaQuery(16, context),
                                                       color: Colors.white),
                                                 ),
                                               ],
@@ -246,8 +258,8 @@ class _LiveGameWidgetState extends State<LiveGameWidget> {
                         ],
                       ),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: ConvertToMediaQuery.convertHeightToMediaQuery(10, context),
                     ),
                   ],
                 ),
