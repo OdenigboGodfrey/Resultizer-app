@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/common/common_button.dart';
-import 'package:resultizer/common/common_textfild.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
-import 'package:resultizer/utils/constant/app_string.dart';
-import 'package:resultizer/view/bottom_navigation_bar/bottonnavigation.dart';
+import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/common/common_textfild.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 
 import '../../common/common_bottom_sheet.dart';
 import '../../theme/themenotifer.dart';

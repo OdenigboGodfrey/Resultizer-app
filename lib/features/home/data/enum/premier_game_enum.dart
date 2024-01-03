@@ -1,0 +1,4 @@
+enum PremierGameStatusEnum {
+  NS,
+  FT,
+}

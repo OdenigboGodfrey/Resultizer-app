@@ -1,12 +1,15 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
-import 'package:resultizer/utils/constant/app_color.dart';
-import 'package:resultizer/utils/constant/app_string.dart';
-import 'package:resultizer/view/follow_team/follow_team.dart';
-import 'package:resultizer/view/sign_in/sign_in_view.dart';
+import 'package:resultizer_merged/features/auth/presentation/screens/sign_in_view.dart';
+import 'package:resultizer_merged/features/auth/presentation/screens/sign_up_view.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_color.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
+import 'package:resultizer_merged/view/follow_team/follow_team.dart';
+import 'package:resultizer_merged/view/sign_in/sign_in_view.dart';
 
 import '../../common/common_button.dart';
 import '../../theme/themenotifer.dart';
@@ -44,6 +47,18 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         title: AppString.welCome4,
         subTitle: AppString.onbondingSubTitle4),
   ];
+
+   _navigateToSignIn() async {
+    await Future.delayed(
+        const Duration(seconds: 3)); // 3 seconds delay for splash
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) =>
+                 const SignInView())); // Navigates to another page after splash
+  }
+
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
@@ -148,7 +163,8 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                   ),
                   CommonButton(
                     onTap: () {
-                      Get.offAll(const FollowTeam());
+                      // Get.offAll(const FollowTeam());
+                      Get.to(const SignUpView());
                     },
                     buttonName: AppString.getStarted,
                     isShadow: true,
@@ -163,9 +179,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
                     isShadow: false,
                     color: AppColor.babyPinkColor,
                     onTap: () {
-                      Get.offAll(
-                        const SignView(),
-                      );
+                      _navigateToSignIn();
+                      // Get.to(
+                      //   const SignInView(),
+                      // );
                     },
                   ),
                   const SizedBox(

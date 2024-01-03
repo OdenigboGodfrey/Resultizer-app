@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/view/home_view/detail_screen.dart';
-import 'package:resultizer/view/home_view/matchdtails.dart';
+import 'package:resultizer_merged/view/home_view/detail_screen.dart';
+import 'package:resultizer_merged/view/home_view/matchdtails.dart';
 
 import '../../theme/themenotifer.dart';
 import '../../utils/constant/app_assets.dart';

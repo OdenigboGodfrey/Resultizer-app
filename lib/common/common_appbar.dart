@@ -2,73 +2,63 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/view/search_screen/search_screen.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
+import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
+import 'package:resultizer_merged/theme/themenotifer.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_color.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
+import 'package:resultizer_merged/utils/model/drawer_model.dart';
+import 'package:resultizer_merged/view/search_screen/search_screen.dart';
 
-import '../theme/themenotifer.dart';
-import '../utils/constant/app_assets.dart';
-import '../utils/constant/app_color.dart';
-import '../utils/model/drawer_model.dart';
+List<DrawerModel> drawerListItems = [];
+void buildDrawerListItems() {
+  drawerListItems = [
+    DrawerModel(
+      image: AppAssets.frame,
+      name: 'Football',
+     action: () {
+        Get.off(const Bottom());
+      }),
+  ];
+  drawerListItems.add(DrawerModel(
+      image: AppAssets.fillPerson,
+      name: 'Account',
+      action: () {
+        Get.to(const AccountScreenView());
+      }));
+}
 
-List<DrawerModel> imagelist = [
-  DrawerModel(
-    image: AppAssets.frame,
-    name: 'Football',
-  ),
-  DrawerModel(
-    image: AppAssets.frame1,
-    name: 'Tennis',
-  ),
-  DrawerModel(
-    image: AppAssets.frame2,
-    name: 'Basketball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame3,
-    name: 'Hockey',
-  ),
-  DrawerModel(
-    image: AppAssets.frame4,
-    name: 'Volleyball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame5,
-    name: 'Handball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame6,
-    name: 'Esports',
-  ),
-  DrawerModel(
-    image: AppAssets.frame7,
-    name: 'Baseball',
-  ),
-  DrawerModel(
-    image: AppAssets.frame8,
-    name: 'Cricket',
-  ),
-  DrawerModel(
-    image: AppAssets.frame9,
-    name: 'Motorsport',
-  ),
-  DrawerModel(
-    image: AppAssets.frame10,
-    name: 'Rugby',
-  ),
-];
+// last item in drawerListItems
 
 int selectIndex = 0;
-final GlobalKey<ScaffoldState> key = GlobalKey();
+late GlobalKey<ScaffoldState> key;
 
 ColorNotifire notifire = ColorNotifire();
 
-PreferredSizeWidget commonappbar(
-    {required String title, required String image, IconData? icon, context}) {
+PreferredSizeWidget commonappbar({
+      required String title,
+      String? image,
+      IconData? icon,
+      context,
+      Function? onTrailWidgetClick,
+      Widget? trailWidget,
+      required GlobalKey<ScaffoldState> scaffoldKey,
+    }) {
   notifire = Provider.of<ColorNotifire>(context, listen: true);
+  // key = GlobalDataSource.scaffoldKey;
+  var key = scaffoldKey;
   return AppBar(
     backgroundColor: notifire.background,
     leading: GestureDetector(
         onTap: () {
-          key.currentState!.openDrawer();
+          print('opening drawer ${key!.currentState}');
+          if (key.currentState != null) {
+            // Access the state
+            key.currentState!.openDrawer();
+          }
         },
         child: Icon(
           Icons.menu,
@@ -87,16 +77,23 @@ PreferredSizeWidget commonappbar(
         icon,
         size: 28,
       ),
+      if (image != null || onTrailWidgetClick != null)
       GestureDetector(
           onTap: () {
-            Get.to(const SearchScreen());
+            if (onTrailWidgetClick != null) {
+              onTrailWidgetClick();
+            } else {
+              Get.to(const SearchScreen());
+            }
           },
-          child: Image.asset(
-            image,
-            height: 28,
-            width: 28,
-            color: notifire.textcolore,
-          )),
+          child: onTrailWidgetClick != null
+              ? trailWidget
+              : Image.asset(
+                  image!,
+                  height: 28,
+                  width: 28,
+                  color: notifire.textcolore,
+                )),
       const SizedBox(
         width: 15,
       ),
@@ -105,7 +102,9 @@ PreferredSizeWidget commonappbar(
 }
 
 class drawer1 extends StatefulWidget {
-  const drawer1({super.key});
+  drawer1({super.key}) {
+    buildDrawerListItems();
+  }
 
   @override
   State<drawer1> createState() => _drawer1State();
@@ -128,7 +127,7 @@ class _drawer1State extends State<drawer1> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "resultizer",
+                  "Resultizer",
                   style: TextStyle(
                     fontFamily: "Urbanist_bold",
                     color: notifire.textcolore,
@@ -143,7 +142,7 @@ class _drawer1State extends State<drawer1> {
                   child: ListView.separated(
                     padding: EdgeInsets.zero,
                     physics: const NeverScrollableScrollPhysics(),
-                    itemCount: imagelist.length,
+                    itemCount: drawerListItems.length,
                     scrollDirection: Axis.vertical,
                     separatorBuilder: (context, index) {
                       return const SizedBox(
@@ -155,6 +154,9 @@ class _drawer1State extends State<drawer1> {
                         onTap: () {
                           setState(() {
                             selectIndex = index;
+                            if (drawerListItems[index].action != null) {
+                              drawerListItems[index].action!();
+                            }
                             // Navigator.pop(context);
                           });
                         },
@@ -163,22 +165,18 @@ class _drawer1State extends State<drawer1> {
                             Padding(
                               padding: const EdgeInsets.only(right: 10),
                               child: Image.asset(
-                                imagelist[index].image.toString(),
+                                drawerListItems[index].image.toString(),
                                 height: 28,
-                                color: selectIndex == index
-                                    ? AppColor.pinkColor
-                                    : notifire.textcolore,
+                                color: notifire.textcolore,
                               ),
                             ),
                             Text(
-                              imagelist[index].name.toString(),
+                              drawerListItems[index].name.toString(),
                               style: TextStyle(
                                   fontSize: 18,
                                   fontWeight: FontWeight.w600,
                                   fontFamily: "Urbanist_bold",
-                                  color: selectIndex == index
-                                      ? AppColor.pinkColor
-                                      : notifire.textcolore),
+                                  color:notifire.textcolore),
                             ),
                           ],
                         ),

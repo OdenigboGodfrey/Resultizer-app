@@ -1,6 +1,6 @@
 class AppString {
   // splash screen
-  static const String resultizer = "Resultizer";
+  static const String resultizer = "ResultizerMerged";
   static const String subResultizer = "Winning made simple";
 
   static const String welCome = "Live score updates";
@@ -27,6 +27,7 @@ class AppString {
   static const String followTeams = "Follow Teams";
   static const String pickAFew =
       "Pick a few teams to follow. It will be seen later on your favorite tab page.";
+static const String sendReset = "Send Reset Link";
 
   static const String setNotification = "Set Notifications";
   static const String chooseTheTeam = "Choose the team notification you want.";
@@ -49,7 +50,7 @@ class AppString {
   static const String confirm = "Confirm";
   static const String forgotPassword = "Forgot Password ";
   static const String enterYourEmail =
-      "Enter your email address to get an OTP code to reset your password.";
+      "Enter your email address to get a password reset link.";
   static const String youGotMail = "You’ve got mail";
   static const String weHaveSentThe =
       "We have sent the OTP verification code to your email address. Check your email and enter the code below.";
@@ -81,4 +82,43 @@ class AppString {
   static const String thu = 'Thu';
   static const String fri = 'Fri';
   static const String sat = 'Sat';
+
+  static const String ft = 'FT';
+  static const String ns = 'NS';
+
+  static const String vs = 'vs';
+
+  static const String statistics = 'Stats';
+  static const String lineups = 'Lineups';
+  static const String events = 'Events';
+  static const String odds = 'Odds';
+  static const String chats = 'Tips';
+  static const String teamInfo = 'Info';
+
+  static const String noStats = 'No Statistics to show';
+  static const String noLineUp = 'No Line up information to show';
+  static const String noEvents = 'No Events to show';
+  static const String noOdds = 'No Odds to show';
+
+  static const String homeString = 'home';
+  static const String drawString = 'draw';
+  static const String awayString = 'away';
+  static const String drawRepresentation = '🤝';
+
+  static const String goal = 'Goal';
+  static const String card = 'Card';
+  static const String subst = 'subst';
+  static const String yellowCard = 'Yellow Card';
+  static const String missedPenalty= 'Missed Penalty';
+  static const String assist = 'Assist';
+
+  static const String tipster = 'tipster';
+  static const String admin = 'admin';
+
+  static const String usersCollectionKey = 'users';
+  static const String chatCollectionKey = 'chat';
+  static const String chatMetaCollectionKey = 'chat-meta';
+  static const String favouriteTeamCollectionKey = 'favourite-teams';
+  static const String favouriteLeaguesCollectionKey = 'favourite-leagues';
+  static const String favouriteMatchesCollectionKey = 'favourite-matches';
 }

@@ -15,9 +15,12 @@ class ColorNotifire with ChangeNotifier {
   get background => isDark ? backgroundcolore : colorewhite;
 
   get bgcolore => isDark ? backgroundcolore : backgrounde;
+  // Color bgcolore = backgroundcolore; // = (isDark ? backgroundcolore : backgrounde);
+  get reverseBgColore => isDark ? backgrounde : backgroundcolore;
   get search => isDark ? backgroundcolore1 : backgrounde;
 
   get textcolore => isDark ? colorewhite : coloreblack;
+  get reverseTextColore => isDark ? coloreblack: colorewhite;
   get textcolorgray => isDark ? textcoloregreay : colorewhite;
 
   get containcolore1 => isDark ? containcolore : colorewhite;
@@ -25,6 +28,7 @@ class ColorNotifire with ChangeNotifier {
 
   get deercolore => isDark ? drowercolore : const Color(0xffF0EFFC);
   get drwetextcode => isDark ? const Color(0xffFFFFFF) :  const Color(0xff5648DF);
+  get textColorOrange => Colors.orange[500];
   
   get borercolour => isDark ? const Color(0xff35383F) : const Color(0xffEEEEEE);
   get insidecolor => isDark ? const Color(0xff1F222A) : const Color(0xffFAFAFA);
@@ -35,6 +39,7 @@ class ColorNotifire with ChangeNotifier {
 
   void isavalable(bool value) {
     _isDark = value;
+    // bgcolore = (_isDark ? backgroundcolore : backgrounde);
     notifyListeners();
   }
 }

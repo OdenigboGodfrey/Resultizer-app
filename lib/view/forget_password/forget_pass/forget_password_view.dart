@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/view/forget_password/otp_view/otp_view.dart';
+import 'package:resultizer_merged/view/forget_password/otp_view/otp_view.dart';
 
 import '../../../common/common_bottom_sheet.dart';
 import '../../../common/common_textfild.dart';

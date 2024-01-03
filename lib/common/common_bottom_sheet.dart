@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:resultizer/common/common_appbar.dart';
-import 'package:resultizer/common/common_button.dart';
+import 'package:provider/provider.dart';
+import 'package:resultizer_merged/common/common_appbar.dart';
+import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/theme/themenotifer.dart';
 
 import '../utils/constant/app_color.dart';
 import '../utils/constant/app_string.dart';
@@ -18,6 +20,7 @@ class CommonBottomSheet extends StatefulWidget {
 class _CommonBottomSheetState extends State<CommonBottomSheet> {
   @override
   Widget build(BuildContext context) {
+    notifire = Provider.of<ColorNotifire>(context, listen: true);
     return Container(
       padding: const EdgeInsets.symmetric(
         horizontal: 20,

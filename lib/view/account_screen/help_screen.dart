@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_assets.dart';
 
 import '../../theme/themenotifer.dart';
 import '../../utils/constant/app_color.dart';

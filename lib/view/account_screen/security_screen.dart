@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:getwidget/components/toggle/gf_toggle.dart';
 import 'package:getwidget/types/gf_toggle_type.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer/common/common_button.dart';
+import 'package:resultizer_merged/common/common_button.dart';
 
 import '../../theme/themenotifer.dart';
 import '../../utils/constant/app_color.dart';
