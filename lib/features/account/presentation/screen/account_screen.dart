@@ -3,24 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
-import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/app_session.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/manage_chats_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/settings_item.dart';
-import 'package:resultizer_merged/features/auth/presentation/screens/sign_in_view.dart';
+import 'package:resultizer_merged/features/on_boarding/on_boarding_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
-import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/view/account_screen/about_screen.dart';
-import 'package:resultizer_merged/view/account_screen/general_screen.dart';
-import 'package:resultizer_merged/view/account_screen/help_screen.dart';
-import 'package:resultizer_merged/view/account_screen/notification_screen.dart';
 import 'package:resultizer_merged/view/account_screen/personal_screen.dart';
-import 'package:resultizer_merged/view/account_screen/security_screen.dart';
-import 'package:resultizer_merged/view/sign_in/sign_in_view.dart';
 
 class AccountScreenView extends StatefulWidget {
   const AccountScreenView({super.key});
@@ -32,26 +24,17 @@ class AccountScreenView extends StatefulWidget {
 class _AccountScreenViewState extends State<AccountScreenView> {
   int selectIndex = 0;
   ColorNotifire notifire = ColorNotifire();
-  List img = [
-    AppAssets.parsonal,
-    AppAssets.notification,
-    AppAssets.gernal,
-    AppAssets.secuity,
-    AppAssets.dark,
-    AppAssets.help,
-    AppAssets.about,
-    AppAssets.logout,
-  ];
-  List text = [
-    'Personal Info',
-    'Notification',
-    'General',
-    'Security',
-    'Dark Mode',
-    'Help Center',
-    'About Resultizer',
-    'Logout',
-  ];
+  
+  // List text = [
+  //   'Personal Info',
+  //   'Notification',
+  //   'General',
+  //   'Security',
+  //   'Dark Mode',
+  //   'Help Center',
+  //   'About Resultizer',
+  //   'Logout',
+  // ];
   int net = 0;
   var scaffoldKey = GlobalKey<ScaffoldState>();
   
@@ -68,7 +51,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
         children: [
           GestureDetector(
             onTap: () {
-              Get.to(const ParsnalScreen());
+              if (GlobalDataSource.userData.id != '0') Get.to(const ParsnalScreen());
             },
             child: ListTile(
               leading: Image.asset('assets/images/Ellipse.png'),
@@ -138,10 +121,8 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             onOpenIconPressed: () {
               GlobalDataSource.clearData();
               AppSession.clear();
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(builder: (context) => const SignInView()),
-              );
+              Get.offAll(const OnBoardingScreenView());
+              // Get.of
             },
             switchValue: notifire.isDark,
             buttonIcon: Icons.logout,

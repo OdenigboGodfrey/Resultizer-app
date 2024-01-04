@@ -67,18 +67,7 @@ class _SignInViewState extends State<SignInView> {
     }
   }
 
-  void handleGuestSignIn() {
-    GlobalDataSource.userData = User.fromMap({
-      'id': '0',
-      'email': '',
-      'username': 'Guest',
-      'fullname': 'Guest',
-      'roles': '[]',
-    });
-
-    showSuccessSnack('Login successful');
-    Get.offAll(const Bottom());
-  }
+  
 
   showErrorSnack(message) {
     showSnack(context, 'Invalid email/password.', Colors.red);
@@ -267,22 +256,6 @@ class _SignInViewState extends State<SignInView> {
                             ],
                           ),
                         ),
-                        Expanded(
-                              flex: 1,
-                              child: GestureDetector(
-                                onTap: () {
-                                  handleGuestSignIn();
-                                },
-                                child: Text(
-                                  "Continue as Guest",
-                                  textAlign: TextAlign.end,
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      fontFamily: "Urbanist_semiBold",
-                                      color: notifire.textcolore),
-                                ),
-                              ),
-                            ),
                       ],
                     ),
                     const SizedBox(
