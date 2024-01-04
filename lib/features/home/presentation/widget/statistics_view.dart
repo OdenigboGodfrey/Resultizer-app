@@ -115,7 +115,7 @@ class StatisticsView extends StatelessWidget {
 Widget buildStatsRow(
         {required StatisticItemModel statisticHome, required StatisticItemModel statisticAway}) =>
     Row(
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
+      // mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
         Expanded(
           child: Text(statisticHome.value, textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),

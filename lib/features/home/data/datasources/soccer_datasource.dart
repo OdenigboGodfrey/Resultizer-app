@@ -219,7 +219,8 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
         ;
       }
     }
-    return leagueMatches.values.toList();
+    var data = leagueMatches.values.toList();
+    return sortFixturesAlphabetically(data);
   }
 
   @override

@@ -135,10 +135,10 @@ class _LiveScreenState extends State<LiveScreenView> {
             // ),
             
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 20),
               child: Column(
                 children: [
-                  livematch(selectIndex),
+                  livematch(),
                 ],
               ),
             ),
@@ -148,7 +148,7 @@ class _LiveScreenState extends State<LiveScreenView> {
     );
   }
 
-  Widget livematch(int index) {
+  Widget livematch() {
     return Column(
       children: [
         // for(var match in fixtures)
@@ -171,7 +171,7 @@ class _LiveScreenState extends State<LiveScreenView> {
               // If the Future completes successfully, use the data.
               final data = snapshot.data;
               List<LiveGameWidget> widgets = [];
-              for (var item in data!) {
+              for (LeagueEventDTO item in data!) {
                 widgets.add(LiveGameWidget(leagueEvent: item));
               }
               return widgets.isNotEmpty ? Column(children: widgets) : const Text('No Live games at the moment, please check again later.');

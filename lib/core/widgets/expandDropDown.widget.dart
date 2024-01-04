@@ -43,6 +43,7 @@ class _ExpandDropDownState extends State<ExpandDropDown>
         borderRadius: BorderRadius.circular(3),
       ),
       margin: EdgeInsets.all(0),
+      
       clipBehavior: Clip.antiAliasWithSaveLayer,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -74,7 +75,7 @@ class _ExpandDropDownState extends State<ExpandDropDown>
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        padding: EdgeInsets.all(8),
+        // padding: EdgeInsets.all(8),
         scrollDirection: Axis.vertical,
         child: buildPanel1());
   }

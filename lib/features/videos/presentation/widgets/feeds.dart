@@ -197,8 +197,7 @@ class _FeedDetailViewState extends State<FeedDetailView> {
                                           borderRadius:
                                               BorderRadius.circular(5),
                                           child: ImageWithDefault(
-                                            imageUrl: widget
-                                                .scorebatVideoModel.thumbnail,
+                                            imageUrl: highlightSuggestions[index].thumbnail,
                                             height: 100,
                                             width: 125,
                                           ),
