@@ -46,7 +46,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
       key: scaffoldKey,
       drawer: drawer1(),
       appBar:
-          commonappbar(title: 'More', image: AppAssets.more, context: context, scaffoldKey: scaffoldKey),
+          commonappbar(title: 'More', context: context, scaffoldKey: scaffoldKey),
       body: Column(
         children: [
           GestureDetector(
