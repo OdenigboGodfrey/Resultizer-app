@@ -66,29 +66,45 @@ class StatisticsView extends StatelessWidget {
       padding: const EdgeInsets.only(
           left: 10, right: 10, top: 10),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Row(
-            children: [
-              Image(
-                width: AppSize.s20,
-                height: AppSize.s20,
-                image: NetworkImage(statistics[0].team.logo.toString()),
-              ),
-              const SizedBox(width: AppSize.s5),
-              Text(statistics[0].team.name.toString(), textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),
-            ],
+          Expanded(
+            // flex: 3,
+            child: Row(
+              children: [
+                Image(
+                  width: AppSize.s20,
+                  height: AppSize.s20,
+                  image: NetworkImage(statistics[0].team.logo.toString()),
+                ),
+                const SizedBox(width: AppSize.s5),
+                Text(statistics[0].team.name.toString(), textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),
+              ],
+            ),
           ),
-          Row(
-            children: [
-              Image(
-                width: AppSize.s20,
-                height: AppSize.s20,
-                image: NetworkImage(statistics[1].team.logo.toString()),
-              ),
-              const SizedBox(width: AppSize.s5),
-              Text(statistics[1].team.name.toString(), textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),
-            ],
+          Expanded(
+            // flex: 4,
+            child: Row(
+              children: [
+                const SizedBox(width: AppSize.s10),
+                Text('Match Stats', textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),
+              ],
+            ),
+          ),
+          Expanded(
+            // flex: 3,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Image(
+                  width: AppSize.s20,
+                  height: AppSize.s20,
+                  image: NetworkImage(statistics[1].team.logo.toString()),
+                ),
+                const SizedBox(width: AppSize.s5),
+                Text(statistics[1].team.name.toString(), textAlign: TextAlign.center, style: TextStyle(color: notifire.textcolore),),
+              ],
+            ),
           ),
         ],
       ),

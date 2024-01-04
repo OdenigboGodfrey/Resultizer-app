@@ -66,9 +66,8 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
     }
   }
 
-  
-
-  Future<List<LeagueEventDTO>> _getFixturesResult(Response response, {bool onlyFutureGames = true}) async {
+  Future<List<LeagueEventDTO>> _getFixturesResult(Response response,
+      {bool onlyFutureGames = true}) async {
     List<dynamic> result = response.data["response"];
     Map<int, LeagueEventDTO> leagueMatches = {};
 
@@ -130,14 +129,14 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
   }
 
   List<LeagueEventDTO> sortFixturesAlphabetically(List<LeagueEventDTO> data) {
-    
     // leagues.sort((a, b) =>
     //   (a.leagueTitle + '-' + a.leagueSubTitle)
     //       .compareTo(b.leagueTitle + '-' + b.leagueSubTitle));
 
     data.sort((a, b) {
       // sorty and return;
-      return ('${a.leagueTitle}-${a.leagueSubTitle}').compareTo('${b.leagueTitle}-${b.leagueSubTitle}');
+      return ('${a.leagueTitle}-${a.leagueSubTitle}')
+          .compareTo('${b.leagueTitle}-${b.leagueSubTitle}');
     });
     return data;
   }
@@ -359,14 +358,25 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
   }
 
   @override
-  Future<dynamic> getTeamStatistic(int teamId, int leagueId) async {
+  Future<dynamic> getTeamStatistic(int teamId, int leagueId,
+      {DateTime? season}) async {
     try {
+      season ??= DateTime.now();
       final response = await dioHelper.get(
           url: Endpoints.teamStatistics,
-          queryParams: {"team": teamId, "season": DateTime.now().year, "league": leagueId });
+          queryParams: {
+            "team": teamId,
+            "season": season.year,
+            "league": leagueId
+          });
       dynamic result = response.data["response"];
       // var apiResponse = await getResultForTeamAndCompetition(response);
-      return result;
+      if (result['fixtures']!['played']!['home'] == 0) {
+        var previousYear = season.subtract(Duration(days: 365));
+        return getTeamStatistic(teamId, leagueId, season: previousYear);
+      } else {
+        return result;
+      }
     } catch (error, stackTrace) {
       print(stackTrace);
       rethrow;

@@ -75,15 +75,18 @@ class _TeamStatsWidgetState extends State<TeamStatsWidget> {
                         padding: const EdgeInsets.only(top: 2.5, bottom: 2.5),
                         child: Row(
                           children: [
-                            const Expanded(flex: 3, child: SizedBox()),
                             Expanded(
-                                flex: 4,
+                                flex: 3,
                                 child: Text(
                                   homeFixtureTeam.name!,
                                   textAlign: TextAlign.center,
                                 )),
+                            const Expanded(flex: 4, child: SizedBox(child: Text(
+                                  'Team Stats',
+                                  textAlign: TextAlign.center,
+                                ) ,)),
                             Expanded(
-                                flex: 4,
+                                flex: 3,
                                 child: Text(
                                   awayFixtureTeam.name!,
                                   textAlign: TextAlign.center,
@@ -149,57 +152,45 @@ class _TeamStatsWidgetState extends State<TeamStatsWidget> {
             contentPadding: const EdgeInsets.symmetric(horizontal: 2),
             leading: SizedBox(
               width: 0.3 * width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Text(key,
-                      style: TextStyle(
-                        fontFamily: 'Urbanist_bold',
-                        fontSize: 12,
-                        fontWeight: FontWeight.w700,
-                        color: notifire.textcolore,
-                      ))
-                ],
-              ),
+              child: Text(
+                  homeValue.toString(),
+                  style: TextStyle(
+                    fontFamily: 'Urbanist_bold',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: homeValueColour,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  softWrap: true,
+                ),
             ),
             title: SizedBox(
-              width: 0.8 * width,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      homeValue.toString(),
-                      style: TextStyle(
-                        fontFamily: 'Urbanist_bold',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: homeValueColour,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      softWrap: true,
-                    ),
-                  ),
-                  Expanded(
-                    flex: 1,
-                    child: Text(
-                      awayValue.toString(),
-                      style: TextStyle(
-                        fontFamily: 'Urbanist_bold',
-                        fontSize: 13,
-                        fontWeight: FontWeight.w700,
-                        color: awayValueColour,
-                      ),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      softWrap: true,
-                    ),
-                  ),
-                ],
-              ),
+              width: 0.4 * width,
+              child: Text(
+                key,
+                  style: TextStyle(
+                    fontFamily: 'Urbanist_bold',
+                    fontSize: 12,
+                    fontWeight: FontWeight.w700,
+                    color: notifire.textcolore,
+                  )),
             ),
+            trailing: SizedBox(
+              width: 0.3 * width,
+              child: Text(
+                  awayValue.toString(),
+                  style: TextStyle(
+                    fontFamily: 'Urbanist_bold',
+                    fontSize: 13,
+                    fontWeight: FontWeight.w700,
+                    color: awayValueColour,
+                  ),
+                  textAlign: TextAlign.center,
+                  maxLines: 2,
+                  softWrap: true,
+                ),
+            )
           ),
         ),
         Divider(

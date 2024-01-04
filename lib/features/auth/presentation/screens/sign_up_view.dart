@@ -91,7 +91,8 @@ class _SignUpViewState extends State<SignUpView> {
                 ),
                 GestureDetector(
                   onTap: () {
-                    Navigator.pop(context);
+                    // Navigator.pop(context);
+                    Get.back();
                   },
                   child: Image.asset(
                     AppAssets.backButton,

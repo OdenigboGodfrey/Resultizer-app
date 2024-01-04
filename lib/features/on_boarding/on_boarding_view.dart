@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_button.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/widgets/snackbar.dart';
+import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/features/auth/presentation/screens/sign_in_view.dart';
 import 'package:resultizer_merged/features/auth/presentation/screens/sign_up_view.dart';
+import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
@@ -53,6 +57,19 @@ class _OnBoardingScreenViewState extends State<OnBoardingScreenView> {
         MaterialPageRoute(
             builder: (context) =>
                  const SignInView())); // Navigates to another page after splash
+  }
+
+  void handleGuestSignIn() {
+    GlobalDataSource.userData = User.fromMap(const {
+      'id': '0',
+      'email': '',
+      'username': 'Guest',
+      'fullname': 'Guest',
+      'roles': '[]',
+    });
+
+    showSnack(context, 'Login successful', Colors.green);
+    Get.offAll(const Bottom());
   }
 
 
@@ -181,6 +198,22 @@ class _OnBoardingScreenViewState extends State<OnBoardingScreenView> {
                       //   const SignInView(),
                       // );
                     },
+                  ),
+                  const SizedBox(
+                    height: 20,
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      handleGuestSignIn();
+                    },
+                    child: Text(
+                      "Continue as Guest",
+                      textAlign: TextAlign.end,
+                      style: TextStyle(
+                          fontSize: 15,
+                          fontFamily: "Urbanist_semiBold",
+                          color: notifire.textcolore),
+                    ),
                   ),
                   const SizedBox(
                     height: 20,

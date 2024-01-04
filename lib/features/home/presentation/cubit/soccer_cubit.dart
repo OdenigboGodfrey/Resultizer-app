@@ -280,6 +280,8 @@ class SoccerCubit extends Cubit<SoccerStates> {
       emit(TeamStatsLoaded(data: teamsStats));
     }
 
+    print('teamsStats');
+    print(teamsStats);
     return teamsStats;
   }
 
