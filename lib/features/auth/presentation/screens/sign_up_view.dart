@@ -7,6 +7,7 @@ import 'package:resultizer_merged/common/common_textfild.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/app_session.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
+import 'package:resultizer_merged/features/account/presentation/cubit/user_detail_cubit.dart';
 import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
@@ -14,8 +15,6 @@ import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
-import 'package:resultizer_merged/view/follow_team/follow_team.dart';
-import 'package:resultizer_merged/view/forget_password/forget_pass/forget_password_view.dart';
 
 class SignUpView extends StatefulWidget {
   const SignUpView({Key? key}) : super(key: key);
@@ -36,6 +35,7 @@ class _SignUpViewState extends State<SignUpView> {
   bool isDone = false;
   bool isLoading = false;
   final AuthDatasource authDatasource = FirebaseAuthDatasource();
+  late UserDetailCubit userDetailCubit;
 
   showErrorSnack(message) {
     showSnack(context, message, Colors.red);
@@ -54,6 +54,7 @@ class _SignUpViewState extends State<SignUpView> {
         buttonName: AppString.signIn,
         onTap: () async {
           try {
+            userDetailCubit = context.read<UserDetailCubit>();
             UserModel user = await authDatasource.signUpWithEmail(
               email: emailController.text.trim(),
               password: passwordController.text.trim(),
@@ -62,9 +63,12 @@ class _SignUpViewState extends State<SignUpView> {
               lastName: lastNameController.text.trim(),
             );
             if (user.id.isNotEmpty) {
+              user.followers = await userDetailCubit.getFollowers(user.id);
+              user.following  = await userDetailCubit.getFollowing(user.id);
+              
               GlobalDataSource.userData = user;
               AppSession.saveItem('userData', GlobalDataSource.userData.toMap());
-              Get.offAll(const Bottom());
+              Get.offAll(Bottom());
             }
             else {
               showErrorSnack('Sign up failed, please try again.');

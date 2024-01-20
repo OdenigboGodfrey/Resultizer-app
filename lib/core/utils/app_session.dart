@@ -1,12 +1,16 @@
 import 'dart:convert';
 
+import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppSession {
-  static Future<void> saveItem(String key, dynamic value) async {
+  static Future<dynamic> writeGlobalUserDataToLocal() async {
+    return await AppSession.saveItem('userData', GlobalDataSource.userData.toMap());
+  }
+  static Future<dynamic> saveItem(String key, dynamic value) async {
     var result = await FlutterSession().set(key, const JsonEncoder().convert(value));
-    print('result');
-    print(result);
+    return result;
   }
 
   static Future<dynamic> getItem(String key) async {

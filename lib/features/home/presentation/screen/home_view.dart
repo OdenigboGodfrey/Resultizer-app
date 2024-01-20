@@ -1,26 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
-import 'package:resultizer_merged/core/widgets/snackbar.dart';
-import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
+import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
-import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
-import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/notification_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_state.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/live_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/premier_widget.dart';
+import 'package:resultizer_merged/onesignal_config.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/utils/model/drawer_model.dart';
-import 'package:resultizer_merged/view/home_view/live_screen.dart';
-import 'package:resultizer_merged/view/home_view/premierleague.dart';
 import 'package:intl/intl.dart';
 
 class HomeScreenView extends StatefulWidget {
@@ -35,116 +31,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   // int selected = 0;
   dynamic selectedValue;
   ColorNotifire notifire = ColorNotifire();
-  List cup = [
-    'World Cup 2022',
-    'World Cup 2022',
-    'World Cup 2022',
-    'Premier League',
-  ];
-  List logo = [
-    'assets/images/Poland.png',
-    'assets/images/canada.png',
-    'assets/images/Germany.png',
-  ];
-
-  List logo1 = [
-    'assets/images/Argentina.png',
-    'assets/images/Morocco.png',
-    'assets/images/Costa Rica.png',
-  ];
-  List subtitle = [
-    'Group C',
-    'Group F',
-    'Group E',
-    'England',
-  ];
-  List time = [
-    'FT     ',
-    '10:00 ',
-    '18:00 ',
-  ];
-  List text = [
-    'Poland',
-    'Canada',
-    'Costa Rica',
-  ];
-  List text1 = [
-    'Argentina',
-    'Morocco',
-    'Germany',
-  ];
-  // Second list
-  List logo2 = [
-    'assets/images/arebia.png',
-    'assets/images/Croatia.png',
-    'assets/images/japan.png',
-  ];
-  List logo02 = [
-    'assets/images/mexico.png',
-    'assets/images/Belgium.png',
-    'assets/images/spain.png',
-  ];
-  List time2 = [
-    '15:00',
-    '14:00',
-    '21:00',
-  ];
-  List text2 = [
-    'Saudi Arabia',
-    'Croatia',
-    'Japan',
-  ];
-  List text02 = [
-    'Mexico',
-    'Belgium',
-    'Spain',
-  ];
-  List<DrawerModel> imagelist = [
-    DrawerModel(
-      image: AppAssets.frame,
-      name: 'Football',
-    ),
-    // DrawerModel(
-    //   image: AppAssets.frame1,
-    //   name: 'Tennis',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame2,
-    //   name: 'Basketball',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame3,
-    //   name: 'Hockey',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame4,
-    //   name: 'Volleyball',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame5,
-    //   name: 'Handball',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame6,
-    //   name: 'Esports',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame7,
-    //   name: 'Baseball',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame8,
-    //   name: 'Cricket',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame9,
-    //   name: 'Motorsport',
-    // ),
-    // DrawerModel(
-    //   image: AppAssets.frame10,
-    //   name: 'Rugby',
-    // ),
-  ];
+  
+  
   // List day = [];
   Map<String, dynamic> selectedDay = {};
 
@@ -158,6 +46,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     AppString.date7,
   ];
   late SoccerCubit cubit;
+  late NotificationCubit notificationCubit;
   // late FavouritesCubit favouritesCubit;
 
   List<LeagueEventDTO> fixtures = [];
@@ -167,6 +56,14 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   void initState() {
     super.initState();
+    Future.delayed(Duration(seconds: 2), () {
+      // Your function code goes here
+      print('Delayed function executed after 2 seconds.');
+      notificationListener().then((value) {
+        print('---------------- init onesignal done ---------------');
+      });
+    });
+    
   }
 
   refreshList() {
@@ -205,6 +102,26 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     selectedDay = cubit.day[0];
     await getLists();
     return fixtures;
+  }
+
+  Future<void> notificationListener() async {
+    User user = GlobalDataSource.userData;
+    List<dynamic>? following = user.following;
+    initOneSignal();
+    print('one signal permission @ home');
+    print(OneSignal.Notifications.permission);
+    if (!OneSignal.Notifications.permission) {
+      // re initialize one signal
+      initOneSignal();
+    }
+    if (following != null && following.isNotEmpty) {
+      for (var element in following) {
+        await subscribeToTag(element.toString());
+      }
+    }
+
+    // for testing
+    await subscribeToTag(user.id);
   }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();

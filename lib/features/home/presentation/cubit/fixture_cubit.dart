@@ -21,7 +21,12 @@ class FixtureCubit extends Cubit<FixtureState> {
 
   List<StatisticsModel> statistics = [];
 
-  Future<void> getStatistics(int fixtureId) async {
+  void emitFixtureStatisticsLoaded(List<StatisticsModel> data) {
+    // manually control the success emit for fixture stats
+    emit(FixtureStatisticsLoaded(statistics: data));
+  }
+
+  Future<List<StatisticsModel>> getStatistics(int fixtureId) async {
     statistics = [];
     if (statistics.isEmpty) {
       emit(FixtureStatisticsLoading());
@@ -32,12 +37,13 @@ class FixtureCubit extends Cubit<FixtureState> {
         },
         (right) {
           setData(right[0]);
-          emit(FixtureStatisticsLoaded(statistics: right[0].statistics!));
+          // emit(FixtureStatisticsLoaded(statistics: right[0].statistics!));
         },
       );
     } else {
-      emit(FixtureStatisticsLoaded(statistics: statistics));
+      // emit(FixtureStatisticsLoaded(statistics: statistics));
     }
+    return statistics;
   }
 
   List<Lineup> lineups = [];

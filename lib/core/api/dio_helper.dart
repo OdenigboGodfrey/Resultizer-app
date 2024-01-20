@@ -14,7 +14,8 @@ const int _timeOut = 20000;
 const String _host = 'api-football-v1.p.rapidapi.com';
 const String scoreBatToken = 'MTA2MjAyXzE2OTc0MzM0NjFfYmQ1ZWExN2NhNDZmODhiNjRiMTkwZjljNjMxZWQ3NzY5ZWE0MzQzYg';
 
-String testUrl = 'http://auxillorx-env.eba-gwzu32gm.us-east-2.elasticbeanstalk.com';
+const String oneSignalRestApiToken = 'YmI5ZDFkMmMtMTUxNS00MWIyLTg4NTYtZDJiNGQ2MTU4YWY3';
+const String oneSignalAppId = 'db1bd7a7-9029-465b-b8cf-a15311196e3a';
 
 enum REQUESTTYPE {
   app,

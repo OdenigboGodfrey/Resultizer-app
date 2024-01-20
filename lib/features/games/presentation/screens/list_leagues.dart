@@ -15,6 +15,7 @@ import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cu
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 class ListLeaguesView extends StatefulWidget {
   const ListLeaguesView({super.key});
@@ -80,7 +81,7 @@ class _ListLeaguesViewState extends State<ListLeaguesView> {
 
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     if (favouritesLeagues.containsKey(league.id.toString())) {

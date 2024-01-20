@@ -358,6 +358,7 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
     return leagueMatches.values.toList();
   }
 
+  int teamStatsRetryCounter = 0;
   @override
   Future<dynamic> getTeamStatistic(int teamId, int leagueId,
       {DateTime? season}) async {
@@ -372,10 +373,12 @@ class SoccerDataSourceImplementation implements SoccerDataSource {
           });
       dynamic result = response.data["response"];
       // var apiResponse = await getResultForTeamAndCompetition(response);
-      if (result['fixtures']!['played']!['home'] == 0) {
+      if (result['fixtures']!['played']!['home'] == 0 && teamStatsRetryCounter < 2) {
+        teamStatsRetryCounter++;
         var previousYear = season.subtract(Duration(days: 365));
         return getTeamStatistic(teamId, leagueId, season: previousYear);
       } else {
+        teamStatsRetryCounter = 0;
         return result;
       }
     } catch (error, stackTrace) {

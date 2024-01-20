@@ -7,6 +7,11 @@ import 'package:provider/provider.dart';
 import 'package:readmore/readmore.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/get_initials.dart';
+import 'package:resultizer_merged/core/widgets/custom_image.dart';
+import 'package:resultizer_merged/core/widgets/snackbar.dart';
+import 'package:resultizer_merged/features/account/presentation/cubit/user_detail_cubit.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/profile_info_widget.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/follow_user_widget.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 
@@ -15,7 +20,7 @@ class InputCommentUser extends StatelessWidget {
   final userImage;
   final onTap;
   final String? kUser01 =
-      "https://avatars.githubusercontent.com/u/77888926?v=4";
+      "";
 
   InputCommentUser({this.control, this.userImage, this.onTap});
 
@@ -44,6 +49,12 @@ class InputCommentUser extends StatelessWidget {
             //   maxRadius: 24.0,
             //   backgroundImage: NetworkImage(kUser01!),
             // ),
+            // child: ClipOval(
+            //         child: ImageWithDefault(
+            //             imageUrl:
+            //                 kUser01!,
+            //             width: 50,
+            //             height: 50)),
             child: Text(getInitials(GlobalDataSource.userData.fullname), style: const TextStyle(color: Colors.white),),
           ),
           Flexible(
@@ -84,22 +95,31 @@ class InputCommentUser extends StatelessWidget {
 }
 
 class CardChat extends StatelessWidget {
-  //final image;
+  String? image;
   final String name;
   final String message;
   final DateTime dateTime;
   final int fixtureId;
+  final String uid;
   ColorNotifire notifire = ColorNotifire();
 
   CardChat({
-    //required this.image,
+    this.image,
     required this.name,
     required this.message,
     required this.dateTime, 
-    required this.fixtureId,
+    required this.fixtureId, 
+    required this.uid,
   });
 
-  void navigateToFixtureScreen() {}
+  void loadUserProfile(BuildContext context, String uid ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return ToggleFollowUserWidget(uid: uid);
+      },
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,31 +132,41 @@ class CardChat extends StatelessWidget {
         children: [
           Expanded(
             flex: 1,
-            child: CircleAvatar(
-              maxRadius: 20.0,
-              backgroundColor: AppColor.pinkColor,
-              // backgroundImage: NetworkImage(image),
-              child: Text(getInitials(name), style: const TextStyle(color: AppColor.offWhite, fontSize: 14),),
+            child: GestureDetector(
+              onTap: () {
+                loadUserProfile(context, uid);
+              },
+              child: CircleAvatar(
+                maxRadius: 20.0,
+                backgroundColor: AppColor.pinkColor,
+                // backgroundImage: NetworkImage(image),
+                child: Text(getInitials(name), style: const TextStyle(color: AppColor.offWhite, fontSize: 14),),
+              ),
             ),
           ),
           const SizedBox(width: 10),
           Expanded(
             flex: 10,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                  style: const TextStyle(
-                      color: AppColor.pinkColor,
-                      fontSize: 14,
-                      fontWeight: FontWeight.bold),
-                ),
-                Text(
-                  message,
-                  style: TextStyle(color: notifire.textcolore),
-                ),
-              ],
+            child: GestureDetector(
+              onTap: () {
+                loadUserProfile(context, uid);
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: const TextStyle(
+                        color: AppColor.pinkColor,
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    message,
+                    style: TextStyle(color: notifire.textcolore),
+                  ),
+                ],
+              ),
             ),
           ),
           Expanded(

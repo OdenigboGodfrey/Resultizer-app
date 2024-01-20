@@ -8,6 +8,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_u
 import 'package:resultizer_merged/features/home/domain/use_cases/team_stats_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_state.dart';
 import 'package:intl/src/intl/date_format.dart';
+import 'package:resultizer_merged/features/notification/data/datasource/notification_datasource.dart';
 
 class SoccerCubit extends Cubit<SoccerStates> {
   SoccerCubit(
@@ -16,7 +17,9 @@ class SoccerCubit extends Cubit<SoccerStates> {
       this.competitionFixturesUseCase,
       this.teamStatsUseCase,
       this.pastFixturesUseCase)
-      : super(SoccerInitial());
+      : super(SoccerInitial()) {
+        firebaseNotificationDataSource = FirebaseNotificationDataSource();
+      }
 
   final DayFixturesUseCase dayFixturesUseCase;
   final TeamFixturesUseCase teamFixturesUseCase;
@@ -34,6 +37,8 @@ class SoccerCubit extends Cubit<SoccerStates> {
   Map<String, List<String>> teamsForm = {};
   Map<String, Map<String, List<dynamic>>> teamsStats = {};
   List<Map<String, List<int>>> teamsStatsMap = [];
+
+  late FirebaseNotificationDataSource firebaseNotificationDataSource;
   
   void getDaysOfNext7Days() {
     if (day.isNotEmpty) return;

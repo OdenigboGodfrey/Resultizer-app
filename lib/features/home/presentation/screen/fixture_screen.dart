@@ -29,18 +29,20 @@ class FixtureScreen extends StatefulWidget {
 
   // const FixtureScreen({Key? key, required this.soccerFixture})
   //     : super(key: key);
-  const FixtureScreen(
+  FixtureScreen(
       {super.key,
       required this.leagueName,
       required this.leagueLogo,
       required this.leagueSubtitle,
       required this.game,
-      required this.leagueId});
+      required this.leagueId,
+      this.initialTab = 'team-stats'});
 
   final String leagueName;
   final String leagueLogo;
   final String leagueSubtitle;
   final int leagueId;
+  String initialTab = 'team-stats';
 
   final PremierGameDTO game;
 
@@ -49,6 +51,9 @@ class FixtureScreen extends StatefulWidget {
 }
 
 class _FixtureScreenState extends State<FixtureScreen> {
+  _FixtureScreenState({this.initialTab = 'team-stats'});
+  String initialTab = 'team-stats';
+  
   ColorNotifire notifire = ColorNotifire();
   List<String> goals = ['0', '0'];
   int homeGoals = 0;
@@ -59,6 +64,8 @@ class _FixtureScreenState extends State<FixtureScreen> {
   late PremierGameDTO _game;
   List<OddsModel> _odds = [];
   int activeTab = 1;
+  
+  var scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   void initState() {
@@ -73,6 +80,15 @@ class _FixtureScreenState extends State<FixtureScreen> {
     if (_game.matchTime.isBefore(DateTime.now())) {
       // _game.matchStatus =
       cubit.getStatistics(_game.fixtureId!).then((value) {
+        if (widget.initialTab == 'tips') {
+          // if initalTab is tips, keep the tips tab opened
+          cubit.emitChatBar();
+          activeTab = 0;
+        } else {
+          // if initalTab is not tips, show the fixture stats tab
+          cubit.emitFixtureStatisticsLoaded(value);
+        }
+        
         _game = cubit.generatePremierGame();
         if (_game.odds.isNotEmpty) _odds = _game.odds;
         setState(() {});
@@ -84,7 +100,13 @@ class _FixtureScreenState extends State<FixtureScreen> {
     cubit = context.read<FixtureCubit>();
     _odds = _game.odds;
     updateData();
-    cubit.emitTeamStats();
+    if (widget.initialTab == 'team-stats') {
+      cubit.emitTeamStats();
+      activeTab = 1;
+    } else if (widget.initialTab == 'tips') {
+      cubit.emitChatBar();
+      activeTab = 0;
+    }
   }
 
   late double width, height;
@@ -112,20 +134,27 @@ class _FixtureScreenState extends State<FixtureScreen> {
         return Scaffold(
           backgroundColor: notifire.bgcolore,
           resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            actionsIconTheme: IconThemeData(color: notifire.reverseBgColore),
-            backgroundColor: notifire.bgcolore,
-            leading: GestureDetector(
-              onTap: () {
-                cubit.reset();
-                Get.back();
-              },
-              child: Icon(Icons.arrow_back, color: notifire.textcolore),
-            ),
-            title: Text(
-              "${game.homeTeam} ${AppString.vs} ${game.awayTeam}",
-              style: TextStyle(color: notifire.textcolore),
-            ),
+          key: scaffoldKey,
+          drawer: drawer1(),
+          // appBar: AppBar(
+          //   actionsIconTheme: IconThemeData(color: notifire.reverseBgColore),
+          //   backgroundColor: notifire.bgcolore,
+          //   leading: GestureDetector(
+          //     onTap: () {
+          //       cubit.reset();
+          //       Get.back();
+          //     },
+          //     child: Icon(Icons.arrow_back, color: notifire.textcolore),
+          //   ),
+          //   title: Text(
+          //     "${game.homeTeam} ${AppString.vs} ${game.awayTeam}",
+          //     style: TextStyle(color: notifire.textcolore),
+          //   ),
+          // ),
+          appBar: commonappbar(
+            title: "${game.homeTeam} ${AppString.vs} ${game.awayTeam}",
+            context: context,
+            scaffoldKey: scaffoldKey,
           ),
           body: ListView(
             physics: const BouncingScrollPhysics(),
@@ -318,7 +347,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
 
   Widget buildTabBar(FixtureCubit cubit) {
     double builderWidth = 150 * 4;
-    if (_game.matchStatus != "NS") builderWidth = 150 * 5; 
+    if (_game.matchStatus != "NS") builderWidth = 150 * 5;
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Container(
@@ -398,7 +427,7 @@ class _FixtureScreenState extends State<FixtureScreen> {
       {required String label,
       required void Function()? onPressed,
       Color? colour}) {
-        double width = 150;
+    double width = 150;
     return SizedBox(
       width: width,
       // color: Colors.red,

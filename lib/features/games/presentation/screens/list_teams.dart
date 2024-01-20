@@ -15,6 +15,7 @@ import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cu
 import 'package:resultizer_merged/features/home/presentation/screen/team_fixture_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 class ListTeamsView extends StatefulWidget {
   const ListTeamsView({super.key, required this.league});
@@ -66,7 +67,7 @@ class _ListTeamsViewState extends State<ListTeamsView> {
 
   void addToFavouritesTeamsList(
       BuildContext context, TeamListItemDTO teamListItem) async {
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     if (favouritesTeams.containsKey(teamListItem.id.toString())) {
@@ -92,7 +93,7 @@ class _ListTeamsViewState extends State<ListTeamsView> {
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
     
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     if (favouritesLeagues.containsKey(league.id.toString())) {

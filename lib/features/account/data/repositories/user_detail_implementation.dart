@@ -12,15 +12,71 @@ class UserDetailImplementation implements UserDetailRepository {
     required this.dataSource,
     required this.networkInfo,
   });
-  
+
   @override
-  Future<Either<Failure, UserModel>> fetchUserByEmail({required String email}) async {
+  Future<Either<Failure, UserModel>> fetchUserByEmail(
+      {required String email}) async {
     if (await networkInfo.isConnected) {
       try {
-        final result =
-            await dataSource.fetchUserByEmail(email: email);
-        final user = result;
-        return Right(user);
+        final result = await dataSource.fetchUserByEmail(email: email);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        // return Left(DataSource.unexpected.getFailure());
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      // return Left(DataSource.networkConnectError.getFailure());
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, UserModel>> fetchUserByUid(
+      {required String uid}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.fetchUserByUid(uid: uid);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        // return Left(DataSource.unexpected.getFailure());
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      // return Left(DataSource.networkConnectError.getFailure());
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updateUser(
+      {required UserModel userModel}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.updateUser(userModel: userModel);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        // return Left(DataSource.unexpected.getFailure());
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      // return Left(DataSource.networkConnectError.getFailure());
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
+  }
+
+  @override
+  Future<Either<Failure, bool>> updatePassword(
+      {required String oldPassword, required String newPassword}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.updatePassword(oldPassword: oldPassword, newPassword: newPassword);
+        return Right(result);
       } catch (e, stackTrace) {
         print(e);
         print(stackTrace);
@@ -34,13 +90,11 @@ class UserDetailImplementation implements UserDetailRepository {
   }
   
   @override
-  Future<Either<Failure, bool>> updateUser({required UserModel userModel}) async {
+  Future<Either<Failure, Map<String, dynamic>>> getFollowers({required String uid}) async {
     if (await networkInfo.isConnected) {
       try {
-        final result =
-            await dataSource.updateUser(userModel: userModel);
-        final user = result;
-        return Right(user);
+        final result = await dataSource.getFollowers(uid: uid);
+        return Right(result);
       } catch (e, stackTrace) {
         print(e);
         print(stackTrace);
@@ -52,4 +106,40 @@ class UserDetailImplementation implements UserDetailRepository {
       return const Left(Failure(code: 02, message: 'networkConnectError'));
     }
   }
+  
+  @override
+  Future<Either<Failure, Map<String, dynamic>>> getFollowing({required String uid}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.getFollowing(uid: uid);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        // return Left(DataSource.unexpected.getFailure());
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      // return Left(DataSource.networkConnectError.getFailure());
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
   }
+  
+  @override
+  Future<Either<Failure, bool>> toggleFollowUser({required String uid}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.toggleFollowUser(uid: uid);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        // return Left(DataSource.unexpected.getFailure());
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      // return Left(DataSource.networkConnectError.getFailure());
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
+  }
+}

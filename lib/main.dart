@@ -1,7 +1,9 @@
 import 'package:bloc/bloc.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/bloc_observer.dart';
 import 'package:resultizer_merged/container_injector.dart';
@@ -28,6 +30,7 @@ import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.da
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/fixture_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/notification_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 import 'package:resultizer_merged/features/splash_view/splash_view.dart';
 import 'package:resultizer_merged/features/videos/domain/usecase/highlights_by_competiton_usecase.dart';
@@ -37,9 +40,10 @@ import 'package:resultizer_merged/features/videos/domain/usecase/list_teams_usec
 import 'package:resultizer_merged/features/videos/domain/usecase/recent_feeds_usecase.dart';
 import 'package:resultizer_merged/features/videos/presentation/cubic/video_cubit.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/view/splash_view/splash_view.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:resultizer_merged/firebase_options.dart';
+
+
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -101,7 +105,14 @@ class MyApp extends StatelessWidget {
         BlocProvider<ChatCubit>(create: (context) => ChatCubit()),
         BlocProvider<UserDetailCubit>(
             create: (context) => UserDetailCubit(
-                sl<FetchUserDetailUseCase>(), sl<UpdateUserDetailUseCase>())),
+                  sl<FetchUserDetailByEmailUseCase>(),
+                  sl<UpdateUserDetailUseCase>(),
+                  sl<ChangePasswordUseCase>(),
+                  sl<GetFollowerUserUseCase>(),
+                  sl<GetFollowingUserUseCase>(),
+                  sl<ToggleFollowUserUseCase>(),
+                  sl<FetchUserDetailByUidUseCase>(),
+                )),
         BlocProvider<ManageChatCubit>(
             create: (context) => ManageChatCubit(
                   countChatUseCase: sl<CountChatUseCase>(),
@@ -109,6 +120,8 @@ class MyApp extends StatelessWidget {
                   deleteChatUseCase: sl<DeleteChatUseCase>(),
                   deleteChatMetaUseCase: sl<DeleteChatMetaUseCase>(),
                 )),
+        BlocProvider<NotificationCubit>(
+            create: (context) => NotificationCubit()),
         MultiProvider(providers: [
           ChangeNotifierProvider(
             create: (context) => ColorNotifire(),
@@ -124,32 +137,6 @@ class MyApp extends StatelessWidget {
         // ),
         home: SplashScreenView(),
       ),
-    );
-
-    return MultiProvider(
-      providers: [
-        MultiProvider(providers: [
-          ChangeNotifierProvider(
-            create: (context) => ColorNotifire(),
-          )
-        ])
-      ],
-      child: GetMaterialApp(
-          title: "resultizer",
-          debugShowCheckedModeBanner: false,
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
-            useMaterial3: true,
-          ),
-          // home: const SplashView(),
-          home: MultiBlocProvider(
-            providers: [
-              BlocProvider<AuthCubit>(
-                  create: (context) =>
-                      AuthCubit(loginUseCase: sl<LoginUseCase>())),
-            ],
-            child: SplashView(),
-          )),
     );
   }
 }

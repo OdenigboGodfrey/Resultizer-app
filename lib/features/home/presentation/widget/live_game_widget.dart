@@ -1,14 +1,11 @@
-import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer_merged/core/utils/app_sizes.dart';
 import 'package:resultizer_merged/core/utils/convert_mediaQuery.dart';
 import 'package:resultizer_merged/core/utils/random_colour.dart';
 import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/core/widgets/expandDropDown.widget.dart';
-import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/match_odds_tile.dart';
@@ -17,7 +14,6 @@ import 'package:resultizer_merged/theme/colors.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/view/home_view/matchdtails.dart';
 
 class LiveGameWidget extends StatefulWidget {
   LiveGameWidget({super.key, required this.leagueEvent});

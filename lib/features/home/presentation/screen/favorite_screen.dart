@@ -10,7 +10,6 @@ import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/games/data/model/team_list_item_dto.dart';
 import 'package:resultizer_merged/features/games/presentation/screens/list_leagues.dart';
-import 'package:resultizer_merged/features/games/presentation/screens/list_teams.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/competition_fixture_view.dart';
@@ -19,8 +18,7 @@ import 'package:resultizer_merged/features/home/presentation/widget/premier_widg
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/utils/model/favorite_model.dart';
-import 'package:resultizer_merged/view/home_view/premierleague.dart';
+import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 class FavoriteScreenView extends StatefulWidget {
   const FavoriteScreenView({super.key});
@@ -101,7 +99,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
 
   void addToFavouritesTeamsList(
       BuildContext context, TeamListItemDTO teamListItem) async {
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     if (favouritesTeams.containsKey(teamListItem.id.toString())) {
@@ -126,7 +124,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
 
   void addToFavouritesLeaguesList(
       BuildContext context, LeagueDTO league) async {
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     if (favouritesLeagues.containsKey(league.id.toString())) {
@@ -654,7 +652,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
                             const SizedBox(
                               height: 10,
                             ),
-                            if (GlobalDataSource.userData.id != '0')
+                            if (GlobalDataSource.userData.id != AppString.guestUid)
                             ElevatedButton(
                               onPressed: () {
                                 Get.to(const ListLeaguesView());
@@ -762,7 +760,7 @@ class _FavoriteScreenViewState extends State<FavoriteScreenView> {
                           const SizedBox(
                             height: 10,
                           ),
-                          if (GlobalDataSource.userData.id != '0')
+                          if (GlobalDataSource.userData.id != AppString.guestUid)
                           ElevatedButton(
                             onPressed: () {
                               Get.to(const ListLeaguesView());

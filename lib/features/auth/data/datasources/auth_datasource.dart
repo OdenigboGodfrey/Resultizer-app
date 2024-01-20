@@ -2,19 +2,22 @@ import 'dart:convert';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:resultizer_merged/core/error/firebase_error_handler.dart';
+import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/custom_promise.dart';
 import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 
-Future<bool> setUserInfoFireStore(User? user, UserModel userModel) async {
-  final userDocRef =
-      FirebaseFirestore.instance.collection(AppString.usersCollectionKey).doc(userModel.email.toLowerCase());
+Future<bool> setUserInfoFireStore(UserModel userModel) async {
+  final userDocRef = FirebaseFirestore.instance
+      .collection(AppString.usersCollectionKey)
+      .doc(userModel.email.toLowerCase());
   DocumentSnapshot documentSnapshot = await userDocRef.get();
-  Map<String, dynamic> existingData = {};
-  if (documentSnapshot.exists) {
-    existingData = documentSnapshot.data() as Map<String, dynamic>;
+  // Map<String, dynamic> existingData = {};
+  if (!documentSnapshot.exists) {
+    return false;
+    // existingData = documentSnapshot.data() as Map<String, dynamic>;
   }
 
   // save to Firestore
@@ -71,7 +74,8 @@ class FirebaseAuthDatasource implements AuthDatasource {
     try {
       final userCred = await authInstance.signInWithEmailAndPassword(
           email: email, password: password);
-      var _email = userCred.user!.email.toString().replaceAll('odenigbo', 'Odenigbo');
+      var _email =
+          userCred.user!.email.toString().replaceAll('odenigbo', 'Odenigbo');
       Map<dynamic, dynamic> userData = {};
       DocumentSnapshot documentSnapshot = await FirebaseFirestore.instance
           .collection(AppString.usersCollectionKey)
@@ -79,19 +83,19 @@ class FirebaseAuthDatasource implements AuthDatasource {
           .get();
       if (documentSnapshot.exists) {
         // Retrieve the 'fullname' field from the document
-        userData  =
-            (documentSnapshot.data() as Map<dynamic, dynamic>);
-        
-      }
+        userData = (documentSnapshot.data() as Map<dynamic, dynamic>);
 
-      List roles = jsonDecode(userData['roles']);
-      userModel = UserModel(
+        List roles = jsonDecode(userData['roles']);
+        userModel = UserModel(
           id: userCred.user!.uid,
           email: email,
           username: userData['username'] ?? (userCred.user!.displayName ?? ''),
           fullname: userData['fullname'] ?? '',
           roles: roles.map((e) => e.toString()).toList(),
         );
+      } else {
+        throw Exception('User credentials not found');
+      }
     } on FirebaseAuthException catch (e, stackTrace) {
       print(stackTrace);
       parseFirebaseException(e.code);
@@ -114,10 +118,11 @@ class FirebaseAuthDatasource implements AuthDatasource {
         idToken: googleAuth?.idToken,
       );
       final userCred = await authInstance.signInWithCredential(credential);
+
       // setFullName(userCred.user, firstName: googleUser?.displayName.toString(), lastName: '');
-      
+
       userModel?.fullname = googleUser?.displayName.toString();
-      setUserInfoFireStore(userCred.user, userModel!);
+      setUserInfoFireStore(userModel!);
 
       userModel = UserModel(
           id: userCred.user!.uid,
@@ -154,7 +159,7 @@ class FirebaseAuthDatasource implements AuthDatasource {
           username: userCred.user!.displayName ?? username,
           fullname: fullname);
       // setFullName(userCred.user, firstName: firstName, lastName: lastName);
-      setUserInfoFireStore(userCred.user, userModel);
+      setUserInfoFireStore(userModel);
     } on FirebaseAuthException catch (e) {
       parseFirebaseException(e.code);
     } catch (e, stackTrace) {

@@ -12,14 +12,12 @@ import 'package:resultizer_merged/features/games/data/model/league_dto.dart';
 import 'package:resultizer_merged/features/games/presentation/screens/list_teams.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/premier_game_dto.dart';
-import 'package:resultizer_merged/features/home/data/enum/premier_game_enum.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/fixture_screen.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/view/home_view/premierleague.dart';
 
 class PremierWidget extends StatefulWidget {
   PremierWidget(
@@ -54,7 +52,7 @@ class _PremierWidgetState extends State<PremierWidget> {
   // Map<dynamic, LeagueEventDTO> favouritesMatches = {};
 
   void addToFavouriteMatch(BuildContext context, PremierGameDTO item) async {
-    if (GlobalDataSource.userData.id == '0') {
+    if (GlobalDataSource.userData.id == AppString.guestUid) {
       return showSnack(context, 'Invalid Action', Colors.red);
     }
     var leagueEventDTO = LeagueEventDTO(

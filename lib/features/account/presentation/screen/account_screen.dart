@@ -5,14 +5,19 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_appbar.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/app_session.dart';
+import 'package:resultizer_merged/core/widgets/custom_image.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/manage_chats_screen.dart';
+import 'package:resultizer_merged/features/account/presentation/screen/profile_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/normal_profile_info_widget.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/profile_info_widget.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/settings_item.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/tipster_profile_info_widget.dart';
 import 'package:resultizer_merged/features/on_boarding/on_boarding_view.dart';
+import 'package:resultizer_merged/onesignal_config.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/view/account_screen/personal_screen.dart';
 
 class AccountScreenView extends StatefulWidget {
   const AccountScreenView({super.key});
@@ -24,7 +29,7 @@ class AccountScreenView extends StatefulWidget {
 class _AccountScreenViewState extends State<AccountScreenView> {
   int selectIndex = 0;
   ColorNotifire notifire = ColorNotifire();
-  
+
   // List text = [
   //   'Personal Info',
   //   'Notification',
@@ -37,53 +42,58 @@ class _AccountScreenViewState extends State<AccountScreenView> {
   // ];
   int net = 0;
   var scaffoldKey = GlobalKey<ScaffoldState>();
-  
+
+  void logout() {
+    initOneSignal();
+    return;
+    // unsubscribe from from topics
+    List following = GlobalDataSource.userData.following;
+    for(var item in following) {
+      unsubscribeFromTag(item);
+    }
+    unsubscribeFromTag(GlobalDataSource.userData.id.toString());
+    
+    // clear apps' global data
+    GlobalDataSource.clearData();
+    // clear app shared preference
+    AppSession.clear();
+    
+
+    
+    Get.offAll(const OnBoardingScreenView());
+  }
+
   @override
   Widget build(BuildContext context) {
     notifire = Provider.of<ColorNotifire>(context, listen: true);
+    List<String> userRole = GlobalDataSource.userData.roles;
     return Scaffold(
       backgroundColor: notifire.background,
       key: scaffoldKey,
       drawer: drawer1(),
-      appBar:
-          commonappbar(title: 'More', context: context, scaffoldKey: scaffoldKey),
+      appBar: commonappbar(
+          title: 'More', context: context, scaffoldKey: scaffoldKey),
       body: Column(
         children: [
-          GestureDetector(
-            onTap: () {
-              if (GlobalDataSource.userData.id != '0') Get.to(const ParsnalScreen());
-            },
-            child: ListTile(
-              leading: Image.asset('assets/images/Ellipse.png'),
-              title: Text(
-                GlobalDataSource.userData.fullname ?? '...',
-                style: TextStyle(
-                  fontFamily: "Urbanist_bold",
-                  color: notifire.textcolore,
-                  fontSize: 20,
-                ),
-              ),
-              subtitle: Text(
-                GlobalDataSource.userData.email ?? '...',
-                style: TextStyle(
-                  fontFamily: "Urbanist_medium",
-                  color: notifire.textcolore,
-                  fontSize: 14,
-                ),
-              ),
-              // trailing: Image.asset(
-              //   AppAssets.edit,
-              //   height: 24,
-              //   width: 24,
-              // ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                ProfileInfoWidget(),
+              ],
             ),
           ),
+
           // SettingsItemWidget(
           //   title: 'Change password',
           //   onSwitchChanged: (switchValue) {},
           //   onOpenIconPressed: () {},
           //   switchValue: notifire.isDark,
           // ),
+          Divider(
+            color: notifire.textcolore,
+            height: 2,
+          ),
           if (GlobalDataSource.userData.roles.contains(AppString.admin))
             Column(
               children: [
@@ -119,10 +129,7 @@ class _AccountScreenViewState extends State<AccountScreenView> {
             title: 'Logout',
             onSwitchChanged: (switchValue) {},
             onOpenIconPressed: () {
-              GlobalDataSource.clearData();
-              AppSession.clear();
-              Get.offAll(const OnBoardingScreenView());
-              // Get.of
+              logout();
             },
             switchValue: notifire.isDark,
             buttonIcon: Icons.logout,

@@ -3,18 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/core/error/error_message_types.dart';
-import 'package:resultizer_merged/core/widgets/expandDropDown.widget.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
-import 'package:resultizer_merged/features/home/data/models/bet_model_dto.dart';
 import 'package:resultizer_merged/features/home/data/models/league_event_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/live_games_cubit.dart';
-import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/live_game_widget.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/utils/constant/app_assets.dart';
-import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/view/home_view/detail_screen.dart';
-import 'package:resultizer_merged/view/home_view/matchdtails.dart';
 
 
 class LiveScreenView extends StatefulWidget {

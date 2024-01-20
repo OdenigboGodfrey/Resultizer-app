@@ -5,12 +5,11 @@ import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_bottom_sheet.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/common/common_textfild.dart';
-import 'package:resultizer_merged/container_injector.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/core/utils/app_session.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
+import 'package:resultizer_merged/features/account/presentation/cubit/user_detail_cubit.dart';
 import 'package:resultizer_merged/features/auth/data/datasources/auth_datasource.dart';
-import 'package:resultizer_merged/features/auth/data/models/user_model.dart';
 import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_state.dart';
@@ -20,7 +19,6 @@ import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
-import 'package:resultizer_merged/view/forget_password/forget_pass/forget_password_view.dart';
 
 class SignInView extends StatefulWidget {
   const SignInView({Key? key}) : super(key: key);
@@ -38,9 +36,11 @@ class _SignInViewState extends State<SignInView> {
   bool isDone = false;
 
   final AuthDatasource authDatasource = FirebaseAuthDatasource();
+  late UserDetailCubit userDetailCubit;
 
-  void handleSignIn() async {
+  void handleSignIn(BuildContext context) async {
     final authCubit = BlocProvider.of<AuthCubit>(context);
+    userDetailCubit = BlocProvider.of<UserDetailCubit>(context);
     var email = emailController.text.trim();
     var password = passwordController.text.trim();
 
@@ -56,18 +56,21 @@ class _SignInViewState extends State<SignInView> {
       // password: passwordController.text.trim(),
     );
 
-    final state = authCubit.state;
+    var state = authCubit.state;
     if (state is AuthLoadFailed) {
       showErrorSnack(state.message);
     } else if (state is AuthLoadSuccess) {
-      GlobalDataSource.userData = state.data;
+      User user = state.data;
+      user.followers = await userDetailCubit.getFollowers(user.id);
+      user.following = await userDetailCubit.getFollowing(user.id);
+
+      GlobalDataSource.userData = user;
       AppSession.saveItem('userData', GlobalDataSource.userData.toMap());
+      // subscribeToTag('topic3');
       showSuccessSnack('Login successful');
-      Get.offAll(const Bottom());
+      Get.offAll(Bottom());
     }
   }
-
-  
 
   showErrorSnack(message) {
     showSnack(context, 'Invalid email/password.', Colors.red);
@@ -90,7 +93,7 @@ class _SignInViewState extends State<SignInView> {
         buttonName: AppString.signIn,
         onTap: () {
           // Get.offAll(const Bottom());
-          handleSignIn();
+          handleSignIn(context);
         },
       ),
       body: SafeArea(
@@ -212,52 +215,52 @@ class _SignInViewState extends State<SignInView> {
                               ),
                       ),
                     ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          child: Row(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isDone = !isDone;
-                                  });
-                                },
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(5),
-                                  child: Container(
-                                    padding: const EdgeInsets.all(5),
-                                    color: AppColor.pinkColor,
-                                    child: isDone
-                                        ? Image.asset(
-                                            AppAssets.done,
-                                            height: height / 70,
-                                            width: height / 70,
-                                          )
-                                        : SizedBox(
-                                            height: height / 70, width: height / 70),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: width / 30,
-                              ),
-                              Text(
-                                "Remember me",
-                                style: TextStyle(
-                                    fontSize: 15,
-                                    fontFamily: "Urbanist_semiBold",
-                                    color: notifire.textcolore),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
+                    // const SizedBox(
+                    //   height: 20,
+                    // ),
+                    // Row(
+                    //   children: [
+                    //     Expanded(
+                    //       flex: 1,
+                    //       child: Row(
+                    //         children: [
+                    //           GestureDetector(
+                    //             onTap: () {
+                    //               setState(() {
+                    //                 isDone = !isDone;
+                    //               });
+                    //             },
+                    //             child: ClipRRect(
+                    //               borderRadius: BorderRadius.circular(5),
+                    //               child: Container(
+                    //                 padding: const EdgeInsets.all(5),
+                    //                 color: AppColor.pinkColor,
+                    //                 child: isDone
+                    //                     ? Image.asset(
+                    //                         AppAssets.done,
+                    //                         height: height / 70,
+                    //                         width: height / 70,
+                    //                       )
+                    //                     : SizedBox(
+                    //                         height: height / 70, width: height / 70),
+                    //               ),
+                    //             ),
+                    //           ),
+                    //           SizedBox(
+                    //             width: width / 30,
+                    //           ),
+                    //           Text(
+                    //             "Remember me",
+                    //             style: TextStyle(
+                    //                 fontSize: 15,
+                    //                 fontFamily: "Urbanist_semiBold",
+                    //                 color: notifire.textcolore),
+                    //           ),
+                    //         ],
+                    //       ),
+                    //     ),
+                    //   ],
+                    // ),
                     const SizedBox(
                       height: 20,
                     ),

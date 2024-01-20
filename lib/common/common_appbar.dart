@@ -2,25 +2,20 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
-import 'package:resultizer_merged/core/utils/app_global.dart';
 import 'package:resultizer_merged/features/account/presentation/screen/account_screen.dart';
-import 'package:resultizer_merged/features/account/presentation/screen/user_detail_screen.dart';
 import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
-import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/utils/model/drawer_model.dart';
-import 'package:resultizer_merged/view/search_screen/search_screen.dart';
 
 List<DrawerModel> drawerListItems = [];
 void buildDrawerListItems() {
   drawerListItems = [
     DrawerModel(
-      image: AppAssets.frame,
-      name: 'Football',
+      image: AppAssets.home,
+      name: 'Home',
      action: () {
-        Get.off(const Bottom());
+        Get.off(Bottom());
       }),
   ];
   drawerListItems.add(DrawerModel(
@@ -82,9 +77,10 @@ PreferredSizeWidget commonappbar({
           onTap: () {
             if (onTrailWidgetClick != null) {
               onTrailWidgetClick();
-            } else {
-              Get.to(const SearchScreen());
-            }
+            } 
+            // else {
+            //   Get.to(const SearchScreen());
+            // }
           },
           child: onTrailWidgetClick != null
               ? trailWidget

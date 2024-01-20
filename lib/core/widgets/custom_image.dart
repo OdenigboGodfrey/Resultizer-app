@@ -6,9 +6,10 @@ class ImageWithDefault extends StatefulWidget {
   String? defaultImage = 'assets/images/no_image.png';
   final double? width;
   final double height;
+  BoxFit? fit;
 
   ImageWithDefault(
-      {Key? key, required this.imageUrl, String? defaultImageUri, required this.width, required this.height})
+      {Key? key, required this.imageUrl, String? defaultImageUri, required this.width, required this.height, this.fit = BoxFit.fill})
     {
       if (defaultImageUri != null) defaultImage = defaultImageUri.toString();
     }
@@ -26,7 +27,7 @@ class _ImageWithDefaultState extends State<ImageWithDefault> {
       errorWidget: (context, url, error) => Image.asset(widget.defaultImage.toString()),
       width: widget.width,
       height: widget.height,
-      fit: BoxFit.fill,
+      fit: widget.fit,
 
     );
   }

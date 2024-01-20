@@ -18,6 +18,7 @@ import 'package:resultizer_merged/features/home/domain/use_cases/team_fixtures_u
 import 'package:resultizer_merged/features/home/domain/use_cases/team_stats_usecase.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/chat_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/favourites_cubit.dart';
+import 'package:resultizer_merged/features/home/presentation/cubit/notification_cubit.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.dart';
 
 void initHome() {
@@ -114,5 +115,6 @@ void initHome() {
           removeFavouriteMatchesUseCase: sl<RemoveFavouriteMatchesUseCase>(),
         ))
     ..registerLazySingleton<ChatCubit>(() => ChatCubit())
+    ..registerLazySingleton<NotificationCubit>(() => NotificationCubit())
   ;
 }

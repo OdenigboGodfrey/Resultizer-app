@@ -5,16 +5,15 @@ import 'package:resultizer_merged/features/home/presentation/screen/favorite_scr
 import 'package:resultizer_merged/features/home/presentation/screen/home_view.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/live_screen.dart';
 import 'package:resultizer_merged/features/home/presentation/screen/tips_screen.dart';
-import 'package:resultizer_merged/features/home/presentation/widget/chat/chats_view.dart';
 import 'package:resultizer_merged/features/videos/presentation/screens/video_screen.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
-import 'package:resultizer_merged/view/watch_screen/watch_screen.dart';
 
 import '../../theme/themenotifer.dart';
 
 class Bottom extends StatefulWidget {
-  const Bottom({Key? key}) : super(key: key);
+  Bottom({Key? key, this.selectedIndex = 0}) : super(key: key);
+  int? selectedIndex;
 
   @override
   State<Bottom> createState() => _BottomState();
@@ -30,6 +29,13 @@ class _BottomState extends State<Bottom> {
     const HighlightsViewScreen(),
     // const AccountScreenView(),
   ];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _selectedIndex = widget.selectedIndex ?? 0;
+  }
 
   int _selectedIndex = 0;
 

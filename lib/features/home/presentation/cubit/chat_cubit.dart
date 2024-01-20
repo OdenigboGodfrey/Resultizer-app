@@ -6,6 +6,7 @@ import 'package:resultizer_merged/features/account/data/models/chat_item_dto.dar
 import 'package:resultizer_merged/features/home/data/datasources/chat_datasource.dart';
 import 'package:resultizer_merged/features/home/data/models/chat_dto.dart';
 import 'package:resultizer_merged/features/home/presentation/cubit/chat_state.dart';
+import 'package:resultizer_merged/onesignal_config.dart';
 
 class ChatCubit extends Cubit<ChatStates> {
   ChatCubit() : super(ChatInitial());
@@ -32,6 +33,19 @@ class ChatCubit extends Cubit<ChatStates> {
       emit(ChatSendFail('Something went wrong, please try again.'));
     } else {
       emit(ChatSent('Action successful.'));
+      var teamName = "${item.name} posted";
+      
+      
+      sendNotification(
+          topic: item.userId,
+          title: teamName,
+          content: item.message,
+          data: {
+            'chatMeta': chatMeta.toMap(),
+            'chatItem': item.toJson(),
+          },
+          fixtureId: item.fixtureId,
+          userId: item.userId);
     }
   }
 
@@ -111,7 +125,7 @@ class ChatCubit extends Cubit<ChatStates> {
           chats.addAll(filterTipsByDate(
               item.values.toList(), DateTime.now().year.toString()));
         }
-        
+
         existingChat = sortChat(chats);
         emit(ChatReceived(existingChat));
         if (existingChat.isEmpty) {
@@ -158,7 +172,8 @@ class ChatCubit extends Cubit<ChatStates> {
 
   Future<Map<dynamic, dynamic>> getChatMetaByFixtureId(int fixtureId) async {
     existingChat = [];
-    Map<dynamic, dynamic> chatMeta = await firebaseChatDataSource.getChatMeta(fixtureId);
+    Map<dynamic, dynamic> chatMeta =
+        await firebaseChatDataSource.getChatMeta(fixtureId);
     return chatMeta;
   }
 }

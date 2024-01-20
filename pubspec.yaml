@@ -48,7 +48,12 @@ dependencies:
   cloud_firestore: ^4.11.0
   readmore: ^2.2.0
   shared_preferences: any
-
+  firebase_messaging: any
+  onesignal_flutter: ^5.0.4
+    # git:
+    #   url: git://github.com/OneSignal/OneSignal-Flutter-SDK.git
+    #   ref: c9c586e5b43232dbcb7b58288c3ffc9f049cb87c
+    # path: local/OneSignal-Flutter-SDK-c9c586e5b43232dbcb7b58288c3ffc9f049cb87c
 
 
   # The following adds the Cupertino Icons font to your application.

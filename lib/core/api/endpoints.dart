@@ -18,4 +18,7 @@ class Endpoints {
   static const scoreBatCompetition = "competition/";
   static const scoreBatListCompetitions = "api/competition/e/";
   static const scoreBatListTeams = "api/teamd/featured";
+  // one signal
+  static const oneSignalBaseUrl = "https://onesignal.com/api/v1/";
+  static const oneSignalNotification = "notifications/";
 }

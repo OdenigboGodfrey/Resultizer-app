@@ -172,6 +172,7 @@ class FavouritesCubit extends Cubit<FavouritesStates> {
   Map<String, LeagueEventDTO> matches = {};
   Future<Map<String, LeagueEventDTO>> getMatches() async {
     matches.clear();
+    if (GlobalDataSource.userData == null) return matches;
     String uid = GlobalDataSource.userData.id;
     emit(FavouritesLoading());
     final fixtures = await getFavouriteMatchesUseCase(uid);

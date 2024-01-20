@@ -25,12 +25,19 @@ void initAccount() {
         ManageChatImplementation(
             dataSource: sl<FirebaseManageChatDataSource>(),
             networkInfo: sl<NetworkInfoImpl>()))
-    ..registerLazySingleton<FetchUserDetailUseCase>(
-      () => FetchUserDetailUseCase(sl<UserDetailRepository>()),
+    ..registerLazySingleton<FetchUserDetailByEmailUseCase>(
+      () => FetchUserDetailByEmailUseCase(sl<UserDetailRepository>()),
+    )
+    ..registerLazySingleton<FetchUserDetailByUidUseCase>(
+      () => FetchUserDetailByUidUseCase(sl<UserDetailRepository>()),
     )
     ..registerLazySingleton<UpdateUserDetailUseCase>(
       () => UpdateUserDetailUseCase(sl<UserDetailRepository>()),
     )
+    ..registerLazySingleton<ChangePasswordUseCase>(
+      () => ChangePasswordUseCase(sl<UserDetailRepository>()),
+    )
+
     ..registerLazySingleton<CountChatUseCase>(
       () => CountChatUseCase(sl<ManageChatRepository>()),
     )
@@ -43,9 +50,23 @@ void initAccount() {
     ..registerLazySingleton<DeleteChatMetaUseCase>(
       () => DeleteChatMetaUseCase(sl<ManageChatRepository>()),
     )
+    ..registerLazySingleton<GetFollowerUserUseCase>(
+      () => GetFollowerUserUseCase(sl<UserDetailRepository>()),
+    )
+    ..registerLazySingleton<GetFollowingUserUseCase>(
+      () => GetFollowingUserUseCase(sl<UserDetailRepository>()),
+    )
+    ..registerLazySingleton<ToggleFollowUserUseCase>(
+      () => ToggleFollowUserUseCase(sl<UserDetailRepository>()),
+    )
     ..registerLazySingleton<UserDetailCubit>(() => UserDetailCubit(
-          sl<FetchUserDetailUseCase>(),
+          sl<FetchUserDetailByEmailUseCase>(),
           sl<UpdateUserDetailUseCase>(),
+          sl<ChangePasswordUseCase>(),
+          sl<GetFollowerUserUseCase>(),
+          sl<GetFollowingUserUseCase>(),
+          sl<ToggleFollowUserUseCase>(),
+          sl<FetchUserDetailByUidUseCase>(),
         ))
     ..registerLazySingleton<ManageChatCubit>(() => ManageChatCubit(
           countChatUseCase: sl<CountChatUseCase>(),

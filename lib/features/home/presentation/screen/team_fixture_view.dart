@@ -8,8 +8,6 @@ import 'package:resultizer_merged/features/home/presentation/cubit/soccer_cubit.
 import 'package:resultizer_merged/features/home/presentation/cubit/soccer_state.dart';
 import 'package:resultizer_merged/features/home/presentation/widget/premier_widget.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
-import 'package:resultizer_merged/utils/constant/app_assets.dart';
-import 'package:resultizer_merged/view/home_view/premierleague.dart';
 
 class TeamFixtureScreenView extends StatefulWidget {
   const TeamFixtureScreenView({Key? key, required this.teamId}) : super(key: key);

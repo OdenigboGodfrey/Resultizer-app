@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/container_injector.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
@@ -12,7 +13,6 @@ import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:flutter_bloc/src/bloc_provider.dart';
-
 
 class SplashScreenView extends StatefulWidget {
   const SplashScreenView({Key? key}) : super(key: key);
@@ -44,7 +44,7 @@ class _SplashScreenView extends State<SplashScreenView> {
           return Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
-              builder: (context) => const Bottom(),
+              builder: (context) => Bottom(),
             ),
             (route) => false);
         } 

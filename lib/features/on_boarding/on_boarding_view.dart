@@ -1,6 +1,7 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:onesignal_flutter/onesignal_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:resultizer_merged/common/common_button.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
@@ -9,11 +10,13 @@ import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/features/auth/presentation/screens/sign_in_view.dart';
 import 'package:resultizer_merged/features/auth/presentation/screens/sign_up_view.dart';
 import 'package:resultizer_merged/features/bottom_navigation_bar/bottonnavigation.dart';
+import 'package:resultizer_merged/onesignal_config.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_color.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 import 'package:resultizer_merged/utils/model/on_bording.dart';
+
 
 
 class OnBoardingScreenView extends StatefulWidget {
@@ -49,6 +52,12 @@ class _OnBoardingScreenViewState extends State<OnBoardingScreenView> {
         subTitle: AppString.onbondingSubTitle4),
   ];
 
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  bool hasRun = false;
    _navigateToSignIn() async {
     await Future.delayed(
         const Duration(seconds: 3)); // 3 seconds delay for splash
@@ -69,7 +78,7 @@ class _OnBoardingScreenViewState extends State<OnBoardingScreenView> {
     });
 
     showSnack(context, 'Login successful', Colors.green);
-    Get.offAll(const Bottom());
+    Get.offAll(Bottom());
   }
 
 
@@ -79,6 +88,12 @@ class _OnBoardingScreenViewState extends State<OnBoardingScreenView> {
     Size size = MediaQuery.of(context).size;
     double height = size.height;
     double width = size.width;
+
+    // hasRun = false;
+    // if (!hasRun) {
+    //   loadOneSignal();
+    //   hasRun = true;
+    // }
 
     return Scaffold(
       backgroundColor: notifire.bgcolore,

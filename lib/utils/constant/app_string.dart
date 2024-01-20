@@ -121,4 +121,9 @@ static const String sendReset = "Send Reset Link";
   static const String favouriteTeamCollectionKey = 'favourite-teams';
   static const String favouriteLeaguesCollectionKey = 'favourite-leagues';
   static const String favouriteMatchesCollectionKey = 'favourite-matches';
+  static const String followersCollectionKey = 'followers';
+  static const String followingCollectionKey = 'following';
+  static const String profileImageUploadKey = 'profile-image';
+
+  static const String guestUid = '0';
 }

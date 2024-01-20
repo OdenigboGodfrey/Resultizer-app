@@ -6,11 +6,9 @@ import 'package:resultizer_merged/common/common_bottom_sheet.dart';
 import 'package:resultizer_merged/common/common_textfild.dart';
 import 'package:resultizer_merged/core/widgets/snackbar.dart';
 import 'package:resultizer_merged/features/auth/presentation/cubit/auth_cubit.dart';
-import 'package:resultizer_merged/features/auth/presentation/screens/forget_password_view.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
-import 'package:resultizer_merged/view/forget_password/otp_view/otp_view.dart';
 
 
 class ForgotPasswordView extends StatefulWidget {

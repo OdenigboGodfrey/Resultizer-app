@@ -149,6 +149,7 @@ class _ChatViewState extends State<ChatView> {
                                   message: existingChat.elementAt(i)['message'],
                                   dateTime: DateTime.parse(
                                       existingChat.elementAt(i)['dateTime']),
+                                      uid: existingChat.elementAt(i)['userId'] ?? '',
                                 ),
                               ),
                               Expanded(
@@ -258,14 +259,17 @@ class _ChatViewState extends State<ChatView> {
                                     chatMeta!,
                                     ChatDTO(
                                         name:
-                                            GlobalDataSource.userData.fullname,
+                                            GlobalDataSource.userData.username,
                                         message: _message.text,
-                                        fixtureId: widget.chatMeta!.fixtureId))
+                                        fixtureId: widget.chatMeta!.fixtureId,
+                                      userId: GlobalDataSource.userData.id,
+                                      ))
                                 .then((value) {
                               _message.clear();
                             });
                           }
                         },
+                        // userImage: GlobalDataSource.userData.profileImageURL
                       ),
                     ),
                   ),
