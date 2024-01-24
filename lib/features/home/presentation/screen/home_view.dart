@@ -31,8 +31,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   // int selected = 0;
   dynamic selectedValue;
   ColorNotifire notifire = ColorNotifire();
-  
-  
+
   // List day = [];
   Map<String, dynamic> selectedDay = {};
 
@@ -56,14 +55,13 @@ class _HomeScreenViewState extends State<HomeScreenView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(Duration(seconds: 3), () {
       // Your function code goes here
       print('Delayed function executed after 2 seconds.');
       notificationListener().then((value) {
         print('---------------- init onesignal done ---------------');
       });
     });
-    
   }
 
   refreshList() {
@@ -71,7 +69,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     updateData(date);
   }
 
-  updateData(String date, {bool onlyFutureGames = true }) {
+  updateData(String date, {bool onlyFutureGames = true}) {
     fixtures = [];
     cubit.refreshList(date, onlyFutureGames: onlyFutureGames);
     setState(() {
@@ -112,7 +110,11 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     print(OneSignal.Notifications.permission);
     if (!OneSignal.Notifications.permission) {
       // re initialize one signal
-      initOneSignal();
+      Future.delayed(Duration(seconds: 2), () {
+        print('one signal permission @ home retry');
+        initOneSignal();
+        print(OneSignal.Notifications.permission);
+      });
     }
     if (following != null && following.isNotEmpty) {
       for (var element in following) {
@@ -155,10 +157,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
         key: scaffoldKey,
         drawer: drawer1(),
         appBar: commonappbar(
-            title: 'Resultizer',
-            
-            context: context,
-            scaffoldKey: scaffoldKey),
+            title: 'Resultizer', context: context, scaffoldKey: scaffoldKey),
         body: ListView(
           padding: EdgeInsets.zero,
           children: [
@@ -375,7 +374,8 @@ class _HomeScreenViewState extends State<HomeScreenView> {
                                 cubit.selected = -1;
                                 // selectedDay = cubit.day[index];
                               });
-                              String date = DateFormat("yyyy-MM-dd").format(picked);
+                              String date =
+                                  DateFormat("yyyy-MM-dd").format(picked);
                               updateData(date, onlyFutureGames: false);
                             }
                           },
