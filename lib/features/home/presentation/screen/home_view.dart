@@ -106,14 +106,10 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     User user = GlobalDataSource.userData;
     List<dynamic>? following = user.following;
     initOneSignal();
-    print('one signal permission @ home');
-    print(OneSignal.Notifications.permission);
     if (!OneSignal.Notifications.permission) {
       // re initialize one signal
       Future.delayed(Duration(seconds: 2), () {
-        print('one signal permission @ home retry');
         initOneSignal();
-        print(OneSignal.Notifications.permission);
       });
     }
     if (following != null && following.isNotEmpty) {
@@ -123,7 +119,7 @@ class _HomeScreenViewState extends State<HomeScreenView> {
     }
 
     // for testing
-    await subscribeToTag(user.id);
+    // await subscribeToTag(user.id);
   }
 
   var scaffoldKey = GlobalKey<ScaffoldState>();

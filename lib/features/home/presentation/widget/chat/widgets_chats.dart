@@ -116,7 +116,7 @@ class CardChat extends StatelessWidget {
     showDialog(
       context: context,
       builder: (BuildContext context) {
-        return ToggleFollowUserWidget(uid: uid);
+        return ToggleFollowUserWidget(uid: uid, showTipsterTips: true, setState: () {});
       },
     );
   }

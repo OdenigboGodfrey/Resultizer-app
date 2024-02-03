@@ -44,8 +44,6 @@ class _AccountScreenViewState extends State<AccountScreenView> {
   var scaffoldKey = GlobalKey<ScaffoldState>();
 
   void logout() {
-    initOneSignal();
-    return;
     // unsubscribe from from topics
     List following = GlobalDataSource.userData.following;
     for(var item in following) {

@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:intl/intl.dart';
 import 'package:resultizer_merged/core/utils/app_global.dart';
+import 'package:resultizer_merged/core/utils/custom_promise.dart';
 import 'package:resultizer_merged/features/account/data/models/chat_item_dto.dart';
 import 'package:resultizer_merged/features/home/data/datasources/chat_datasource.dart';
 import 'package:resultizer_merged/features/home/data/models/chat_dto.dart';
@@ -11,7 +12,7 @@ import 'package:resultizer_merged/onesignal_config.dart';
 class ChatCubit extends Cubit<ChatStates> {
   ChatCubit() : super(ChatInitial());
 
-  late FirebaseChatDataSource firebaseChatDataSource;
+  late FirebaseChatDataSource firebaseChatDataSource  = FirebaseChatDataSource();
 
   void init(ChatMetaDTO chatMeta) {
     firebaseChatDataSource =
@@ -34,8 +35,7 @@ class ChatCubit extends Cubit<ChatStates> {
     } else {
       emit(ChatSent('Action successful.'));
       var teamName = "${item.name} posted";
-      
-      
+
       sendNotification(
           topic: item.userId,
           title: teamName,
@@ -137,25 +137,67 @@ class ChatCubit extends Cubit<ChatStates> {
     });
   }
 
-  Future getAllExistingTips() async {
-    await firebaseChatDataSource.getAll((data) {
-      List chats = [];
-      if (data != null) {
-        Map<dynamic, dynamic> allChats = data;
-        for (Map<dynamic, dynamic> item in allChats.values.toList()) {
-          chats.addAll(filterTipsByDate(
-              item.values.toList(), DateTime.now().year.toString()));
-        }
+  Future getAllExistingTipsAndFilterByDate() async {
+    await customPromise(() async {
+      await firebaseChatDataSource.getAll(emitter: (data) {
+        List chats = [];
+        if (data != null) {
+          Map<dynamic, dynamic> allChats = data;
+          print('data');
+          print(data);
+          for (Map<dynamic, dynamic> item in allChats.values.toList()) {
+            chats.addAll(filterTipsByDate(
+                item.values.toList(), DateTime.now().year.toString()));
 
-        existingChat = sortChat(chats);
-        emit(ChatReceived(existingChat));
-        if (existingChat.isEmpty) {
-          isNewMessageGroup = true;
-        } else {
-          isNewMessageGroup = false;
+            // chats.addAll(item.values.toList());
+          }
+
+          existingChat = sortChat(chats);
+          emit(ChatReceived(existingChat));
+          if (existingChat.isEmpty) {
+            isNewMessageGroup = true;
+          } else {
+            isNewMessageGroup = false;
+          }
         }
+      });
+    });
+    return existingChat;
+  }
+
+  Future getAllExistingTips() async {
+    print('fetcing');
+    await customPromise(() async {
+      try {
+        print('promise');
+        Map<dynamic, dynamic> data = await firebaseChatDataSource.getAll();
+        List<dynamic> chats = [];
+        for (Map<dynamic, dynamic> item in data.values.toList()) {
+            // chats.addAll(filterTipsByDate(
+            //     item.values.toList(), DateTime.now().year.toString()));
+
+            chats.addAll(item.values.toList());
+          }
+        
+            // Map<dynamic, dynamic> allChats = data;
+            // print('object getAll');
+            // print(data.toList().length);
+            
+            // for (DataSnapshot item in data.toList()) {
+            //   chats.addAll(item.children.toList());
+            // }
+            
+            // print('getl all');
+            // print(chats.length);
+
+            existingChat = sortChat(chats);
+      }
+      catch(e, stackTrace) {
+        print(e);
+        print(stackTrace);
       }
     });
+    return existingChat;
   }
 
   Future<bool> cancelAllTipsListener() async {

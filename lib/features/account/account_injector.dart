@@ -50,6 +50,9 @@ void initAccount() {
     ..registerLazySingleton<DeleteChatMetaUseCase>(
       () => DeleteChatMetaUseCase(sl<ManageChatRepository>()),
     )
+    ..registerLazySingleton<GetChatMetaUseCase>(
+      () => GetChatMetaUseCase(sl<ManageChatRepository>()),
+    )
     ..registerLazySingleton<GetFollowerUserUseCase>(
       () => GetFollowerUserUseCase(sl<UserDetailRepository>()),
     )
@@ -73,5 +76,6 @@ void initAccount() {
           getAllChatMetaUseCase: sl<GetAllChatMetaUseCase>(),
           deleteChatUseCase: sl<DeleteChatUseCase>(),
           deleteChatMetaUseCase: sl<DeleteChatMetaUseCase>(),
+          getChatMetaUseCase: sl<GetChatMetaUseCase>(),
         ));
 }

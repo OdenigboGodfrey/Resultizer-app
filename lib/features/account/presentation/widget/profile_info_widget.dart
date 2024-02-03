@@ -6,14 +6,16 @@ import 'package:resultizer_merged/features/account/presentation/cubit/user_detai
 import 'package:resultizer_merged/features/account/presentation/screen/profile_screen.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/normal_profile_info_widget.dart';
 import 'package:resultizer_merged/features/account/presentation/widget/tipster_profile_info_widget.dart';
+import 'package:resultizer_merged/features/account/presentation/widget/profile_tips_widget/tipster_tip_item_widget.dart';
 import 'package:resultizer_merged/features/auth/domain/entities/user.dart';
 import 'package:resultizer_merged/theme/themenotifer.dart';
 import 'package:resultizer_merged/utils/constant/app_assets.dart';
 import 'package:resultizer_merged/utils/constant/app_string.dart';
 
 class ProfileInfoWidget extends StatefulWidget {
-  ProfileInfoWidget({super.key, this.uid});
+  ProfileInfoWidget({super.key, this.uid, this.showTipsterTips = false});
   String? uid;
+  bool showTipsterTips;
 
   @override
   State<ProfileInfoWidget> createState() => ProfileInfoWidgetState();
@@ -75,14 +77,20 @@ class ProfileInfoWidgetState extends State<ProfileInfoWidget> {
               const CircularProgressIndicator(),
             if (userData != null)
               userData != null && userData!.roles!.contains(AppString.tipster)
-                  ? TipsterProfileInfo(
-                      followersCount: followersUids.length.toString(),
-                      followingCount: followingUids.length.toString(),
-                      uid: widget.uid,
-                      followersUids: followersUids,
-                      followingUids: followingUids,
-                      userData: userData,
-                    )
+                  ? Column(
+                    children: [
+                      TipsterProfileInfo(
+                          followersCount: followersUids.length.toString(),
+                          followingCount: followingUids.length.toString(),
+                          uid: widget.uid,
+                          followersUids: followersUids,
+                          followingUids: followingUids,
+                          userData: userData,
+                        ),
+                        // if (!widget.showTipsterTips)
+                        //   TipsterTipItemWidget(uid: userData!.id),
+                    ],
+                  )
                   : NormalProfileInfoWidget(
                     followingCount: followingUids.length.toString(),
                       followersCount: followersUids.length.toString(),

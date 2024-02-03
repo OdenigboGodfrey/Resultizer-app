@@ -10,6 +10,7 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
       required this.getAllChatMetaUseCase,
       required this.deleteChatUseCase,
       required this.deleteChatMetaUseCase,
+      required this.getChatMetaUseCase,
     })
       : super(ManageChatInitial());
 
@@ -17,6 +18,7 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
   final GetAllChatMetaUseCase getAllChatMetaUseCase;
   final DeleteChatUseCase deleteChatUseCase;
   final DeleteChatMetaUseCase deleteChatMetaUseCase;
+  final GetChatMetaUseCase getChatMetaUseCase;
 
   Future<int> countChat(int fixtureId) async {
     // emit(ManageChatLoading());
@@ -42,7 +44,6 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
       },
       (right) {
         for (var element in right) {
-          print(element.value);
           response.add(ChatMetaDTO.fromJson(element.value));
         }
       },
@@ -65,7 +66,6 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
     deleteChatMetaResult.fold(
       (left) {},
       (right) {
-        print('has deleted chat meta $right');
         // hasDeletedChat = right;
         // emit(CountingChatLoaded(count));
       },
@@ -73,16 +73,26 @@ class ManageChatCubit extends Cubit<ManageChatStates> {
     return hasDeletedChat;
   }
 
-  // Future<bool> updateUser(UserModel model) async {
-  //   bool status = false;
-  //   final fixtures = await updateManageChatUseCase(model);
-  //   fixtures.fold(
-  //     (left) {},
-  //     (right) {
-  //       status = right;
+  List<dynamic> filterChatByUserId(List<dynamic> data, String uid) {
+    List<dynamic> output = [];
+    for (var element in data) { 
+      if (element['userId'] == uid) output.add(element);
+    }
+    return output;
+  }
 
-  //     },
-  //   );
-  //   return status;
-  // }
+  Future<ChatMetaDTO?> getChatMeta(int fixtureId) async {
+    // emit(ManageChatLoading());
+    ChatMetaDTO? chatMeta;
+    final result = await getChatMetaUseCase(fixtureId);
+    result.fold(
+      (left) {
+        emit(GetChatMetaFailure('Failed to fetch chat meta'));
+      },
+      (right) {
+        chatMeta = ChatMetaDTO.fromJson(right);
+      },
+    );
+    return chatMeta;
+  }
 }

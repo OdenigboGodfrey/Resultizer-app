@@ -79,4 +79,20 @@ class ManageChatImplementation implements ManageChatRepository {
       return const Left(Failure(code: 02, message: 'networkConnectError'));
     }
   }
+
+  @override
+  Future<Either<Failure, dynamic>> getChatMeta({required int fixtureId}) async {
+    if (await networkInfo.isConnected) {
+      try {
+        final result = await dataSource.getChatMeta(fixtureId);
+        return Right(result);
+      } catch (e, stackTrace) {
+        print(e);
+        print(stackTrace);
+        return const Left(Failure(code: 01, message: 'unexpected'));
+      }
+    } else {
+      return const Left(Failure(code: 02, message: 'networkConnectError'));
+    }
+  }
 }

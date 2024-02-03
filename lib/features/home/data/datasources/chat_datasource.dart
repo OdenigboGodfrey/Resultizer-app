@@ -17,7 +17,7 @@ abstract class ChatDataSource {
   Future<bool> get(Function emitter);
   Future<bool> createChatMeta(ChatMetaDTO item);
   Future<Map<dynamic, dynamic>> getChatMeta(int fixtureId);
-  Future<Iterable<DataSnapshot>> getAll(Function emitter);
+  Future<dynamic> getAll({Function? emitter});
   Future<bool> listenAll(Function emitter);
   Future<bool> cancelAllTipsListener();
   Future<bool> cancelFixtureListener();
@@ -32,7 +32,7 @@ class FirebaseChatDataSource extends ChatDataSource {
   StreamSubscription? _allTipsSubscription;
   StreamSubscription? _allFixtureTipsSubscription;
 
-  FirebaseChatDataSource({required this.fixtureId}) {
+  FirebaseChatDataSource({this.fixtureId = 0}) {
     fixtureChatRef = FirebaseDatabase.instanceFor(
             app: Firebase.app(),
             databaseURL:
@@ -96,10 +96,15 @@ class FirebaseChatDataSource extends ChatDataSource {
   }
 
   @override
-  Future<Iterable<DataSnapshot>> getAll(Function emitter) async {
+  Future<dynamic> getAll({Function? emitter}) async {
     var key = AppString.chatCollectionKey;
     var getResult = await chatRef.ref(key).get();
-    return getResult.children;
+    if (emitter!=null) emitter(getResult.children);
+    // print('getResult.children');
+    // print(getResult.children);
+    // print('getResult.value');
+    // print(getResult.value);
+    return getResult.value;
   }
 
   @override

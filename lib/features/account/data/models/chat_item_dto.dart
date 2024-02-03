@@ -55,9 +55,9 @@ class ChatMetaDTO {
       fixtureId: json['fixtureId'],
       leagueLogo: json['leagueLogo'] ?? '',
       leagueSubtitle: json['leagueSubtitle'] ?? '',
-      awayTeamId: json['awayTeamId'],
-      homeTeamId: json['homeTeamId'],
-      leagueId: json['leagueId'],
+      awayTeamId: json['awayTeamId'] ?? 0,
+      homeTeamId: json['homeTeamId'] ?? 0,
+      leagueId: json['leagueId'] ?? 0,
     );
   }
 }

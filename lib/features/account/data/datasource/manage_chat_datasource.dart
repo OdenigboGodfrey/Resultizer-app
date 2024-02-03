@@ -10,6 +10,7 @@ abstract class ManageChatDataSource {
   Future<bool> deleteChat(int fixtureId);
   Future<Iterable<DataSnapshot>> getAllChatMeta();
   Future<bool> deleteChatMeta(int fixtureId);
+  Future<dynamic> getChatMeta(int fixtureId);
 }
 
 class FirebaseManageChatDataSource extends ManageChatDataSource {
@@ -61,5 +62,16 @@ class FirebaseManageChatDataSource extends ManageChatDataSource {
       return true;
     }
     return false;
+  }
+
+  @override
+  Future<dynamic> getChatMeta(int fixtureId) async {
+    var key = '${AppString.chatMetaCollectionKey}/$fixtureId';
+    var tmpRef = chatMetaRef.ref(key);
+    var document = await tmpRef.get();
+    if (document.exists) {
+      return document.value;
+    }
+    return null;
   }
 }

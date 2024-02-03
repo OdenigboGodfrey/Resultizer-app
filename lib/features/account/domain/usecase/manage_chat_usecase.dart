@@ -39,3 +39,12 @@ class DeleteChatMetaUseCase implements UseCase<bool, int> {
     return await _repository.deleteChatMeta(fixtureId: fixtureId);
   }
 }
+
+class GetChatMetaUseCase implements UseCase<dynamic, int> {
+  final ManageChatRepository _repository;
+  GetChatMetaUseCase(this._repository);
+  @override
+  Future<Either<Failure, dynamic>> call(int fixtureId) async {
+    return await _repository.getChatMeta(fixtureId: fixtureId);
+  }
+}

@@ -90,7 +90,7 @@ class _ChatViewState extends State<ChatView> {
   initAllTipsListener() async {
     chatCubit = context.read<ChatCubit>();
     chatCubit.init(widget.chatMeta!);
-    await chatCubit.getAllExistingTips();
+    // await chatCubit.getAllExistingTipsAndFilterByDate();
     chatCubit.allTipsListener();
   }
 

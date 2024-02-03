@@ -119,6 +119,7 @@ class MyApp extends StatelessWidget {
                   getAllChatMetaUseCase: sl<GetAllChatMetaUseCase>(),
                   deleteChatUseCase: sl<DeleteChatUseCase>(),
                   deleteChatMetaUseCase: sl<DeleteChatMetaUseCase>(),
+                  getChatMetaUseCase: sl<GetChatMetaUseCase>(),
                 )),
         BlocProvider<NotificationCubit>(
             create: (context) => NotificationCubit()),

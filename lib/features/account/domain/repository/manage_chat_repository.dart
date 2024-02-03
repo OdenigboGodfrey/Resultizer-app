@@ -8,4 +8,5 @@ abstract class ManageChatRepository {
   Future<Either<Failure, bool>> deleteChat({ required int fixtureId});
   Future<Either<Failure, Iterable<DataSnapshot>>> getAllChatMeta();
   Future<Either<Failure, bool>> deleteChatMeta({ required int fixtureId});
+  Future<Either<Failure, dynamic>> getChatMeta({required int fixtureId});
 }
